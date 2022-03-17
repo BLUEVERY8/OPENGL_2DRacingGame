@@ -2,14 +2,15 @@
 //날 짜 : 2022.03.15
 //작성자 : 강대한
 //주 제 : 콜백 관련 기본 소스
-
+#include <stdio.h>
 #include <glut.h> //운영체제 연결
 #include <glu.h> //그림 그리기
 #include <gl.h> //렌더링
-
+int BuSt = 0;
+double r=0, g=0, b=0;
 void MyDisplay() {
 	glClear(GL_COLOR_BUFFER_BIT); //버퍼 초기화
-	glColor3f(0.8f, 0.5f, 1.0f); // 도형 색깔
+	glColor3f(r, g, b); // 도형 색깔
 	glBegin(GL_POLYGON); // 점들을 면으로
 		glVertex3f(0.0, -0.45, 0.0); // 3: 인자 3개(3차원), f: 실수
 		glVertex3f(0.55, -0.75, 0.0);
@@ -28,13 +29,44 @@ void MyDisplay() {
 }
 void MyReshape(int NewWidth, int NewHeight) { } // 균형 유지 위한 변형값을 인자로 받음 (자동)
 
-void MyKeyboard(unsigned char KeyPressed, int X, int Y) {} // 입력값, 입력 위치 x, y
+void MyKeyboard(unsigned char KeyPressed, int X, int Y) {
+	printf("%c %d %d", KeyPressed, X, Y);
+} // 입력값, 입력 위치 x, y
 
-void MySpecial(int key, int X, int Y) {} // 입력값(특수문자), 입력 위치 x, y
+void MySpecial(int key, int X, int Y) {
+	printf("%d %d %d \n", key, X, Y);
+} // 입력값(특수문자), 입력 위치 x, y
 
-void MyMouseClick(GLint Button, GLint State, GLint X, GLint Y) {} // 왼 or 오른쪽, 누름 or 해제 etc, 마우스 위치
+void MyMouseClick(GLint Button, GLint State, GLint X, GLint Y) {
+	printf("%d %c %d %d \n", Button, State, X, Y);
+	if (Button == 0) {
+		BuSt = 1;
+		r = 0.0;
+		g = 0.0;
+		b = 1;
+	}
+	else if (Button == 2 ) {
+		BuSt = 2;
+		r = 1;
+		g = 0.0;
+		b = 0.0;
+	}	
+	else {
+		r = 0.0;
+		g = 1;
+		b = 0.0;
+		BuSt = 0;
+	}
 
-void MyMouseMove(GLint X, GLint Y) {}
+} // 왼 or 오른쪽, 누름 or 해제 etc, 마우스 위치
+
+void MyMouseMove(GLint X, GLint Y) {
+	if (BuSt == 1)
+		printf("왼쪽");
+	else if (BuSt == 2)
+		printf("오른쪽");
+	printf("%d %d \n", X, Y);
+}
 
 void MyIdle() {
 }
@@ -58,10 +90,10 @@ int main(int argc, char** argv) {
 	// begin 콜백함수 등록
 	//glutReshapeFunc(MyReshape);
 	
-	//glutKeyboardFunc(MyKeyboard);
-	//glutSpecialFunc(MySpecial);
-	//glutMouseFunc(MyMouseClick);
-	//glutMotionFunc(MyMouseMove);
+	/*glutKeyboardFunc(MyKeyboard);
+	glutSpecialFunc(MySpecial);*/
+	glutMouseFunc(MyMouseClick);
+	glutMotionFunc(MyMouseMove);
 	//glutIdleFunc(MyIdle); ex)idle: cpu 쉬는 시간에 작동되는 것 
 	//glutTimerFunc(40, MyTimer, 1); 
 	// end 콜백함수 등록
