@@ -1,5 +1,5 @@
 ﻿
-//날 짜 : 2022.03.24
+//날 짜 : 2022.03.29
 //작성자 : 강대한
 //주 제 : 콜백 관련 함수
 #include <stdio.h>
@@ -118,7 +118,7 @@ int main(int argc, char** argv) {
 	glutSpecialFunc(MySpecial);*/
 	/*glutMouseFunc(MyMouseClick);
 	glutMotionFunc(MyMouseMove);*/
-	//glutIdleFunc(MyIdle);													// ex)idle: cpu 쉬는 시간에 작동되는 것 
+	//glutIdleFunc(MyIdle);													// ex)idle: cpu 쉬는 시간에 작동되는 것, 이벤트가 없을 때
 	//glutTimerFunc(40, MyTimer, 1); 
 	// 콜백함수 등록 끝
 

@@ -1,0 +1,16 @@
+날 짜 : 2022.03.29
+작성자 : 강대한
+주 제 : 콜백 관련 함수
+
+일반 함수 : 제어권이 main에 있다.
+콜백 함수 : 제어권이 함수에 있다. 9개 한정
+-glutDisplayFunc()
+-glutReshapeFunc()
+-glutIdleFunc()
+-glut
+
+s/w > 이벤트 > 이벤트 큐 > callback..
+
+glMatrixMode(GL_PROJECTION) : 픽셀 변경 모드 지정, 좌표변경 선언
+glLoadIdentity() : 픽셀 모드 변경 후 초기화 , 좌표 초기화
+glOrtho(x(1, 1), y, z) : 좌표값 설정
