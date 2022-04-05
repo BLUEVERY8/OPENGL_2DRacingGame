@@ -3,123 +3,61 @@
 //주 제 : Timer 활용
 
 #include <stdio.h>
+#include <conio.h>
 #include <glut.h>
 #include <glu.h>
 #include <gl.h>
 
-GLfloat Delta = 0.0;
-GLfloat seta = 0.0, R=0, G=0, B=0;
-GLint flag1 = 0;
-GLint flag2 = 0, val=1;
+GLint TopLeftX, TopLeftY, BottomRightX, BottomRightY;
+int NewWi, NewHe, temp = 0;
 
 void MyDisplay() {
 	glClear(GL_COLOR_BUFFER_BIT);
-	glColor3f(R, G, B);
+	glColor3f(1.0f, 1.0f, 0.0f);
 	glBegin(GL_POLYGON);
-	glVertex3f(-0.5 + Delta, -0.25 + seta, 0.0);
-	glVertex3f(0.0 + Delta, -0.25 + seta, 0.0);
-	glVertex3f(0.0 + Delta, 0.25 + seta, 0.0);
-	glVertex3f(-0.5 + Delta, 0.25 + seta, 0.0);
+	glVertex3f(0.05, 0.05, 0.0);
+	glVertex3f(0.05, 0.95, 0.0);
+	glVertex3f(0.95, 0.95, 0.0);
+	glVertex3f(0.95, 0.05, 0.0);
+	glEnd();
+
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glBegin(GL_POLYGON);
+	glVertex3f(TopLeftX / (float)NewWi, (NewHe - TopLeftY) / (float)NewHe, 0.0);
+	glVertex3f(TopLeftX / (float)NewWi, (NewHe - BottomRightY) / (float)NewHe, 0.0);
+	glVertex3f(BottomRightX / (float)NewWi, (NewHe - BottomRightY) / (float)NewHe, 0.0);
+	glVertex3f(BottomRightX / (float)NewWi, (NewHe - TopLeftY) / (float)NewHe, 0.0);
 	glEnd();
 	glFlush();
 
 }
 
-void MyKeyboard(unsigned char KeyPressed, int X, int Y) {}
-
-void MyIdle() {
-	if (flag1 == 0)
-		Delta = Delta + 0.0035;
-	else
-		Delta = Delta - 0.0035;
-	if (Delta > 1) {
-		flag1 = 1;
-	}
-
-	else if (Delta < -0.5) {
-		flag1 = 0;
-	}
-
-	if (flag2 == 0)
-		seta = seta + 0.001;
-	else
-		seta = seta - 0.001;
-	if (seta > 0.75) {
-		flag2 = 1;
-	}
-
-	else if (seta < -0.75) {
-		flag2 = 0;
-	}
-	glutPostRedisplay();
-}
-
-void MyTimer(int Value) {
-	if (Value == 1) {
-		R = 0.3, G = 0.5, B = 0.8;
-		if (flag1 == 0)
-			Delta = Delta + 0.2;
-		else
-			Delta = Delta - 0.2;
-		if (Delta > 1) {
-			flag1 = 1;
-			val = 2;
-		}
-
-		else if (Delta < -0.5) {
-			flag1 = 0;
-			val = 2;
-		}
-
-		/*if (flag2 == 0)
-			seta = seta + 0.2;
-		else
-			seta = seta - 0.2;
-		if (seta > 0.75) {
-			flag2 = 1;
-		}
-
-		else if (seta < -0.75) {
-			flag2 = 0;
-		}*/
-		glutPostRedisplay();
-		glutTimerFunc(200, MyTimer, val);
-	}
-	else if (Value == 2) {
-		R = 0.7, G = 0.4, B = 0.2;
-		/*if (flag1 == 0)
-			Delta = Delta + 0.2;
-		else
-			Delta = Delta - 0.2;
-		if (Delta > 1) {
-			flag1 = 1;
-		}
-
-		else if (Delta < -0.5) {
-			flag1 = 0;
-		}*/
-
-		if (flag2 == 0)
-			seta = seta + 0.2;
-		else
-			seta = seta - 0.2;
-		if (seta > 0.75) {
-			flag2 = 1;
-			val = 1;
-		}
-
-		else if (seta < -0.75) {
-			flag2 = 0;
-			val = 1;
-		}
-		glutPostRedisplay();
-		glutTimerFunc(200, MyTimer, val);
-	}
-}
-void MyReshape(int NewWidth, int NewHeight) {
+void MyReshape(int NW, int NH) {
+	glViewport(0, 0, NW, NH);
+	NewWi = NW; NewHe = NH;
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-1.0, 1.0, -1.0, 1.0, 1.0, -1.0);
+	glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
+	glMatrixMode(GL_MODELVIEW); glLoadIdentity();
+}
+
+void MyMouseClick(GLint Button, GLint State, GLint X, GLint Y) {
+	if (Button == GLUT_LEFT_BUTTON && State == GLUT_DOWN) {
+		TopLeftX = X; TopLeftY = Y;
+		printf("click-> %d %d \n", X, Y);
+		temp = 1;
+	}
+	else
+		temp = 0;
+}
+
+void MyMouseMove(GLint X, GLint Y) {
+	if (temp == 1 ) {
+		BottomRightX = X; BottomRightY = Y;
+		printf("move-> %d %d \n", X, Y);
+		glutPostRedisplay();
+	}
+	
 }
 
 void initUse() {
@@ -130,19 +68,15 @@ void initUse() {
 
 int main(int argc, char** argv) {
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGB);
-	glutInitWindowSize(500, 500);
-	glutInitWindowPosition(0, 0);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_SINGLE);
+	glutInitWindowSize(700, 700);
 	glutCreateWindow("제목");
 	initUse();
 
 	glutDisplayFunc(MyDisplay);
-	//glutReshapeFunc(MyReshape);
-	glutKeyboardFunc(MyKeyboard);
-	//glutIdleFunc(MyIdle);
-	glutTimerFunc(200, MyTimer, val);
-
-	glutTimerFunc(200, MyTimer, val);
+	glutReshapeFunc(MyReshape);
+	glutMouseFunc(MyMouseClick);
+	glutMotionFunc(MyMouseMove);
 	glutMainLoop();
 	return 0;
 }
