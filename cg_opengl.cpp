@@ -1,82 +1,84 @@
-﻿//날 짜 : 2022.03.31
+﻿//날 짜 : 2022.04.07
 //작성자 : 강대한
-//주 제 : Timer 활용
+//주 제 : Menu Callback
 
 #include <stdio.h>
-#include <conio.h>
-#include <glut.h>
+#include <glut.h> 
 #include <glu.h>
-#include <gl.h>
-
-GLint TopLeftX, TopLeftY, BottomRightX, BottomRightY;
-int NewWi, NewHe, temp = 0;
-
+#include <gl.h> 
+int menuValue, sizeMenu, ColorMenu, shapeMenu;
+double sizeValue = 0.5f;
 void MyDisplay() {
 	glClear(GL_COLOR_BUFFER_BIT);
-	glColor3f(1.0f, 1.0f, 0.0f);
-	glBegin(GL_POLYGON);
-	glVertex3f(0.05, 0.05, 0.0);
-	glVertex3f(0.05, 0.95, 0.0);
-	glVertex3f(0.95, 0.95, 0.0);
-	glVertex3f(0.95, 0.05, 0.0);
-	glEnd();
+	if (ColorMenu == 11) glColor3f(1.0f, 0.0f, 0.0f);
+	else if (ColorMenu == 12) glColor3f(0.0f, 1.0f, 0.0f);
+	else if (ColorMenu == 13) glColor3f(0.0f, 0.0f, 1.0f);
+	else glColor3f(1.0f, 1.0f, 0.0f);
 
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glBegin(GL_POLYGON);
-	glVertex3f(TopLeftX / (float)NewWi, (NewHe - TopLeftY) / (float)NewHe, 0.0);
-	glVertex3f(TopLeftX / (float)NewWi, (NewHe - BottomRightY) / (float)NewHe, 0.0);
-	glVertex3f(BottomRightX / (float)NewWi, (NewHe - BottomRightY) / (float)NewHe, 0.0);
-	glVertex3f(BottomRightX / (float)NewWi, (NewHe - TopLeftY) / (float)NewHe, 0.0);
-	glEnd();
+	if (sizeMenu == 21) { sizeValue += 0.1; sizeMenu = 0; }
+	else if (sizeMenu == 22) { sizeValue -= 0.1; sizeMenu = 0; }
+
+	if (shapeMenu == 1) glutSolidSphere(sizeValue, 8, 5);
+	else if (shapeMenu == 2) glutSolidTorus(0.1, sizeValue, 50, 10);
+	else { glBegin(GL_POLYGON);
+					glVertex3f(-sizeValue, -sizeValue, 0.0);
+					glVertex3f(sizeValue, -sizeValue, 0.0);
+					glVertex3f(sizeValue, sizeValue, 0.0);
+					glVertex3f(-sizeValue, sizeValue, 0.0);
+					glEnd();
+	}
 	glFlush();
+}
+void MyReshape(int NewWidth, int NewHeight) { }
 
+void MyKeyboard(unsigned char KeyPressed, int X, int Y) {}
+
+void MySpecial(int key, int X, int Y) {}
+
+void MyMouseClick(GLint Button, GLint State, GLint X, GLint Y) {}
+
+void MyMouseMove(GLint X, GLint Y) {}
+
+void MyIdle() {
 }
 
-void MyReshape(int NW, int NH) {
-	glViewport(0, 0, NW, NH);
-	NewWi = NW; NewHe = NH;
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
-	glMatrixMode(GL_MODELVIEW); glLoadIdentity();
-}
+void MyTimer(int Value) {}
 
-void MyMouseClick(GLint Button, GLint State, GLint X, GLint Y) {
-	if (Button == GLUT_LEFT_BUTTON && State == GLUT_DOWN) {
-		TopLeftX = X; TopLeftY = Y;
-		printf("click-> %d %d \n", X, Y);
-		temp = 1;
-	}
-	else
-		temp = 0;
-}
+void MenuProc(int entryID) {
+	printf("선택한 메뉴=>%d\n", entryID);
+	if (entryID == 3) exit(0);
+	else if (entryID >= 20) sizeMenu = entryID;
+	else if (entryID >= 10) ColorMenu = entryID;
+	else shapeMenu = entryID;
+	glutPostRedisplay();
+}void MenuFunc() {
+	GLint MySubMenuSize = glutCreateMenu(MenuProc);
+	glutAddMenuEntry("big", 21); glutAddMenuEntry("small", 22);
 
-void MyMouseMove(GLint X, GLint Y) {
-	if (temp == 1 ) {
-		BottomRightX = X; BottomRightY = Y;
-		printf("move-> %d %d \n", X, Y);
-		glutPostRedisplay();
-	}
-	
-}
+	GLint MySubMenuID = glutCreateMenu(MenuProc);
+	glutAddMenuEntry("red", 11); glutAddMenuEntry("green", 12);
+	glutAddMenuEntry("blue", 13);
 
-void initUse() {
-	glClearColor(1.0, 1.0, 1.0, 1.0);
-	printf("학과 학번 이름 \n 날짜: ~~ \n 주제: ~~");
+	GLint MyMainMenuID = glutCreateMenu(MenuProc);
+	glutAddMenuEntry("Draw Sphere", 1);
+	glutAddMenuEntry("Draw Torue", 2);
+	glutAddSubMenu("Color", MySubMenuID);
+	glutAddSubMenu("Size", MySubMenuSize);
+	glutAddMenuEntry("Exit", 3);
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
 
 }
 
 int main(int argc, char** argv) {
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_SINGLE);
-	glutInitWindowSize(700, 700);
+	glutInitDisplayMode(GLUT_RGB);
+	glutInitWindowSize(500, 500);
+	glutInitWindowPosition(100, 200);
 	glutCreateWindow("제목");
-	initUse();
+	glClearColor(0.5, 0.5, 0.5, 1.0);
 
 	glutDisplayFunc(MyDisplay);
-	glutReshapeFunc(MyReshape);
-	glutMouseFunc(MyMouseClick);
-	glutMotionFunc(MyMouseMove);
+	MenuFunc();
 	glutMainLoop();
 	return 0;
 }

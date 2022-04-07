@@ -1,13 +1,17 @@
-날 짜 : 2022.03.29
+날 짜 : 2022.04.07
 작성자 : 강대한
-주 제 : 콜백 관련 함수
+주 제 : Menu Callback
 
-소스 분석 순서
-1. main + 사용자 함수
-2. reshape
-3. display
-4.etc
-glViewport() (0, 0)왼쪽하단 보여주는 영역 ex) NW/4, NH/4 4/1영역만 보여줌
-glMatrixMode() 좌표변경선언 Projection : 전체 이동 ModelView : 객체 개별 이동
-glLoadIdentity() glMatrixMode()뒤에 반드시 필요 좌표값 초기화
-glOrtho()  좌표값 설정
+glMatrixMode(), glLoadIdentity, glOrtho() : reshape, display callback함수에서만 사용 가능
+27 = esc(공통) : keyBoard에서 인식 special X
+glutGetModifiers()
+
+MenuCallback
+MenuFunc -> 일반함수 : 메뉴에 글자, 메뉴 자체 만들기(메뉴 선택시 메뉴콜백 호출)
+Menu in Graphics = 마우스 우클릭
+glutAttachMenu(int ButtonRight)
+glutAddSubMenu() : 메뉴 선택시 나타나는 하위 메뉴, 메뉴 자체보다 먼저 만들어야 함
+glutCreateMenu() : 메인 메뉴, 메뉴 콜백 등록
+glutAddMenuEntry(char menuName[], int menuSign) : 항목 이름 등록
+Tip 
+메뉴 숫자 지정 메인 : 1, 2, 3 하위 메뉴 : 11(1-1), 12, 13... / 21, 22, 23
