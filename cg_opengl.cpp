@@ -66,6 +66,7 @@ void MenuProc(int entryID) {
 	glutAddSubMenu("Size", MySubMenuSize);
 	glutAddMenuEntry("Exit", 3);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
+	glutAddMenuEntry("?", 4);
 
 }
 
