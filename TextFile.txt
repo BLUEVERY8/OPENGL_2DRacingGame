@@ -1,54 +1,7 @@
 날 짜 : 2022.04.07
 작성자 : 강대한
 주 제 : 기본개념 정리
+glPerspective(시야각, 종횡비(w,h), near, far) : 어느 범위만 볼 것인지 지정, 시야각이 커지면 보이는 영역 커짐
+GL_PROJECTION : 전체좌표 설정, GL_MODELVIEW : 모델좌표 설정
 
-opengl
-프로그래밍 언어 x
-그래픽 지원 오픈소스 라이브러리
-하드웨어와 사용자 연결
-모든 프로그래밍 언어
-
-Reshape Callback
-- 처음 Window를 열 때
-- Window의 위치를 이동
-- Window의 크기를 변경
-- 활성화되었을 때
-display callback
-처음에 reshape callback 다음으로
-main()에서 콜백 호출
-활성화 되었을 때
-keyboard
-char형태로 입력
-special
-int 형태로 입력
-mouse
-클릭시
-mouse move
-클릭 후 움직였을 때
-idle
-cpu가 쉴 때
-timer
-시간 설정 가능
-일정시간 간격만큼
-
-special : f1~12, insert, home, pageup, pagedown, end, 방향키
-keyboard : special키 제외 모든 키
-
-모델좌표 : 각각의 물체의 중심, 물체별로 부여
-전역좌표 : Default = 그래픽창 중심
-시점좌표 : 바라보는 시점에 따라 바뀌는 좌표
-절단좌표 : 시점으로부터 보이지 않는 물체
-정규좌표 : Default = 그래픽창 중심 glortho(left, right, bottom, top, nearVal, farVal) : 보여지는 범위 설정
-화면 좌표 : 모니터에 따라 달라지는 좌표 중심값 변경 불가, 좌측 상단이 중심
-
-뷰포트 : 그래픽창에 보여주고 싶은 영역 Default = 전체, (0, 0) = 좌측 하단 glViewport(시작점(x, y), 너비, 높이)
-왜곡 방지 : 가로 세로의 비율을 같게 하는 것
-
-왜곡 방지 reshape 
-glViewport()
-GLfloat WidthFactor = NewWidth / 윈도우 너비
-GLfloat HeightFactor = NewHeight / 윈도우높이
-
-glMatrixMode(GL_PROJECTION); glLoadIdentity();
-glOrtho(-1.0*WidthFactor, 1.0*WidthFactor, -1.0*HeightFactor, 1.0*HeightFactor, -1.0, 1.0);
-glMatrixMode(GL_MODELVIEW); glLoadIdentity();
+gluLookAt(카메라 위치(x, y, z), 카메라 시점(x, y, z), 카메라 기울기(x, y, z))

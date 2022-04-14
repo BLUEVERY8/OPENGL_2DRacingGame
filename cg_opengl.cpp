@@ -6,30 +6,37 @@
 #include <glut.h> 
 #include <glu.h>
 #include <gl.h> 
-int menuValue, sizeMenu, ColorMenu, shapeMenu;
-double sizeValue = 0.5f;
+
 void MyDisplay() {
 	glClear(GL_COLOR_BUFFER_BIT);
-	if (ColorMenu == 11) glColor3f(1.0f, 0.0f, 0.0f);
-	else if (ColorMenu == 12) glColor3f(0.0f, 1.0f, 0.0f);
-	else if (ColorMenu == 13) glColor3f(0.0f, 0.0f, 1.0f);
-	else glColor3f(1.0f, 1.0f, 0.0f);
-
-	if (sizeMenu == 21) { sizeValue += 0.1; sizeMenu = 0; }
-	else if (sizeMenu == 22) { sizeValue -= 0.1; sizeMenu = 0; }
-
-	if (shapeMenu == 1) glutSolidSphere(sizeValue, 8, 5);
-	else if (shapeMenu == 2) glutSolidTorus(0.1, sizeValue, 50, 10);
-	else { glBegin(GL_POLYGON);
-					glVertex3f(-sizeValue, -sizeValue, 0.0);
-					glVertex3f(sizeValue, -sizeValue, 0.0);
-					glVertex3f(sizeValue, sizeValue, 0.0);
-					glVertex3f(-sizeValue, sizeValue, 0.0);
-					glEnd();
-	}
+	glColor3f(0.8f, 0.5f, 1.0f);
+	glBegin(GL_POLYGON);
+	glVertex3f(0.0, -0.45, 0.0);
+	glVertex3f(0.55, -0.75, 0.0);
+	glVertex3f(0.4, -0.25, 0.0);
+	glVertex3f(0.75, 0.0, 0.0);
+	glVertex3f(0.25, 0.2, 0.0);
+	glVertex3f(0.0, 0.65, 0.0);
+	glVertex3f(-0.25, 0.2, 0.0);
+	glVertex3f(-0.75, 0.0, 0.0);
+	glVertex3f(-0.4, -0.25, 0.0);
+	glVertex3f(-0.55, -0.75, 0.0);
+	glEnd();
 	glFlush();
 }
-void MyReshape(int NewWidth, int NewHeight) { }
+void MyReshape(int NewWidth, int NewHeight) {
+	glViewport(0, 0, (GLsizei)NewWidth, (GLsizei)NewHeight);
+
+	glMatrixMode(GL_PROJECTION); glLoadIdentity();
+	gluPerspective(30, (GLdouble)NewWidth / (GLdouble)NewHeight, 1.0, 50.0);
+	
+
+	glMatrixMode(GL_MODELVIEW); glLoadIdentity();
+
+	gluLookAt(-5.0, -5.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+
+	glutPostRedisplay();
+}
 
 void MyKeyboard(unsigned char KeyPressed, int X, int Y) {}
 
@@ -44,31 +51,8 @@ void MyIdle() {
 
 void MyTimer(int Value) {}
 
-void MenuProc(int entryID) {
-	printf("선택한 메뉴=>%d\n", entryID);
-	if (entryID == 3) exit(0);
-	else if (entryID >= 20) sizeMenu = entryID;
-	else if (entryID >= 10) ColorMenu = entryID;
-	else shapeMenu = entryID;
-	glutPostRedisplay();
-}void MenuFunc() {
-	GLint MySubMenuSize = glutCreateMenu(MenuProc);
-	glutAddMenuEntry("big", 21); glutAddMenuEntry("small", 22);
-
-	GLint MySubMenuID = glutCreateMenu(MenuProc);
-	glutAddMenuEntry("red", 11); glutAddMenuEntry("green", 12);
-	glutAddMenuEntry("blue", 13);
-
-	GLint MyMainMenuID = glutCreateMenu(MenuProc);
-	glutAddMenuEntry("Draw Sphere", 1);
-	glutAddMenuEntry("Draw Torue", 2);
-	glutAddSubMenu("Color", MySubMenuID);
-	glutAddSubMenu("Size", MySubMenuSize);
-	glutAddMenuEntry("Exit", 3);
-	glutAttachMenu(GLUT_RIGHT_BUTTON);
-	glutAddMenuEntry("?", 4);
-
-}
+void MenuProc(int entryID) {}
+void MenuFunc() {}
 
 int main(int argc, char** argv) {
 	glutInit(&argc, argv);
@@ -79,6 +63,7 @@ int main(int argc, char** argv) {
 	glClearColor(0.5, 0.5, 0.5, 1.0);
 
 	glutDisplayFunc(MyDisplay);
+	glutReshapeFunc(MyReshape);
 	MenuFunc();
 	glutMainLoop();
 	return 0;
