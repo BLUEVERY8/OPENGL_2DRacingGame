@@ -1,5 +1,5 @@
 일시 : 2022.04.28
 주제 : 좌표 이동
-glScalef(x, y, z) : 확대 비율
+glScalef(x, y, z) : 정규좌표 확대, 축소
 glTranslatef(x, y, z) : 정규좌표의 중심좌표 이동
 glRotatef(회전각도f, x, y, z) : 중심좌표 회전
