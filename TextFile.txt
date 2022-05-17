@@ -1,5 +1,17 @@
-일시 : 2022.04.28
-주제 : 좌표 이동
-glScalef(x, y, z) : 정규좌표 확대, 축소
-glTranslatef(x, y, z) : 정규좌표의 중심좌표 이동
-glRotatef(회전각도f, x, y, z) : 중심좌표 회전
+일시 : 2022.05.17
+주제 : 동적 객체 생성
+
+GLUquadricObj *pObj;
+pObj = gluNewQuadric(); //동적 객체 생성, 여러 객체를 하나로
+gluDeleteQuadric(GLUquadricObj *obj); //메모리 정리
+
+gluQuadricDrawStyle(GLUquadric *quadObject, GLUquadric drawstyle)
+
+void gluQuadricNormals(pObj, GLU_SMOOTH)
+
+void gluQuadricOrientation( GLUquadric *quadObject, GLenum orientation)
+
+void gluQuadricTexture(GLUquadric *, GLbe Text)
+
+void gluPartialDisk()
+glEnable()
