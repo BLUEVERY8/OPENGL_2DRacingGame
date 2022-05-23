@@ -247,8 +247,8 @@ int main(int argc, char* argv[])
 	glutKeyboardFunc(myKey);
 	glutTimerFunc(1000, myTimer, 0);
 
-	
+
 	glutMainLoop();
-	
+
 	return 0;
 }
