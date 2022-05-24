@@ -1,17 +1,4 @@
 일시 : 2022.05.17
-주제 : 동적 객체 생성
+주제 : 시점 변환
 
-GLUquadricObj *pObj;
-pObj = gluNewQuadric(); //동적 객체 생성, 여러 객체를 하나로
-gluDeleteQuadric(GLUquadricObj *obj); //메모리 정리
-
-gluQuadricDrawStyle(GLUquadric *quadObject, GLUquadric drawstyle)
-
-void gluQuadricNormals(pObj, GLU_SMOOTH)
-
-void gluQuadricOrientation( GLUquadric *quadObject, GLenum orientation)
-
-void gluQuadricTexture(GLUquadric *, GLbe Text)
-
-void gluPartialDisk()
-glEnable()
+gluLookAt(GLdouble(x,y,z), GLdouble(x,y,z), GLdouble(x,y,z)) : 카메라의 위치, 카메라의 초점,  카메라의 기울기

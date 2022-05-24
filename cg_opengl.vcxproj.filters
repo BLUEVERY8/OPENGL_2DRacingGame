@@ -18,8 +18,5 @@
     <ClCompile Include="cg_opengl.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="base_source.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
