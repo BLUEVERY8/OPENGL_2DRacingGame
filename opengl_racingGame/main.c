@@ -6,10 +6,10 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 
-
-int isGaming = 0, FPS = 50, score = 0;
+int isGaming = 0, FPS = 50, score = 0, speed = 1, i=0, boosterFlag = 0, isBoosting=0,randomBooster;
 
 int roadDivTopMost = 0;
 int roadDivTop = 0;
@@ -19,12 +19,11 @@ int roadDivBtm = 0;
 int lrIndex = 0;
 
 //Car Coming
-int car1 = 0;
-int lrIndex1 = 0;
-int car2 = +35;
-int lrIndex2 = 0;
-int car3 = +70;
-int lrIndex3 = 0;
+int coin1 = 0;
+int coinIdx1 = 0;
+int booster = 0;
+int boosterIdx = 0;
+
 
 const int font1 = (int)GLUT_BITMAP_TIMES_ROMAN_24;
 const int font2 = (int)GLUT_BITMAP_HELVETICA_18;
@@ -78,7 +77,7 @@ void startGame()
 	glVertex2f(52, roadDivTop + 100);
 	glVertex2f(52, roadDivTop + 80);
 	glEnd();
-	roadDivTop--;
+	roadDivTop -= speed;
 	if (roadDivTop < -100) {
 		roadDivTop = 20;
 		score++;
@@ -93,7 +92,7 @@ void startGame()
 
 
 
-	roadDivMdl--;
+	roadDivMdl -= speed;
 	if (roadDivMdl < -60) {
 		roadDivMdl = 60;
 		score++;
@@ -106,7 +105,7 @@ void startGame()
 	glVertex2f(52, roadDivBtm + 20);
 	glVertex2f(52, roadDivBtm + 0);
 	glEnd();
-	roadDivBtm--;
+	roadDivBtm -= speed;
 	if (roadDivBtm < -20) {
 		roadDivBtm = 100;
 		score++;
@@ -152,6 +151,61 @@ void startGame()
 	glVertex2f(lrIndex + 30, 1);
 	glEnd();
 
+	//코인(점수증가)
+	glColor3f(0.0, 0.0, 0.0);
+	glBegin(GL_POLYGON);
+	glVertex2f(coinIdx1 + 26 - 2, coin1 + 100 - 4);
+	glVertex2f(coinIdx1 + 26 - 2, coin1 + 100 - 6);
+	glVertex2f(coinIdx1 + 30 + 2, coin1 + 100 - 6);
+	glVertex2f(coinIdx1 + 30 + 2, coin1 + 100 - 4);
+	glEnd();
+	coin1 -= speed;
+	if ((abs(lrIndex - coinIdx1) < 8) && (coin1 + 100 < 10)) {
+		score += 3;
+		coinIdx1 = rand() % 45;
+		coin1 = 0;
+	}
+	else if (coin1 < -100)
+	{
+		coinIdx1 = rand() % 45;
+		coin1 = 0;
+	}
+	
+	//부스터(속도 증가)
+	if (isBoosting == 0)
+	{
+		randomBooster = rand() % 20;
+	}
+	if (randomBooster == 8)
+	{
+		isBoosting = 1;
+		glColor3f(1.0, 1.0, 1.0);
+		glBegin(GL_POLYGON);
+		glVertex2f(boosterIdx + 26 - 2, booster + 100 - 4);
+		glVertex2f(boosterIdx + 26 - 2, booster + 100 - 6);
+		glVertex2f(boosterIdx + 30 + 2, booster + 100 - 6);
+		glVertex2f(boosterIdx + 30 + 2, booster + 100 - 4);
+		glEnd();
+		if (speed == 1)
+			booster--;
+		else
+			booster -= speed;
+		if ((abs(lrIndex - boosterIdx) < 8) && (booster + 100 < 10)) {
+			speed = 3;
+			boosterIdx = rand() % 45;
+			booster = 0;
+			isBoosting = 0;
+			boosterFlag = 1;
+		}
+		else if (booster < -100)
+		{
+			boosterIdx = rand() % 45;
+			booster = 0;
+			isBoosting = 0;
+		}
+	}
+	
+	
 }
 void startMenu()
 {
@@ -191,10 +245,33 @@ void myDisplay()
 	glFlush();
 	glutSwapBuffers();
 }
-void myTimer(int)
+void myTimer(int value)
 {
-	glutPostRedisplay();
-	glutTimerFunc(1000 / FPS, myTimer, 0);
+	if (value == 0)
+	{
+		i++;
+		if (i == 500)
+			speed = 1;
+		if (boosterFlag == 1)
+		{
+			boosterFlag = 0;
+			glutPostRedisplay();
+			glutTimerFunc(1000 / FPS, myTimer, 1);
+		}
+		else
+		{
+			glutPostRedisplay();
+			glutTimerFunc(1000 / FPS, myTimer, 0);
+		}		
+	}
+	else if (value == 1)
+	{
+		i = 0;
+		glutPostRedisplay();
+		glutTimerFunc(1000 / FPS, myTimer, 0);
+		
+	}
+	
 }
 
 void mySpecialKey(int key, int x, int y)
@@ -222,8 +299,12 @@ void myKey(unsigned char key, int x, int y)
 {
 	if (isGaming == 0 || isGaming == 2)
 	{
-		if (key == 32)
+		if (key == 32) 
+		{
+			coinIdx1 = rand() % 45;
 			isGaming = 1;
+		}
+			
 	}
 	glutPostRedisplay();
 }
@@ -241,7 +322,7 @@ int main(int argc, char* argv[])
 	glutInitWindowPosition(200, 20);
 	glutCreateWindow("The racer");
 	init();
-
+	srand((unsigned int)time(NULL));
 	glutDisplayFunc(myDisplay);
 	glutSpecialFunc(mySpecialKey);
 	glutKeyboardFunc(myKey);
