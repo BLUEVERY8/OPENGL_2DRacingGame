@@ -10,6 +10,7 @@
 
 //게임화면상태, 게임 속도, 점수, 차량 스피드, 부스터 지속시간, 부스터 상태, 부스터 등장, 부스터 확률
 int isGaming = 0, FPS = 50, score = 0, speed = 1, i=0, boosterFlag = 0, isBoosting=0, randomBooster;
+int over = 0;
 // 맵
 int roadDivTopMost = 0;
 int roadDivTop = 0;
@@ -17,6 +18,14 @@ int roadDivMdl = 0;
 int roadDivBtm = 0;
 //차량 x 인덱스
 int lrIndex = 0;
+
+//장애물 차량 , 장애물 차량 인덱스
+int comingCar1 = 0;
+int cCar1Index = 0;
+int comingCar2 = 0;
+int cCar2Index = 0;
+int comingCar3 = 0;
+int cCar3Index = 0;
 
 //Car Coming
 int coin1 = 0, coin2 = 10, coin3 = 20, coin4 = 30, coin5 = 40;
@@ -151,6 +160,110 @@ void startGame()
 	glVertex2f(lrIndex + 30, 8);
 	glVertex2f(lrIndex + 30, 1);
 	glEnd();
+
+	// 장애물 차량 1번
+	glColor3f(0.000, 0.000, 0.000);
+    glBegin(GL_POLYGON);
+    glVertex2f(cCar1Index + 26 - 2, comingCar1 + 100 - 4);
+    glVertex2f(cCar1Index + 26 - 2, comingCar1 + 100 - 6);
+    glVertex2f(cCar1Index + 30 + 2, comingCar1 + 100 - 6);
+    glVertex2f(cCar1Index + 30 + 2, comingCar1 + 100 - 4);
+    glEnd();
+    glColor3f(0.000, 0.000, 0.000);
+    glBegin(GL_POLYGON);
+    glVertex2f(cCar1Index + 26 - 2, comingCar1 + 100);
+    glVertex2f(cCar1Index + 26 - 2, comingCar1 + 100 - 2);
+    glVertex2f(cCar1Index + 30 + 2, comingCar1 + 100 - 2);
+    glVertex2f(cCar1Index + 30 + 2, comingCar1 + 100);
+    glEnd();
+    glColor3f(1.000, 0.000, 0.000);
+    glBegin(GL_POLYGON);
+    glVertex2f(cCar1Index + 26, comingCar1 + 100);
+    glVertex2f(cCar1Index + 26, comingCar1 + 100 - 7);
+    glVertex2f(cCar1Index + 28, comingCar1 + 100 - 9);
+    glVertex2f(cCar1Index + 30, comingCar1 + 100 - 7);
+    glVertex2f(cCar1Index + 30, comingCar1 + 100);
+    glEnd();
+    comingCar1--;
+    if (comingCar1 < -100) {
+        comingCar1 = 0;
+        cCar1Index = lrIndex;
+    }
+    // 장애물 차량 1번에 부딪혔는지 체크
+    if ((abs(lrIndex - cCar1Index) < 8) && (comingCar1 + 100 < 10)) {
+        isGaming = 0;
+        over = 1;
+
+    }
+    // 장애물 차량 2번
+    glColor3f(0.000, 0.000, 0.000);
+    glBegin(GL_POLYGON);
+    glVertex2f(cCar2Index + 26 - 2, comingCar2 + 100 - 4);
+    glVertex2f(cCar2Index + 26 - 2, comingCar2 + 100 - 6);
+    glVertex2f(cCar2Index + 30 + 2, comingCar2 + 100 - 6);
+    glVertex2f(cCar2Index + 30 + 2, comingCar2 + 100 - 4);
+    glEnd();
+    glColor3f(0.000, 0.000, 0.000);
+    glBegin(GL_POLYGON);
+    glVertex2f(cCar2Index + 26 - 2, comingCar2 + 100);
+    glVertex2f(cCar2Index + 26 - 2, comingCar2 + 100 - 2);
+    glVertex2f(cCar2Index + 30 + 2, comingCar2 + 100 - 2);
+    glVertex2f(cCar2Index + 30 + 2, comingCar2 + 100);
+    glEnd();
+    glColor3f(0.294, 0.000, 0.510);
+    glBegin(GL_POLYGON);
+    glVertex2f(cCar2Index + 26, comingCar2 + 100);
+    glVertex2f(cCar2Index + 26, comingCar2 + 100 - 7);
+    glVertex2f(cCar2Index + 28, comingCar2 + 100 - 9);
+    glVertex2f(cCar2Index + 30, comingCar2 + 100 - 7);
+    glVertex2f(cCar2Index + 30, comingCar2 + 100);
+    glEnd();
+    comingCar2--;
+    if (comingCar2 < -100) {
+        comingCar2 = 0;
+        cCar2Index = lrIndex;
+    }
+    // 장애물 차량 2번에 부딪혔는지 체크
+    if ((abs(lrIndex - cCar2Index) < 8) && (comingCar2 + 100 < 10)) {
+        isGaming = 0;
+        over = 1;
+    }
+
+
+    // 장애물 차량 3번
+    glColor3f(0.000, 0.000, 0.000);
+    glBegin(GL_POLYGON);
+    glVertex2f(cCar3Index + 26 - 2, comingCar3 + 100 - 4);
+    glVertex2f(cCar3Index + 26 - 2, comingCar3 + 100 - 6);
+    glVertex2f(cCar3Index + 30 + 2, comingCar3 + 100 - 6);
+    glVertex2f(cCar3Index + 30 + 2, comingCar3 + 100 - 4);
+    glEnd();
+    glColor3f(0.000, 0.000, 0.000);
+    glBegin(GL_POLYGON);
+    glVertex2f(cCar3Index + 26 - 2, comingCar3 + 100);
+    glVertex2f(cCar3Index + 26 - 2, comingCar3 + 100 - 2);
+    glVertex2f(cCar3Index + 30 + 2, comingCar3 + 100 - 2);
+    glVertex2f(cCar3Index + 30 + 2, comingCar3 + 100);
+    glEnd();
+    glColor3f(1.000, 0.271, 0.000);
+    glBegin(GL_POLYGON);
+    glVertex2f(cCar3Index + 26, comingCar3 + 100);
+    glVertex2f(cCar3Index + 26, comingCar3 + 100 - 7);
+    glVertex2f(cCar3Index + 28, comingCar3 + 100 - 9);
+    glVertex2f(cCar3Index + 30, comingCar3 + 100 - 7);
+    glVertex2f(cCar3Index + 30, comingCar3 + 100);
+    glEnd();
+    comingCar3--;
+    if (comingCar3 < -100) {
+        comingCar3 = 0;
+        cCar3Index = lrIndex;
+    }
+	// 장애물 차량 3번에 부딪혔는지 체크
+    if ((abs(lrIndex - cCar3Index) < 8) && (comingCar3 + 100 < 10)) {
+        isGaming = 0;
+        over = 1;
+
+    }
 
 	//코인(점수증가)
 	glColor3f(0.0, 0.0, 0.0);
@@ -291,33 +404,124 @@ void startGame()
 	
 	
 }
+
+void NewMenu() {
+	// 게임이 끝났을 때 나오는 메뉴
+	if (over == 1) {
+		glColor3f(0.098, 0.098, 0.439);
+		glBegin(GL_POLYGON);
+		glVertex2f(32 - 4, 35);
+		glVertex2f(32 + 46, 35);
+		glVertex2f(32 + 46, 15);
+		glVertex2f(32 - 4, 15);
+		glEnd();
+
+		glColor3f(0.0, 0.0, 0.0);
+		glBegin(GL_POLYGON);
+		glVertex2f(32 - 4, 35);
+		glVertex2f(32 + 46, 35);
+		glVertex2f(32 + 46, 34);
+		glVertex2f(32 - 4, 34);
+		glEnd();
+		glBegin(GL_POLYGON);
+		glVertex2f(32 + 45, 35);
+		glVertex2f(32 + 46, 35);
+		glVertex2f(32 + 46, 15);
+		glVertex2f(32 + 45, 15);
+		glEnd();
+		glBegin(GL_POLYGON);
+		glVertex2f(32 - 4, 16);
+		glVertex2f(32 + 46, 16);
+		glVertex2f(32 + 46, 15);
+		glVertex2f(32 - 4, 15);
+		glEnd();
+		glBegin(GL_POLYGON);
+		glVertex2f(32 - 4, 35);
+		glVertex2f(32 - 5, 35);
+		glVertex2f(32 - 5, 15);
+		glVertex2f(32 - 4, 15);
+		glEnd();
+		glColor3f(1.0, 0.0, 0.0);
+		renderBitmapString(15, 70, (void*)font2, "GAME OVER");
+		glColor3f(1.0, 0.0, 0.0);
+		sprintf(buffer2, "Score : %d", score);
+		renderBitmapString(15, 60, (void*)font2, buffer2);
+		glColor3f(0.0f, 0.0f, 0.0f);
+		renderBitmapString(15, 50, (void*)font2, "If you want to restart game Press space bar");
+		glColor3f(1.0f, 1.0f, 1.0f);
+		renderBitmapString(40, 85, (void*)font2, "The racer");
+
+		glColor3f(0.0f, 1.0f, 0.0f);
+		renderBitmapString(30, 30, (void*)font2, "Press SPACE to START");
+
+		glColor3f(1.0f, 1.0f, 1.0f);
+		renderBitmapString(30, 20, (void*)font3, "Press RIGHT to turn Right");
+		renderBitmapString(30, 18, (void*)font3, "Press LEFT to turn Left");
+
+	}
+	// 기본 메뉴 창
+	else {
+		glColor3f(0.098, 0.098, 0.439);
+		glBegin(GL_POLYGON);
+		glVertex2f(28, 65);
+		glVertex2f(78, 65);
+		glVertex2f(78, 45);
+		glVertex2f(28, 45);
+		glEnd();
+
+		glColor3f(0.0, 0.0, 0.0);
+		glBegin(GL_POLYGON);
+		glVertex2f(28, 65);
+		glVertex2f(78, 65);
+		glVertex2f(78, 64);
+		glVertex2f(28, 64);
+		glEnd();
+		glBegin(GL_POLYGON);
+		glVertex2f(77, 65);
+		glVertex2f(78, 65);
+		glVertex2f(78, 45);
+		glVertex2f(77, 45);
+		glEnd();
+		glBegin(GL_POLYGON);
+		glVertex2f(28, 46);
+		glVertex2f(78, 46);
+		glVertex2f(78, 45);
+		glVertex2f(28, 45);
+		glEnd();
+		glBegin(GL_POLYGON);
+		glVertex2f(28, 65);
+		glVertex2f(27, 65);
+		glVertex2f(27, 45);
+		glVertex2f(28, 45);
+		glEnd();
+
+
+		glColor3f(1.0f, 1.0f, 0.0f);
+		renderBitmapString(40, 85, (void*)font1, "The racer");
+
+		glColor3f(0.0f, 1.0f, 0.0f);
+		renderBitmapString(30, 60, (void*)font2, "Press SPACE to START");
+
+		glColor3f(1.0f, 1.0f, 1.0f);
+		renderBitmapString(30, 50, (void*)font3, "Press RIGHT to turn Right");
+		renderBitmapString(30, 48, (void*)font3, "Press LEFT to turn Left");
+	}
+}
+
+
+
 void startMenu()
 {
 	//시작 화면
-	if (isGaming == 0)
-	{
-		glColor3f(1.000, 1.000, 0.000);
-		renderBitmapString(30, 80, (void*)font1, "The racer");
-
-		glColor3f(0.000, 1.000, 0.000);
-		renderBitmapString(30, 50 + 10, (void*)font2, "Press SPACE to START");
-
-		glColor3f(1.000, 1.000, 1.000);
-		renderBitmapString(30, 50 - 10 + 10, (void*)font3, "Press RIGHT to turn Right");
-		renderBitmapString(30, 50 - 12 + 10, (void*)font3, "Press LEFT to turn Left");
-	}
+	if (isGaming == 1)
+		startGame();
 	//종료 화면
-	else
-	{
-		glColor3f(1.0, 0.0, 0.0);
-		renderBitmapString(35, 50, (void*)font1, "GAME OVER");
-		glColor3f(1.0, 0.0, 0.0);
-		sprintf(buffer2, "Score : %d", score);
-		renderBitmapString(33, 66, (void*)font1, buffer2);
-		glColor3f(1.0, 0.0, 0.0);
-		renderBitmapString(30, 40, (void*)font1, "If you want to restart game Press space bar");
-	}
+	else 
+		NewMenu();
+
 }
+
+
 void myDisplay()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -394,6 +598,7 @@ void myKey(unsigned char key, int x, int y)
 			coinIdx4 = rand() % 45;
 			coinIdx5 = rand() % 45;
 			isGaming = 1;
+			over = 0;
 		}
 			
 	}
