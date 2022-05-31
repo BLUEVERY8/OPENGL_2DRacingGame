@@ -1,8 +1,6 @@
 #pragma warning (disable:4996)
-#include <windows.h>
-#include <glut.h>
-#include <glu.h>
-#include <gl.h>
+#include <unistd.h> //윈도우는 windows.h
+#include <GLUT/glut.h> //윈도우는 glut.h, glu.h, gl.h
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
