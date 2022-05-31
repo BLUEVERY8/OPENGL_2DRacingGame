@@ -1,7 +1,8 @@
 #pragma warning (disable:4996)
-#include <unistd.h>
-#include <GLUT/glut.h>
-
+#include <windows.h>
+#include <glut.h>
+#include <glu.h>
+#include <gl.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
