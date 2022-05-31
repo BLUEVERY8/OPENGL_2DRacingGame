@@ -1,0 +1,8 @@
+일시 : 2022.05.17
+주제 : 조명
+
+glMaterialfv() : 모델 좌표값, 물체에 대한 성질(색, 질감)을 입히는 것
+GL_CONSTANT_ATTENUATION : 거리에 따른 빛의 감쇠
+GL_SHININESS : 빛의 반사 유무
+GL_SPOT_CUTOFF : 빛이 비치는 영역 조절
+GL_SPOT_CUTOFF : 지수 함수에 의해 밝기 조절

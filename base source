@@ -1,0 +1,41 @@
+[33mcommit d70d0758c649220fc518aad2d76f51a2558a9403[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Bluevery8 <bluevery818@gmail.com>
+Date:   Tue Mar 29 12:26:40 2022 +0900
+
+    3.29 Idle basic source
+
+[33mcommit 3b5cd562aa10f393ef884c1960893039d8e8a3ef[m
+Author: Bluevery8 <bluevery818@gmail.com>
+Date:   Thu Mar 24 10:45:17 2022 +0900
+
+    3.24 Reshape Callback
+
+[33mcommit 6777e70584e15d173dca6c8978d4b63edf7a29fb[m
+Author: Bluevery818 <bluevery818@gmail.com>
+Date:   Tue Mar 22 12:48:38 2022 +0900
+
+    3.22 display control
+
+[33mcommit 46ae3e7a1549c58c1a2ae849b3ce71a86cb2c81d[m
+Author: Bluevery818 <bluevery818@gmail.com>
+Date:   Thu Mar 17 10:51:35 2022 +0900
+
+    3.17
+
+[33mcommit 812c02daf8217572b79e357d61d6db2054319ca8[m
+Author: Bluevery818 <bluevery818@gmail.com>
+Date:   Thu Mar 17 10:09:11 2022 +0900
+
+    base source
+
+[33mcommit 1dd95adb805387c3f2b386d43871fc116b396d74[m
+Author: 915 <915@DESKTOP-FUT2SID>
+Date:   Tue Mar 15 12:13:29 2022 +0900
+
+    초기 커밋.
+
+[33mcommit ccafb2ec66322755e6b72d3605f3b08d5ef1054a[m
+Author: 915 <915@DESKTOP-FUT2SID>
+Date:   Tue Mar 15 12:13:27 2022 +0900
+
+    .gitignore 및 .gitattributes를 추가하세요.
