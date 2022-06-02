@@ -19,8 +19,10 @@ int roadDivBtm = 0;
 int lrIndex = 0;
 
 //Car Coming
-int coin1 = 0, coin2 = 10, coin3 = 20, coin4 = 30, coin5 = 40;
+int coin1 = 0, coin2 = 0, coin3 = 0, coin4 = 0, coin5 = 0;
+int randomcoin = 0;
 int coinIdx1 = 0, coinIdx2 = 0, coinIdx3 = 0, coinIdx4 = 0, coinIdx5 = 0;
+int coin1score = 0, coin2score = 0, coin3score = 0, coin4score = 0, coin5score = 0;
 int booster = 0;
 int boosterIdx = 0;
 
@@ -157,102 +159,136 @@ void startGame()
 	glEnd();
 
 	//코인(점수증가)
+	randomcoin = rand() % 50;
+	//1번 코인
 	glColor3f(0.0, 0.0, 0.0);
 	glBegin(GL_POLYGON);
 	glVertex2f(coinIdx1 + 28, coin1 + 100 - 2);
 	glVertex2f(coinIdx1 + 26, coin1 + 100 - 6);
 	glVertex2f(coinIdx1 + 30, coin1 + 100 - 6);
-
 	glEnd();
 	coin1 -= speed; //코인 이동
 	// 코인 획득 감지
 	if ((abs(lrIndex - coinIdx1) < 8) && (coin1 + 100 < 10)) {
-		score += 3;
-		coinIdx1 = rand() % 45;
-		coin1 = 0;
+		if (coin1score == 0) {
+			score += 3;
+			coin1score = 1;
+		}
+		if (randomcoin == 1) {
+			coinIdx1 = rand() % 45;
+			coin1 = 0;
+			coin1score = 0;
+		}
 	}
 	//코인 재생성
 	else if (coin1 < -100)
 	{
 		coinIdx1 = rand() % 45;
-		coin1 = 0;
+		if (randomcoin == 1)
+			coin1 = 0;
 	}
-
+	//2번 코인
 	glColor3f(0.0, 0.0, 0.0);
 	glBegin(GL_POLYGON);
 	glVertex2f(coinIdx2 + 28, coin2 + 100 - 2);
 	glVertex2f(coinIdx2 + 26, coin2 + 100 - 6);
 	glVertex2f(coinIdx2 + 30, coin2 + 100 - 6);
-
 	glEnd();
 	coin2 -= speed;
 	if ((abs(lrIndex - coinIdx2) < 8) && (coin2 + 100 < 10)) {
-		score += 3;
-		coinIdx2 = rand() % 45;
-		coin2 = 0;
+		if (coin2score == 0) {
+			score += 3;
+			coin2score = 1;
+		}
+		if (randomcoin == 2) {
+			coinIdx1 = rand() % 45;
+			coin2 = 0;
+			coin2score = 0;
+		}
 	}
 	else if (coin2 < -100)
 	{
 		coinIdx2 = rand() % 45;
-		coin2 = 0;
+		if (randomcoin == 2)
+			coin2 = 0;
 	}
-
+	//3번 코인
 	glColor3f(0.0, 0.0, 0.0);
 	glBegin(GL_POLYGON);
 	glVertex2f(coinIdx3 + 28, coin3 + 100 - 2);
 	glVertex2f(coinIdx3 + 26, coin3 + 100 - 6);
 	glVertex2f(coinIdx3 + 30, coin3 + 100 - 6);
-
 	glEnd();
 	coin3 -= speed;
 	if ((abs(lrIndex - coinIdx3) < 8) && (coin3 + 100 < 10)) {
-		score += 3;
-		coinIdx3 = rand() % 45;
-		coin3 = 0;
+		if (coin3score == 0) {
+			score += 3;
+			coin3score = 1;
+		}
+		if (randomcoin == 3) {
+			coinIdx1 = rand() % 45;
+			coin3 = 0;
+			coin3score = 0;
+		}
 	}
 	else if (coin3 < -100)
 	{
 		coinIdx3 = rand() % 45;
-		coin3 = 0;
+		if (randomcoin == 3)
+			coin3 = 0;
 	}
-
+	//4번 코인
 	glColor3f(0.0, 0.0, 0.0);
 	glBegin(GL_POLYGON);
 	glVertex2f(coinIdx4 + 28, coin4 + 100 - 2);
 	glVertex2f(coinIdx4 + 26, coin4 + 100 - 6);
 	glVertex2f(coinIdx4 + 30, coin4 + 100 - 6);
-
 	glEnd();
 	coin4 -= speed;
 	if ((abs(lrIndex - coinIdx4) < 8) && (coin4 + 100 < 10)) {
-		score += 3;
-		coinIdx4 = rand() % 45;
-		coin4 = 0;
+		if (coin4score == 0) {
+			score += 3;
+			coin4score = 1;
+		}
+		if (randomcoin == 4) {
+			coinIdx1 = rand() % 45;
+			coin4 = 0;
+			coin4score = 0;
+		}
 	}
 	else if (coin4 < -100)
 	{
 		coinIdx4 = rand() % 45;
-		coin4 = 0;
+		if (randomcoin == 4)
+			coin4 = 0;
 	}
-
+	//5번 코인
 	glColor3f(0.0, 0.0, 0.0);
 	glBegin(GL_POLYGON);
 	glVertex2f(coinIdx5 + 28, coin5 + 100 - 2);
 	glVertex2f(coinIdx5 + 26, coin5 + 100 - 6);
 	glVertex2f(coinIdx5 + 30, coin5 + 100 - 6);
-
 	glEnd();
 	coin5 -= speed;
 	if ((abs(lrIndex - coinIdx5) < 8) && (coin5 + 100 < 10)) {
-		score += 3;
-		coinIdx5 = rand() % 45;
-		coin5 = 0;
+		if (coin5score == 0) {
+			score += 3;
+			coin5score = 1;
+		}
+		if (randomcoin == 5) {
+			coinIdx1 = rand() % 45;
+			coin5 = 0;
+			coin5score = 0;
+		}
 	}
 	else if (coin5 < -100)
 	{
 		coinIdx5 = rand() % 45;
-		coin5 = 0;
+		if (randomcoin == 5)
+			coin5 = 0;
 	}
+	
+	
 	//부스터(속도 증가)
 	//부스터 확률 설정
 	if (isBoosting == 0)
@@ -429,6 +465,20 @@ void myKey(unsigned char key, int x, int y)
 			isGaming = 0;
 	glutPostRedisplay();
 }
+/*
+void myReshape(int w, int h) {
+	GLfloat fAspect;
+	if (h == 0) h = 1;
+	glViewport(0, 0, w, h);
+	fAspect = (GLfloat)w / (GLfloat)h;
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(35.0f, fAspect, 1.0, 40.0);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glClearColor(0.5, 0.5, 0.5, 1.0);
+}
+*/
 void init()
 {
 	glOrtho(0, 100, 0, 100, -1, 1);
@@ -448,7 +498,7 @@ int main(int argc, char* argv[])
 	glutSpecialFunc(mySpecialKey);
 	glutKeyboardFunc(myKey);
 	glutTimerFunc(1000, myTimer, 0);
-
+	//glutReshapeFunc(myReshape);
 	glutMainLoop();
 
 	return 0;
