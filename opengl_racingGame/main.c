@@ -29,12 +29,7 @@ int randomCar1;
 
 // 라이프
 GLfloat life1 = 1, life2 = 1, life3 = 1;
-<<<<<<< HEAD
-int delay = 8;
-int crash = 0;
-=======
->>>>>>> f238cd9339ff682570a2ff56a479f3683c69e2a7
-
+int lifeIndex = 80;
 // 차량 색
 int carColor;
 // 코인
@@ -71,7 +66,7 @@ void startGame()
     glEnd();
 
     //Road Left Border
-    glColor3f(1.000, 1.000, 1.000);
+    glColor3f(1.0f, 1.0f, 1.0f);
     glBegin(GL_POLYGON);
     glVertex2f(20, 0);
     glVertex2f(20, 100);
@@ -80,7 +75,7 @@ void startGame()
     glEnd();
 
     //Road Right Border
-    glColor3f(1.000, 1.000, 1.000);
+    glColor3f(1.0f, 1.0f, 1.0f);
     glBegin(GL_POLYGON);
     glVertex2f(77, 0);
     glVertex2f(77, 100);
@@ -90,7 +85,7 @@ void startGame()
 
     //Road Middel Border
       //TOP
-    glColor3f(1.000, 1.000, 0.000);
+    glColor3f(1.0f, 1.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(48, roadDivTop + 80);
     glVertex2f(48, roadDivTop + 100);
@@ -102,7 +97,7 @@ void startGame()
         roadDivTop = 20;
         score++;
     }
-    glColor3f(1.000, 1.000, 0.000);
+    glColor3f(1.0f, 1.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(48, roadDivMdl + 40);
     glVertex2f(48, roadDivMdl + 60);
@@ -118,7 +113,7 @@ void startGame()
         score++;
     }
     //Bottom
-    glColor3f(1.000, 1.000, 0.000);
+    glColor3f(1.0f, 1.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(48, roadDivBtm + 0);
     glVertex2f(48, roadDivBtm + 20);
@@ -138,7 +133,6 @@ void startGame()
     glVertex2f(100, 98 - 8);
     glVertex2f(80, 98 - 8);
     glEnd();
-<<<<<<< HEAD
 
     sprintf(buffer1, "SCORE: %d", score);
     glColor3f(0.0f, 1.0f, 0.0f);
@@ -147,41 +141,41 @@ void startGame()
     // 라이프
     glColor3f(life1, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
-    glVertex2f(81.5 + 2.5, 93);
-    glVertex2f(82 + 2.5, 92.5);
-    glVertex2f(83 + 2.5, 93);
-    glVertex2f(83.5 + 2.5, 92.5);
-    glVertex2f(83 + 2.5, 92);
-    glVertex2f(82 + 2.5, 91.5);
-    glVertex2f(81.5 + 2.5, 92);
-    glVertex2f(81 + 2.5, 92.5);
+    glVertex2f(lifeIndex + 4, 93);
+    glVertex2f(lifeIndex + 4.5, 92.5);
+    glVertex2f(lifeIndex + 5.5, 93);
+    glVertex2f(lifeIndex + 6, 92.5);
+    glVertex2f(lifeIndex + 5.5, 92);
+    glVertex2f(lifeIndex + 4.5, 91.5);
+    glVertex2f(lifeIndex + 4, 92);
+    glVertex2f(lifeIndex + 3.5, 92.5);
     glEnd();
 
     glColor3f(life2, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
-    glVertex2f(81.5 + 7.5, 93);
-    glVertex2f(82 + 7.5, 92.5);
-    glVertex2f(83 + 7.5, 93);
-    glVertex2f(83.5 + 7.5, 92.5);
-    glVertex2f(83 + 7.5, 92);
-    glVertex2f(82 + 7.5, 91.5);
-    glVertex2f(81.5 + 7.5, 92);
-    glVertex2f(81 + 7.5, 92.5);
+    glVertex2f(lifeIndex + 9, 93);
+    glVertex2f(lifeIndex + 9.5, 92.5);
+    glVertex2f(lifeIndex + 10.5, 93);
+    glVertex2f(lifeIndex + 11, 92.5);
+    glVertex2f(lifeIndex + 10.5, 92);
+    glVertex2f(lifeIndex + 9.5, 91.5);
+    glVertex2f(lifeIndex + 9, 92);
+    glVertex2f(lifeIndex + 8.5, 92.5);
     glEnd();
 
     glColor3f(life3, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
-    glVertex2f(81.5 + 12.5, 93);
-    glVertex2f(82 + 12.5, 92.5);
-    glVertex2f(83 + 12.5, 93);
-    glVertex2f(83.5 + 12.5, 92.5);
-    glVertex2f(83 + 12.5, 92);
-    glVertex2f(82 + 12.5, 91.5);
-    glVertex2f(81.5 + 12.5, 92);
-    glVertex2f(81 + 12.5, 92.5);
+    glVertex2f(lifeIndex + 14, 93);
+    glVertex2f(lifeIndex + 14.5, 92.5);
+    glVertex2f(lifeIndex + 15.5, 93);
+    glVertex2f(lifeIndex + 16, 92.5);
+    glVertex2f(lifeIndex + 15.5, 92);
+    glVertex2f(lifeIndex + 14.5, 91.5);
+    glVertex2f(lifeIndex + 14, 92);
+    glVertex2f(lifeIndex + 13.5, 92.5);
     glEnd();
 
-    glColor3f(0.000, 0.000, 0.000);
+    glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(lrIndex + 26 - 2, 5);
     glVertex2f(lrIndex + 26 - 2, 7);
@@ -189,7 +183,7 @@ void startGame()
     glVertex2f(lrIndex + 30 + 2, 5);
     glEnd();
     //Back Tire
-    glColor3f(0.000, 0.000, 0.000);
+    glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(lrIndex + 26 - 2, 1);
     glVertex2f(lrIndex + 26 - 2, 3);
@@ -207,121 +201,34 @@ void startGame()
         glColor3f(1.0f, 0.0f, 0.0f);
     }
     else
-    glColor3f(0.678, 1.000, 0.184);
+    glColor3f(0.678, 1.0f, 0.184);
     glBegin(GL_POLYGON);
     glVertex2f(lrIndex + 26, 1);
     glVertex2f(lrIndex + 26, 8);
-    glColor3f(0.000, 0.545, 0.545);
-
-    glVertex2f(lrIndex + 28, 10);
-    glVertex2f(lrIndex + 30, 8);
-    glVertex2f(lrIndex + 30, 1);
-    glEnd();
-=======
->>>>>>> f238cd9339ff682570a2ff56a479f3683c69e2a7
-
-    sprintf(buffer1, "SCORE: %d", score);
-    glColor3f(0.0f, 1.0f, 0.0f);
-    renderBitmapString(80.5, 95, (void*)font3, buffer1);
-
-<<<<<<< HEAD
-=======
-    // 라이프
-    glColor3f(life1, 0.0f, 0.0f);
-    glBegin(GL_POLYGON);
-    glVertex2f(81.5 + 2.5, 93);
-    glVertex2f(82 + 2.5, 92.5);
-    glVertex2f(83 + 2.5, 93);
-    glVertex2f(83.5 + 2.5, 92.5);
-    glVertex2f(83 + 2.5, 92);
-    glVertex2f(82 + 2.5, 91.5);
-    glVertex2f(81.5 + 2.5, 92);
-    glVertex2f(81 + 2.5, 92.5);
-    glEnd();
-
-    glColor3f(life2, 0.0f, 0.0f);
-    glBegin(GL_POLYGON);
-    glVertex2f(81.5 + 7.5, 93);
-    glVertex2f(82 + 7.5, 92.5);
-    glVertex2f(83 + 7.5, 93);
-    glVertex2f(83.5 + 7.5, 92.5);
-    glVertex2f(83 + 7.5, 92);
-    glVertex2f(82 + 7.5, 91.5);
-    glVertex2f(81.5 + 7.5, 92);
-    glVertex2f(81 + 7.5, 92.5);
-    glEnd();
-
-    glColor3f(life3, 0.0f, 0.0f);
-    glBegin(GL_POLYGON);
-    glVertex2f(81.5 + 12.5, 93);
-    glVertex2f(82 + 12.5, 92.5);
-    glVertex2f(83 + 12.5, 93);
-    glVertex2f(83.5 + 12.5, 92.5);
-    glVertex2f(83 + 12.5, 92);
-    glVertex2f(82 + 12.5, 91.5);
-    glVertex2f(81.5 + 12.5, 92);
-    glVertex2f(81 + 12.5, 92.5);
-    glEnd();
-
-    glColor3f(0.000, 0.000, 0.000);
-    glBegin(GL_POLYGON);
-    glVertex2f(lrIndex + 26 - 2, 5);
-    glVertex2f(lrIndex + 26 - 2, 7);
-    glVertex2f(lrIndex + 30 + 2, 7);
-    glVertex2f(lrIndex + 30 + 2, 5);
-    glEnd();
-    //Back Tire
-    glColor3f(0.000, 0.000, 0.000);
-    glBegin(GL_POLYGON);
-    glVertex2f(lrIndex + 26 - 2, 1);
-    glVertex2f(lrIndex + 26 - 2, 3);
-    glVertex2f(lrIndex + 30 + 2, 3);
-    glVertex2f(lrIndex + 30 + 2, 1);
-    glEnd();
-    //Car Body
-    if (carColor == 3) {
-        glColor3f(0.0f, 0.0f, 1.0f);
-    }
-    else if (carColor == 2) {
-        glColor3f(0.0f, 1.0f, 0.0f);
-    }
-    else if (carColor == 1) {
-        glColor3f(1.0f, 0.0f, 0.0f);
-    }
-    else
-        glColor3f(0.678, 1.000, 0.184);
-    glBegin(GL_POLYGON);
-    glVertex2f(lrIndex + 26, 1);
-    glVertex2f(lrIndex + 26, 8);
+    glColor3f(0.0f, 0.545, 0.545);
 
     glVertex2f(lrIndex + 28, 10);
     glVertex2f(lrIndex + 30, 8);
     glVertex2f(lrIndex + 30, 1);
     glEnd();
 
-    /*
-    srand((unsigned int)time(NULL));
-    cCar1Index = rand() % 100;
-    cCar1Index = rand() % 100;
-    cCar3Index = rand() % 100;
-    */
->>>>>>> f238cd9339ff682570a2ff56a479f3683c69e2a7
+
     // 장애물 차량 1번
-    glColor3f(0.000, 0.000, 0.000);
+    glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(cCar1Index + 26 - 2, comingCar1 + 100 - 4);
     glVertex2f(cCar1Index + 26 - 2, comingCar1 + 100 - 6);
     glVertex2f(cCar1Index + 30 + 2, comingCar1 + 100 - 6);
     glVertex2f(cCar1Index + 30 + 2, comingCar1 + 100 - 4);
     glEnd();
-    glColor3f(0.000, 0.000, 0.000);
+    glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(cCar1Index + 26 - 2, comingCar1 + 100);
     glVertex2f(cCar1Index + 26 - 2, comingCar1 + 100 - 2);
     glVertex2f(cCar1Index + 30 + 2, comingCar1 + 100 - 2);
     glVertex2f(cCar1Index + 30 + 2, comingCar1 + 100);
     glEnd();
-    glColor3f(1.000, 0.000, 0.000);
+    glColor3f(1.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(cCar1Index + 26, comingCar1 + 100);
     glVertex2f(cCar1Index + 26, comingCar1 + 100 - 7);
@@ -335,39 +242,41 @@ void startGame()
         comingCar1 -= speed;
     if (comingCar1 < -100) {
         comingCar1 = 0;
-<<<<<<< HEAD
         cCar1Index = rand() % 45;
     } 
-=======
-        cCar1Index = lrIndex;
-    }
->>>>>>> f238cd9339ff682570a2ff56a479f3683c69e2a7
 
     // 장애물 차량 1번에 부딪혔는지 체크
     if ((abs(lrIndex - cCar1Index) < 8) && (comingCar1 + 100 < 10)) {
+        if ((life1 == 1) && (life2 == 1) && (life3 == 1)) {
+            life3 = 0;
+        }
+        else if ((life1 == 1) && (life2 == 1) && (life3 == 0)) {
+            life2 = 0;
+        }
+        else if ((life1 == 1) && (life2 == 0) && (life3 == 0)) {
+            life1 = 0;
+        }
         if ((life1 == 0) && (life2 == 0) && (life3 == 0)) {
             isGaming = 2;
         }
-        life3 = 0;
         over = 1;
-
     }
     // 장애물 차량 2번
-    glColor3f(0.000, 0.000, 0.000);
+    glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(cCar2Index + 26 - 2, comingCar2 + 100 - 4);
     glVertex2f(cCar2Index + 26 - 2, comingCar2 + 100 - 6);
     glVertex2f(cCar2Index + 30 + 2, comingCar2 + 100 - 6);
     glVertex2f(cCar2Index + 30 + 2, comingCar2 + 100 - 4);
     glEnd();
-    glColor3f(0.000, 0.000, 0.000);
+    glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(cCar2Index + 26 - 2, comingCar2 + 100);
     glVertex2f(cCar2Index + 26 - 2, comingCar2 + 100 - 2);
     glVertex2f(cCar2Index + 30 + 2, comingCar2 + 100 - 2);
     glVertex2f(cCar2Index + 30 + 2, comingCar2 + 100);
     glEnd();
-    glColor3f(0.294, 0.000, 0.510);
+    glColor3f(0.294, 0.0f, 0.510);
     glBegin(GL_POLYGON);
     glVertex2f(cCar2Index + 26, comingCar2 + 100);
     glVertex2f(cCar2Index + 26, comingCar2 + 100 - 7);
@@ -385,30 +294,38 @@ void startGame()
     }
     // 장애물 차량 2번에 부딪혔는지 체크
     if ((abs(lrIndex - cCar2Index) < 8) && (comingCar2 + 100 < 10)) {
+        if ((life1 == 1) && (life2 == 1) && (life3 == 1)) {
+            life3 = 0;
+        }
+        else if ((life1 == 1) && (life2 == 1) && (life3 == 0)) {
+            life2 = 0;
+        }
+        else if ((life1 == 1) && (life2 == 0) && (life3 == 0)) {
+            life1 = 0;
+        }
         if ((life1 == 0) && (life2 == 0) && (life3 == 0)) {
             isGaming = 2;
         }
-        life2 = 0;
         over = 1;
     }
 
 
     // 장애물 차량 3번
-    glColor3f(0.000, 0.000, 0.000);
+    glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(cCar3Index + 26 - 2, comingCar3 + 100 - 4);
     glVertex2f(cCar3Index + 26 - 2, comingCar3 + 100 - 6);
     glVertex2f(cCar3Index + 30 + 2, comingCar3 + 100 - 6);
     glVertex2f(cCar3Index + 30 + 2, comingCar3 + 100 - 4);
     glEnd();
-    glColor3f(0.000, 0.000, 0.000);
+    glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(cCar3Index + 26 - 2, comingCar3 + 100);
     glVertex2f(cCar3Index + 26 - 2, comingCar3 + 100 - 2);
     glVertex2f(cCar3Index + 30 + 2, comingCar3 + 100 - 2);
     glVertex2f(cCar3Index + 30 + 2, comingCar3 + 100);
     glEnd();
-    glColor3f(1.000, 0.271, 0.000);
+    glColor3f(1.0f, 0.271, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(cCar3Index + 26, comingCar3 + 100);
     glVertex2f(cCar3Index + 26, comingCar3 + 100 - 7);
@@ -426,16 +343,19 @@ void startGame()
     }
     // 장애물 차량 3번에 부딪혔는지 체크
     if ((abs(lrIndex - cCar3Index) < 8) && (comingCar3 + 100 < 10)) {
-<<<<<<< HEAD
-
-=======
->>>>>>> f238cd9339ff682570a2ff56a479f3683c69e2a7
+        if ((life1 == 1) && (life2 == 1) && (life3 == 1)) {
+            life3 = 0;
+        }
+        else if ((life1 == 1) && (life2 == 1) && (life3 == 0)) {
+            life2 = 0;
+        }
+        else if ((life1 == 1) && (life2 == 0) && (life3 == 0)) {
+            life1 = 0;
+        }
         if ((life1 == 0) && (life2 == 0) && (life3 == 0)) {
             isGaming = 2;
         }
-        life1 = 0;
         over = 1;
-
     }
 
     //코인(점수증가)
@@ -636,22 +556,14 @@ void NewMenu() {
     else {
         glColor3f(0.098, 0.098, 0.439);
         glBegin(GL_POLYGON);
-<<<<<<< HEAD
         glVertex2f(28-7, 65 + 2.5);
         glVertex2f(78+7, 65 + 2.5);
         glVertex2f(78+7, 45 - 2.5);
         glVertex2f(28-7, 45 - 2.5);
-=======
-        glVertex2f(28, 65);
-        glVertex2f(78, 65);
-        glVertex2f(78, 45);
-        glVertex2f(28, 45);
->>>>>>> f238cd9339ff682570a2ff56a479f3683c69e2a7
         glEnd();
 
         glColor3f(0.0, 0.0, 0.0);
         glBegin(GL_POLYGON);
-<<<<<<< HEAD
         glVertex2f(28-7, 65+2.5);
         glVertex2f(78+7, 65 + 2.5);
         glVertex2f(78+7, 64 + 2.5);
@@ -674,30 +586,6 @@ void NewMenu() {
         glVertex2f(27-7, 65 + 2.5);
         glVertex2f(27-7, 45 - 2.5);
         glVertex2f(28-7, 45 - 2.5);
-=======
-        glVertex2f(28, 65);
-        glVertex2f(78, 65);
-        glVertex2f(78, 64);
-        glVertex2f(28, 64);
-        glEnd();
-        glBegin(GL_POLYGON);
-        glVertex2f(77, 65);
-        glVertex2f(78, 65);
-        glVertex2f(78, 45);
-        glVertex2f(77, 45);
-        glEnd();
-        glBegin(GL_POLYGON);
-        glVertex2f(28, 46);
-        glVertex2f(78, 46);
-        glVertex2f(78, 45);
-        glVertex2f(28, 45);
-        glEnd();
-        glBegin(GL_POLYGON);
-        glVertex2f(28, 65);
-        glVertex2f(27, 65);
-        glVertex2f(27, 45);
-        glVertex2f(28, 45);
->>>>>>> f238cd9339ff682570a2ff56a479f3683c69e2a7
         glEnd();
 
 
@@ -708,15 +596,9 @@ void NewMenu() {
         renderBitmapString(30, 60, font2, "Press SPACE to START");
 
         glColor3f(1.0f, 1.0f, 1.0f);
-<<<<<<< HEAD
         renderBitmapString(27, 50, font3, "Press RIGHT to turn Right");
         renderBitmapString(27, 48, font3, "Press LEFT to turn Left");
         renderBitmapString(27, 46, font3, "Click Right Button to Change Color");
-=======
-        renderBitmapString(30, 50, font3, "Press RIGHT to turn Right");
-        renderBitmapString(30, 48, font3, "Press LEFT to turn Left");
-        renderBitmapString(30, 46, font3, "Click Right Button to Change Color");
->>>>>>> f238cd9339ff682570a2ff56a479f3683c69e2a7
     }
 }
 
@@ -843,13 +725,8 @@ void MenuProc(int entryID) {
         carColor = entryID;
         printf("선택한 차량색 => Blue\n");
     }
-<<<<<<< HEAD
     else if (entryID == 2) { 
         carColor = entryID; 
-=======
-    else if (entryID == 2) {
-        carColor = entryID;
->>>>>>> f238cd9339ff682570a2ff56a479f3683c69e2a7
         printf("선택한 차량색 => Green\n");
     }
     else if (entryID == 1) {
