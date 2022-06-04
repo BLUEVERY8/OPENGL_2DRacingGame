@@ -19,7 +19,7 @@ int roadDivBtm = 0;
 int lrIndex = 0;
 
 //Car Coming
-int coin1 = 0, coin2 = 0, coin3 = 0, coin4 = 0, coin5 = 0;
+int coin1 = 0, coin2 = 20, coin3 = 40, coin4 = 60, coin5 = 80;
 int randomcoin = 0;
 int coinIdx1 = 0, coinIdx2 = 0, coinIdx3 = 0, coinIdx4 = 0, coinIdx5 = 0;
 int coin1score = 0, coin2score = 0, coin3score = 0, coin4score = 0, coin5score = 0;
@@ -159,7 +159,7 @@ void startGame()
 	glEnd();
 
 	//코인(점수증가)
-	randomcoin = rand() % 50;
+	randomcoin = rand() % 40;
 	//1번 코인
 	glColor3f(0.0, 0.0, 0.0);
 	glBegin(GL_POLYGON);
@@ -169,14 +169,15 @@ void startGame()
 	glEnd();
 	coin1 -= speed; //코인 이동
 	// 코인 획득 감지
-	if ((abs(lrIndex - coinIdx1) < 8) && (coin1 + 100 < 10)) {
+	if ((abs(lrIndex - coinIdx1) < 8) && (coin1 + 100 < 12)) {
 		if (coin1score == 0) {
 			score += 3;
 			coin1score = 1;
+			coin1 = -100;
 		}
-		if (randomcoin == 1) {
+		if (randomcoin == 1 && coin1 < -100) {
 			coinIdx1 = rand() % 45;
-			coin1 = 0;
+			coin1 = 6;
 			coin1score = 0;
 		}
 	}
@@ -187,6 +188,7 @@ void startGame()
 		if (randomcoin == 1)
 			coin1 = 0;
 	}
+	
 	//2번 코인
 	glColor3f(0.0, 0.0, 0.0);
 	glBegin(GL_POLYGON);
@@ -195,14 +197,15 @@ void startGame()
 	glVertex2f(coinIdx2 + 30, coin2 + 100 - 6);
 	glEnd();
 	coin2 -= speed;
-	if ((abs(lrIndex - coinIdx2) < 8) && (coin2 + 100 < 10)) {
+	if ((abs(lrIndex - coinIdx2) < 8) && (coin2 + 100 < 12)) {
 		if (coin2score == 0) {
 			score += 3;
 			coin2score = 1;
+			coin2 = -100;
 		}
-		if (randomcoin == 2) {
-			coinIdx1 = rand() % 45;
-			coin2 = 0;
+		if (randomcoin == 2 && coin2 < -100) {
+			coinIdx2 = rand() % 45;
+			coin2 = 6;
 			coin2score = 0;
 		}
 	}
@@ -220,14 +223,15 @@ void startGame()
 	glVertex2f(coinIdx3 + 30, coin3 + 100 - 6);
 	glEnd();
 	coin3 -= speed;
-	if ((abs(lrIndex - coinIdx3) < 8) && (coin3 + 100 < 10)) {
+	if ((abs(lrIndex - coinIdx3) < 8) && (coin3 + 100 < 12)) {
 		if (coin3score == 0) {
 			score += 3;
 			coin3score = 1;
+			coin3 = -100;
 		}
-		if (randomcoin == 3) {
-			coinIdx1 = rand() % 45;
-			coin3 = 0;
+		if (randomcoin == 3 && coin3 < -100) {
+			coinIdx3 = rand() % 45;
+			coin3 = 6;
 			coin3score = 0;
 		}
 	}
@@ -245,14 +249,15 @@ void startGame()
 	glVertex2f(coinIdx4 + 30, coin4 + 100 - 6);
 	glEnd();
 	coin4 -= speed;
-	if ((abs(lrIndex - coinIdx4) < 8) && (coin4 + 100 < 10)) {
+	if ((abs(lrIndex - coinIdx4) < 8) && (coin4 + 100 < 12)) {
 		if (coin4score == 0) {
 			score += 3;
 			coin4score = 1;
+			coin4 = -100;
 		}
-		if (randomcoin == 4) {
-			coinIdx1 = rand() % 45;
-			coin4 = 0;
+		if (randomcoin == 4 && coin4 < -100) {
+			coinIdx4 = rand() % 45;
+			coin4 = 6;
 			coin4score = 0;
 		}
 	}
@@ -270,14 +275,15 @@ void startGame()
 	glVertex2f(coinIdx5 + 30, coin5 + 100 - 6);
 	glEnd();
 	coin5 -= speed;
-	if ((abs(lrIndex - coinIdx5) < 8) && (coin5 + 100 < 10)) {
+	if ((abs(lrIndex - coinIdx5) < 8) && (coin5 + 100 < 12)) {
 		if (coin5score == 0) {
 			score += 3;
 			coin5score = 1;
+			coin5 = -100;
 		}
-		if (randomcoin == 5) {
-			coinIdx1 = rand() % 45;
-			coin5 = 0;
+		if (randomcoin == 5 && coin5 < -100) {
+			coinIdx5 = rand() % 45;
+			coin5 = 6;
 			coin5score = 0;
 		}
 	}
@@ -288,7 +294,7 @@ void startGame()
 			coin5 = 0;
 	}
 	
-	
+
 	//부스터(속도 증가)
 	//부스터 확률 설정
 	if (isBoosting == 0)
@@ -356,7 +362,7 @@ void startMenu()
 		glColor3f(1.0, 0.0, 0.0);
 		renderBitmapString(30, 40, (void*)font1, "If you want to restart game Press space bar");
 		printf("이름을 입력해주세요.예)AAA, BBB, ABC\n이름 : ");
-		scanf("%s", player[play]);
+		scanf("%s", (const char*)player[play]);
 		record[play] = score;
 		play++;
 	}
@@ -372,7 +378,7 @@ void startMenu()
 			for (int i = 0; i < play; i++)
 			{
 				renderBitmapString(5, 95 - (i * 2), (void*)font3, (const char*)player[i]);
-				renderBitmapString(10, 95 - (i * 2), (void*)font3, (const char *)record[i]);
+				renderBitmapString(10, 95 - (i * 2), (void*)font3, (const char*)record[i]);
 			}
 			renderBitmapString(30, 50, (void*)font2, "Press B to go Back");
 		}
