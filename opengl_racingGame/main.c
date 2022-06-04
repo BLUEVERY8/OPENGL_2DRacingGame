@@ -244,7 +244,7 @@ void startGame()
         comingCar1 -= speed;
     if (comingCar1 < -100) {
         comingCar1 = 0;
-        cCar1Index = rand() % 45;
+        cCar1Index = rand() % 55;
     } 
 
     // 장애물 차량 1번에 부딪혔는지 체크
@@ -285,7 +285,7 @@ void startGame()
         comingCar2 -= speed;
     if (comingCar2 < -100) {
         comingCar2 = 0;
-        cCar2Index = rand() % 45;
+        cCar2Index = rand() % 55;
     }
     // 장애물 차량 2번에 부딪혔는지 체크
     if ((abs(lrIndex - cCar2Index) < 8) && (comingCar2 + 100 < 10)) {
@@ -326,7 +326,7 @@ void startGame()
         comingCar3 -= speed;
     if (comingCar3 < -100) {
         comingCar3 = 0;
-        cCar3Index = rand() % 45;
+        cCar3Index = rand() % 55;
     }
     // 장애물 차량 3번에 부딪혔는지 체크
     if ((abs(lrIndex - cCar3Index) < 8) && (comingCar3 + 100 < 10)) {
