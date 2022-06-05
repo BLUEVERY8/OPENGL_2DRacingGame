@@ -6,6 +6,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <mmsystem.h>
+#pragma comment(lib,"winmm.lib")
+
+// 사운드
+#define _C 1046.502
+#define CoinSound "F:\\학교 공부\\컴퓨터그래픽스\\localRepo\\TeamProject\\opengl_racingGame\\BGM\\CoinSound.wav"
 
 //게임화면상태, 게임 속도, 점수, 차량 스피드, 부스터 지속시간, 부스터 상태, 부스터 등장, 부스터 확률
 int isGaming = 0, FPS = 50, score = 0, speed = 1, i = 0, boosterFlag = 0, isBoosting = 0, randomBooster;
@@ -372,6 +378,7 @@ void startGame()
         score += 3;
         coinIdx1 = rand() % 45;
         coin1 = 0;
+        PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
     }
     //코인 재생성
     else if (coin1 < -100)
@@ -392,6 +399,7 @@ void startGame()
         score += 3;
         coinIdx2 = rand() % 45;
         coin2 = 0;
+        PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
     }
     else if (coin2 < -100)
     {
@@ -411,6 +419,7 @@ void startGame()
         score += 3;
         coinIdx3 = rand() % 45;
         coin3 = 0;
+        PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
     }
     else if (coin3 < -100)
     {
@@ -430,6 +439,7 @@ void startGame()
         score += 3;
         coinIdx4 = rand() % 45;
         coin4 = 0;
+        PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
     }
     else if (coin4 < -100)
     {
@@ -449,6 +459,7 @@ void startGame()
         score += 3;
         coinIdx5 = rand() % 45;
         coin5 = 0;
+        PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
     }
     else if (coin5 < -100)
     {
@@ -758,6 +769,8 @@ int main(int argc, char* argv[])
     glutKeyboardFunc(myKey);
     glutTimerFunc(1000, myTimer, 0);
     MenuFunc();
+   
+
 
     glutMainLoop();
 

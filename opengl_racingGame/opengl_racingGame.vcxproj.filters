@@ -19,4 +19,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="BGM\CoinSound.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+  </ItemGroup>
 </Project>
