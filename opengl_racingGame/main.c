@@ -1,4 +1,4 @@
-﻿#pragma warning (disable:4996)
+#pragma warning (disable:4996)
 #include <windows.h> //������� windows.h
 #include <glut.h> //������� glut.h, glu.h, gl.h
 #include <glu.h> 
@@ -55,8 +55,7 @@ char buffer1[50], buffer2[50];
 //플레이 횟수
 int play = 0;
 //저장할 이름, 점수
-char player[10][10];
-int record[10];
+char player[10][10], record[10];
 //ȭ�鿡 ���� ���
 void renderBitmapString(float x, float y, void* font, const char* string)
 {
@@ -638,25 +637,21 @@ void newMenu() {
     }
     else if (isGaming == 3)
     {
-        printf("이름을 입력해주세요.예)AAA, BBB, ABC\n이름 : ");
-        scanf("%s", (const char*)player[play]);
-        record[play] = score;
-        play++;
-        glColor3f(1.0, 1.0, 1.0);
         if (play == 0)
         {
             renderBitmapString(30, 50 + 10, (void*)font2, "No Record");
             renderBitmapString(30, 50 + 10 - 3, (void*)font2, "Press B to move start menu");
         }
-        else if (play != 0) {
+        else if (play > 0) {
             for (int i = 0; i < play; i++)
             {
                 renderBitmapString(5, 95 - (i * 2), (void*)font3, (const char*)player[i]);
-                renderBitmapString(10, 95 - (i * 2), (void*)font3, (const char*)record[i]);
+                renderBitmapString(10, 95 - (i * 2), (void*)font3, buffer2);
             }
             renderBitmapString(30, 50, (void*)font2, "Press B to move start menu");
         }
     }
+    
     // �⺻ �޴� â
     else {
         glColor3f(0.098, 0.098, 0.439);
@@ -706,7 +701,15 @@ void newMenu() {
         renderBitmapString(27, 46, font3, "Click Right Button to Change Color");
     }
 }
-
+void Record() {
+    printf("이름을 입력해주세요.예)AAA, BBB, ABC\n이름 : ");
+    scanf("%s", (const char*)player[play]);
+    printf("%s\n", (const char*)player[play]);
+    printf("%d\n", buffer2);
+    play++;
+    printf("%d\n", play);
+    glColor3f(1.0, 1.0, 1.0);
+}
 void myDisplay()
 {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -800,13 +803,16 @@ void myKey(unsigned char key, int x, int y)
             isGaming = 1;
             life1 = 1; life2 = 1; life3 = 1;
         }
-        else if (key == 's' && isGaming == 2)
+        else if (key == 's' && isGaming == 0)
         {
             isGaming = 3;
         }
-
+        else if (key == 's' && isGaming == 2)
+        {
+            Record();
+        }
     }
-    if (isGaming == 3)
+    if (isGaming == 2 || isGaming == 3)
         if (key == 'b')
             isGaming = 0;
     glutPostRedisplay();
