@@ -10,7 +10,6 @@
 #pragma comment(lib,"winmm.lib")
 
 // 사운드
-#define _C 1046.502
 #define CoinSound "F:\\학교 공부\\컴퓨터그래픽스\\localRepo\\TeamProject\\opengl_racingGame\\BGM\\CoinSound.wav"
 
 //게임화면상태, 게임 속도, 점수, 차량 스피드, 부스터 지속시간, 부스터 상태, 부스터 등장, 부스터 확률
@@ -43,6 +42,8 @@ int coin1 = 0, coin2 = 10, coin3 = 20, coin4 = 30, coin5 = 40;
 int coinIdx1 = 0, coinIdx2 = 0, coinIdx3 = 0, coinIdx4 = 0, coinIdx5 = 0;
 int booster = 0;
 int boosterIdx = 0;
+int coin1score = 0, coin2score = 0, coin3score = 0, coin4score = 0, coin5score = 0;
+int randomcoin = 0;
 
 //글자 폰트
 void* font1 = GLUT_BITMAP_TIMES_ROMAN_24;
@@ -365,106 +366,160 @@ void startGame()
     }
 
     //코인(점수증가)
+    randomcoin = rand() % 40;
+    //1번 코인
+    glColor3f(1.0, 1.0, 0.0);
+    glBegin(GL_POLYGON);
+    glVertex2f(coinIdx1 + 26, coin1 + 98);
+    glVertex2f(coinIdx1 + 29, coin1 + 98);
+    glVertex2f(coinIdx1 + 31, coin1 + 96);
+    glVertex2f(coinIdx1 + 31, coin1 + 94);
+    glVertex2f(coinIdx1 + 29, coin1 + 92);
+    glVertex2f(coinIdx1 + 26, coin1 + 92);
+    glVertex2f(coinIdx1 + 24, coin1 + 94);
+    glVertex2f(coinIdx1 + 24, coin1 + 96);
+    glEnd();
+
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx1 + 28, coin1 + 100 - 2);
-    glVertex2f(coinIdx1 + 26, coin1 + 100 - 6);
-    glVertex2f(coinIdx1 + 30, coin1 + 100 - 6);
-
+    glVertex2f(coinIdx1 + 25, coin1 + 95);
+    glVertex2f(coinIdx1 + 26, coin1 + 94);
+    glVertex2f(coinIdx1 + 29, coin1 + 94);
+    glVertex2f(coinIdx1 + 29, coin1 + 94.5);
+    glVertex2f(coinIdx1 + 27, coin1 + 94.5);
+    glVertex2f(coinIdx1 + 26, coin1 + 95);
+    glVertex2f(coinIdx1 + 26, coin1 + 96);
+    glVertex2f(coinIdx1 + 27, coin1 + 96.5);
+    glVertex2f(coinIdx1 + 29, coin1 + 96.5);
+    glVertex2f(coinIdx1 + 29, coin1 + 97);
+    glVertex2f(coinIdx1 + 26, coin1 + 97);
+    glVertex2f(coinIdx1 + 25, coin1 + 96);
     glEnd();
     coin1 -= speed; //코인 이동
     // 코인 획득 감지
-    if ((abs(lrIndex - coinIdx1) < 8) && (coin1 + 100 < 10)) {
-        score += 3;
-        coinIdx1 = rand() % 45;
-        coin1 = 0;
-        PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
+    if ((abs(lrIndex - coinIdx1) < 8) && (coin1 + 100 < 12)) {
+        if (coin1score == 0) {
+            score += 3;
+            coin1score = 1;
+            coin1 = -100;
+        }
+        if (randomcoin == 1 && coin1 < -100) {
+            coinIdx1 = rand() % 45;
+            coin1 = 6;
+            coin1score = 0;
+        }
     }
     //코인 재생성
     else if (coin1 < -100)
     {
         coinIdx1 = rand() % 45;
-        coin1 = 0;
+        if (randomcoin == 1)
+            coin1 = 0;
     }
 
+    //2번 코인
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_POLYGON);
     glVertex2f(coinIdx2 + 28, coin2 + 100 - 2);
     glVertex2f(coinIdx2 + 26, coin2 + 100 - 6);
     glVertex2f(coinIdx2 + 30, coin2 + 100 - 6);
-
     glEnd();
     coin2 -= speed;
-    if ((abs(lrIndex - coinIdx2) < 8) && (coin2 + 100 < 10)) {
-        score += 3;
-        coinIdx2 = rand() % 45;
-        coin2 = 0;
-        PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
+    if ((abs(lrIndex - coinIdx2) < 8) && (coin2 + 100 < 12)) {
+        if (coin2score == 0) {
+            score += 3;
+            coin2score = 1;
+            coin2 = -100;
+        }
+        if (randomcoin == 2 && coin2 < -100) {
+            coinIdx2 = rand() % 45;
+            coin2 = 6;
+            coin2score = 0;
+        }
     }
     else if (coin2 < -100)
     {
         coinIdx2 = rand() % 45;
-        coin2 = 0;
+        if (randomcoin == 2)
+            coin2 = 0;
     }
-
+    //3번 코인
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_POLYGON);
     glVertex2f(coinIdx3 + 28, coin3 + 100 - 2);
     glVertex2f(coinIdx3 + 26, coin3 + 100 - 6);
     glVertex2f(coinIdx3 + 30, coin3 + 100 - 6);
-
     glEnd();
     coin3 -= speed;
-    if ((abs(lrIndex - coinIdx3) < 8) && (coin3 + 100 < 10)) {
-        score += 3;
-        coinIdx3 = rand() % 45;
-        coin3 = 0;
-        PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
+    if ((abs(lrIndex - coinIdx3) < 8) && (coin3 + 100 < 12)) {
+        if (coin3score == 0) {
+            score += 3;
+            coin3score = 1;
+            coin3 = -100;
+        }
+        if (randomcoin == 3 && coin3 < -100) {
+            coinIdx3 = rand() % 45;
+            coin3 = 6;
+            coin3score = 0;
+        }
     }
     else if (coin3 < -100)
     {
         coinIdx3 = rand() % 45;
-        coin3 = 0;
+        if (randomcoin == 3)
+            coin3 = 0;
     }
-
+    //4번 코인
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_POLYGON);
     glVertex2f(coinIdx4 + 28, coin4 + 100 - 2);
     glVertex2f(coinIdx4 + 26, coin4 + 100 - 6);
     glVertex2f(coinIdx4 + 30, coin4 + 100 - 6);
-
     glEnd();
     coin4 -= speed;
-    if ((abs(lrIndex - coinIdx4) < 8) && (coin4 + 100 < 10)) {
-        score += 3;
-        coinIdx4 = rand() % 45;
-        coin4 = 0;
-        PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
+    if ((abs(lrIndex - coinIdx4) < 8) && (coin4 + 100 < 12)) {
+        if (coin4score == 0) {
+            score += 3;
+            coin4score = 1;
+            coin4 = -100;
+        }
+        if (randomcoin == 4 && coin4 < -100) {
+            coinIdx4 = rand() % 45;
+            coin4 = 6;
+            coin4score = 0;
+        }
     }
     else if (coin4 < -100)
     {
         coinIdx4 = rand() % 45;
-        coin4 = 0;
+        if (randomcoin == 4)
+            coin4 = 0;
     }
-
+    //5번 코인
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_POLYGON);
     glVertex2f(coinIdx5 + 28, coin5 + 100 - 2);
     glVertex2f(coinIdx5 + 26, coin5 + 100 - 6);
     glVertex2f(coinIdx5 + 30, coin5 + 100 - 6);
-
     glEnd();
     coin5 -= speed;
-    if ((abs(lrIndex - coinIdx5) < 8) && (coin5 + 100 < 10)) {
-        score += 3;
-        coinIdx5 = rand() % 45;
-        coin5 = 0;
-        PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
+    if ((abs(lrIndex - coinIdx5) < 8) && (coin5 + 100 < 12)) {
+        if (coin5score == 0) {
+            score += 3;
+            coin5score = 1;
+            coin5 = -100;
+        }
+        if (randomcoin == 5 && coin5 < -100) {
+            coinIdx5 = rand() % 45;
+            coin5 = 6;
+            coin5score = 0;
+        }
     }
     else if (coin5 < -100)
     {
         coinIdx5 = rand() % 45;
-        coin5 = 0;
+        if (randomcoin == 5)
+            coin5 = 0;
     }
     //부스터(속도 증가)
     //부스터 확률 설정
@@ -754,6 +809,18 @@ void MenuFunc() {
     glutAddMenuEntry("Blue", 3);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
+//void myReshape(int w, int h) {
+//    GLfloat fAspect;
+//    if (h == 0) h = 1;
+//    glViewport(0, 0, w, h);
+//    fAspect = (GLfloat)w / (GLfloat)h;
+//    glMatrixMode(GL_PROJECTION);
+//    glLoadIdentity();
+//    gluPerspective(35.0f, fAspect, 1.0, 40.0);
+//    glMatrixMode(GL_MODELVIEW);
+//    glLoadIdentity();
+//    glClearColor(0.5, 0.5, 0.5, 1.0);
+//}
 
 int main(int argc, char* argv[])
 {
@@ -769,8 +836,7 @@ int main(int argc, char* argv[])
     glutKeyboardFunc(myKey);
     glutTimerFunc(1000, myTimer, 0);
     MenuFunc();
-   
-
+    //glutReshapeFunc(myReshape);
 
     glutMainLoop();
 
