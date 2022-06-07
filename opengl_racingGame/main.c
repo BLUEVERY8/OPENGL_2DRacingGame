@@ -10,8 +10,7 @@
 #pragma comment(lib,"winmm.lib")
 
 // 사운드
-#define _C 1046.502
-#define CoinSound "F:\\학교 공부\\컴퓨터그래픽스\\localRepo\\TeamProject\\opengl_racingGame\\BGM\\CoinSound.wav"
+#define CoinSound "C:\\Users\\이영근\\source\\repos\\2DRacingGame\\opengl_racingGame\\BGM\\CoinSound.wav"
 
 //게임화면상태, 게임 속도, 점수, 차량 스피드, 부스터 지속시간, 부스터 상태, 부스터 등장, 부스터 확률
 int isGaming = 0, FPS = 50, score = 0, speed = 1, i = 0, boosterFlag = 0, isBoosting = 0, randomBooster;
@@ -365,12 +364,30 @@ void startGame()
     }
 
     //코인(점수증가)
-    glColor3f(0.0, 0.0, 0.0);
+    glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx1 + 28, coin1 + 100 - 2);
-    glVertex2f(coinIdx1 + 26, coin1 + 100 - 6);
-    glVertex2f(coinIdx1 + 30, coin1 + 100 - 6);
+    glVertex2f(coinIdx1 + 26, coin1 + 98);
+    glVertex2f(coinIdx1 + 29, coin1 + 98);
+    glVertex2f(coinIdx1 + 31, coin1 + 96);
+    glVertex2f(coinIdx1 + 31, coin1 + 94);
+    glVertex2f(coinIdx1 + 29, coin1 + 92);
+    glVertex2f(coinIdx1 + 26, coin1 + 92);
+    glVertex2f(coinIdx1 + 24, coin1 + 94);
+    glVertex2f(coinIdx1 + 24, coin1 + 96);
+    glEnd();
 
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(coinIdx1 + 25, coin1 + 95 - 1);
+    glVertex2f(coinIdx1 + 25, coin1 + 97 - 1);
+    glVertex2f(coinIdx1 + 26, coin1 + 98 - 1);
+    glVertex2f(coinIdx1 + 29, coin1 + 98 - 1);
+    glVertex2f(coinIdx1 + 29, coin1 + 97 - 1);
+    glVertex2f(coinIdx1 + 26, coin1 + 97 - 1);
+    glVertex2f(coinIdx1 + 26, coin1 + 95 - 1);
+    glVertex2f(coinIdx1 + 29, coin1 + 95 - 1);
+    glVertex2f(coinIdx1 + 29, coin1 + 94 - 1);
+    glVertex2f(coinIdx1 + 26, coin1 + 94 - 1);
     glEnd();
     coin1 -= speed; //코인 이동
     // 코인 획득 감지
@@ -387,13 +404,32 @@ void startGame()
         coin1 = 0;
     }
 
-    glColor3f(0.0, 0.0, 0.0);
+    glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx2 + 28, coin2 + 100 - 2);
-    glVertex2f(coinIdx2 + 26, coin2 + 100 - 6);
-    glVertex2f(coinIdx2 + 30, coin2 + 100 - 6);
-
+    glVertex2f(coinIdx2 + 26, coin2 + 98);
+    glVertex2f(coinIdx2 + 29, coin2 + 98);
+    glVertex2f(coinIdx2 + 31, coin2 + 96);
+    glVertex2f(coinIdx2 + 31, coin2 + 94);
+    glVertex2f(coinIdx2 + 29, coin2 + 92);
+    glVertex2f(coinIdx2 + 26, coin2 + 92);
+    glVertex2f(coinIdx2 + 24, coin2 + 94);
+    glVertex2f(coinIdx2 + 24, coin2 + 96);
     glEnd();
+
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(coinIdx2 + 25, coin2 + 95 - 1);
+    glVertex2f(coinIdx2 + 25, coin2 + 97 - 1);
+    glVertex2f(coinIdx2 + 26, coin2 + 98 - 1);
+    glVertex2f(coinIdx2 + 29, coin2 + 98 - 1);
+    glVertex2f(coinIdx2 + 29, coin2 + 97 - 1);
+    glVertex2f(coinIdx2 + 26, coin2 + 97 - 1);
+    glVertex2f(coinIdx2 + 26, coin2 + 95 - 1);
+    glVertex2f(coinIdx2 + 29, coin2 + 95 - 1);
+    glVertex2f(coinIdx2 + 29, coin2 + 94 - 1);
+    glVertex2f(coinIdx2 + 26, coin2 + 94 - 1);
+    glEnd();
+
     coin2 -= speed;
     if ((abs(lrIndex - coinIdx2) < 8) && (coin2 + 100 < 10)) {
         score += 3;
@@ -407,12 +443,30 @@ void startGame()
         coin2 = 0;
     }
 
-    glColor3f(0.0, 0.0, 0.0);
+    glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx3 + 28, coin3 + 100 - 2);
-    glVertex2f(coinIdx3 + 26, coin3 + 100 - 6);
-    glVertex2f(coinIdx3 + 30, coin3 + 100 - 6);
+    glVertex2f(coinIdx3 + 26, coin3 + 98);
+    glVertex2f(coinIdx3 + 29, coin3 + 98);
+    glVertex2f(coinIdx3 + 31, coin3 + 96);
+    glVertex2f(coinIdx3 + 31, coin3 + 94);
+    glVertex2f(coinIdx3 + 29, coin3 + 92);
+    glVertex2f(coinIdx3 + 26, coin3 + 92);
+    glVertex2f(coinIdx3 + 24, coin3 + 94);
+    glVertex2f(coinIdx3 + 24, coin3 + 96);
+    glEnd();
 
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(coinIdx3 + 25, coin3 + 95 - 1);
+    glVertex2f(coinIdx3 + 25, coin3 + 97 - 1);
+    glVertex2f(coinIdx3 + 26, coin3 + 98 - 1);
+    glVertex2f(coinIdx3 + 29, coin3 + 98 - 1);
+    glVertex2f(coinIdx3 + 29, coin3 + 97 - 1);
+    glVertex2f(coinIdx3 + 26, coin3 + 97 - 1);
+    glVertex2f(coinIdx3 + 26, coin3 + 95 - 1);
+    glVertex2f(coinIdx3 + 29, coin3 + 95 - 1);
+    glVertex2f(coinIdx3 + 29, coin3 + 94 - 1);
+    glVertex2f(coinIdx3 + 26, coin3 + 94 - 1);
     glEnd();
     coin3 -= speed;
     if ((abs(lrIndex - coinIdx3) < 8) && (coin3 + 100 < 10)) {
@@ -427,12 +481,30 @@ void startGame()
         coin3 = 0;
     }
 
-    glColor3f(0.0, 0.0, 0.0);
+    glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx4 + 28, coin4 + 100 - 2);
-    glVertex2f(coinIdx4 + 26, coin4 + 100 - 6);
-    glVertex2f(coinIdx4 + 30, coin4 + 100 - 6);
+    glVertex2f(coinIdx4 + 26, coin4 + 98);
+    glVertex2f(coinIdx4 + 29, coin4 + 98);
+    glVertex2f(coinIdx4 + 31, coin4 + 96);
+    glVertex2f(coinIdx4 + 31, coin4 + 94);
+    glVertex2f(coinIdx4 + 29, coin4 + 92);
+    glVertex2f(coinIdx4 + 26, coin4 + 92);
+    glVertex2f(coinIdx4 + 24, coin4 + 94);
+    glVertex2f(coinIdx4 + 24, coin4 + 96);
+    glEnd();
 
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(coinIdx4 + 25, coin4 + 95 - 1);
+    glVertex2f(coinIdx4 + 25, coin4 + 97 - 1);
+    glVertex2f(coinIdx4 + 26, coin4 + 98 - 1);
+    glVertex2f(coinIdx4 + 29, coin4 + 98 - 1);
+    glVertex2f(coinIdx4 + 29, coin4 + 97 - 1);
+    glVertex2f(coinIdx4 + 26, coin4 + 97 - 1);
+    glVertex2f(coinIdx4 + 26, coin4 + 95 - 1);
+    glVertex2f(coinIdx4 + 29, coin4 + 95 - 1);
+    glVertex2f(coinIdx4 + 29, coin4 + 94 - 1);
+    glVertex2f(coinIdx4 + 26, coin4 + 94 - 1);
     glEnd();
     coin4 -= speed;
     if ((abs(lrIndex - coinIdx4) < 8) && (coin4 + 100 < 10)) {
@@ -447,12 +519,30 @@ void startGame()
         coin4 = 0;
     }
 
-    glColor3f(0.0, 0.0, 0.0);
+    glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx5 + 28, coin5 + 100 - 2);
-    glVertex2f(coinIdx5 + 26, coin5 + 100 - 6);
-    glVertex2f(coinIdx5 + 30, coin5 + 100 - 6);
+    glVertex2f(coinIdx5 + 26, coin5 + 98);
+    glVertex2f(coinIdx5 + 29, coin5 + 98);
+    glVertex2f(coinIdx5 + 31, coin5 + 96);
+    glVertex2f(coinIdx5 + 31, coin5 + 94);
+    glVertex2f(coinIdx5 + 29, coin5 + 92);
+    glVertex2f(coinIdx5 + 26, coin5 + 92);
+    glVertex2f(coinIdx5 + 24, coin5 + 94);
+    glVertex2f(coinIdx5 + 24, coin5 + 96);
+    glEnd();
 
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(coinIdx5 + 25, coin5 + 95 - 1);
+    glVertex2f(coinIdx5 + 25, coin5 + 97 - 1);
+    glVertex2f(coinIdx5 + 26, coin5 + 98 - 1);
+    glVertex2f(coinIdx5 + 29, coin5 + 98 - 1);
+    glVertex2f(coinIdx5 + 29, coin5 + 97 - 1);
+    glVertex2f(coinIdx5 + 26, coin5 + 97 - 1);
+    glVertex2f(coinIdx5 + 26, coin5 + 95 - 1);
+    glVertex2f(coinIdx5 + 29, coin5 + 95 - 1);
+    glVertex2f(coinIdx5 + 29, coin5 + 94 - 1);
+    glVertex2f(coinIdx5 + 26, coin5 + 94 - 1);
     glEnd();
     coin5 -= speed;
     if ((abs(lrIndex - coinIdx5) < 8) && (coin5 + 100 < 10)) {
@@ -559,8 +649,8 @@ void NewMenu() {
         renderBitmapString(30, 30, (void*)font2, "Press SPACE to START");
 
         glColor3f(1.0f, 1.0f, 1.0f);
-        renderBitmapString(30, 20, (void*)font3, "Press RIGHT to turn Right");
-        renderBitmapString(30, 18, (void*)font3, "Press LEFT to turn Left");
+        renderBitmapString(30, 20, (void*)font3, "Press RIGHT to move Right");
+        renderBitmapString(30, 18, (void*)font3, "Press LEFT to move Left");
 
     }
     // 기본 메뉴 창
