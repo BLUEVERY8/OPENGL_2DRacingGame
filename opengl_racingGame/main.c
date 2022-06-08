@@ -1,22 +1,13 @@
-#pragma warning (disable:4996)
-#include <unistd.h> //윈도우는 windows.h
-#include <GLUT/glut.h> //윈도우는 glut.h, glu.h, gl.h
+﻿#pragma warning (disable:4996)
+#include <windows.h>
+#include <glut.h> 
+#include <glu.h>
+#include <gl.h>
 #include <stdlib.h>
 #include <stdio.h>
-//#include <mmsystem.h>
+#include <mmsystem.h>
 #pragma comment(lib, "winmm.lib")
 #include <time.h>
-
-//#pragma warning (disable:4996)
-//#include <windows.h> //������� windows.h
-//#include <glut.h> //������� glut.h, glu.h, gl.h
-//#include <glu.h>
-//#include <gl.h>
-//#include <stdlib.h>
-//#include <stdio.h>
-//#include <time.h>
-//#include <mmsystem.h>
-//#pragma comment(lib,"winmm.lib")
 
 // ����
 #define _C 1046.502
@@ -47,6 +38,8 @@ GLfloat life1 = 1, life2 = 1, life3 = 1;
 int lifeIndex = 80;
 // ���� ��
 int carColor;
+const GLfloat white[] = { 1.0, 1.0, 1.0, 1.0 };
+const GLfloat polished[] = { 100.0 };
 // ����
 int coin1 = 0, coin2 = 10, coin3 = 20, coin4 = 30, coin5 = 40;
 int randomcoin = 0;
@@ -64,7 +57,7 @@ char buffer1[50], buffer2[50];
 //플레이 횟수
 int play = 0;
 //저장할 이름, 점수
-char * player[10][10], record[10];
+char* player[10][10], record[10];
 //ȭ�鿡 ���� ���
 void renderBitmapString(float x, float y, void* font, const char* string)
 {
@@ -78,6 +71,10 @@ void renderBitmapString(float x, float y, void* font, const char* string)
 
 void startGame()
 {
+    glEnable(GL_LIGHTING);
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, white);
+    glMaterialfv(GL_FRONT, GL_SHININESS, polished);
     glColor3f(0.412, 0.412, 0.412);
     glBegin(GL_POLYGON);
     glVertex2f(20, 0);
@@ -85,7 +82,7 @@ void startGame()
     glVertex2f(80, 100);
     glVertex2f(80, 0);
     glEnd();
-
+    glDisable(GL_LIGHTING);
     //Road Left Border
     glColor3f(1.0f, 1.0f, 1.0f);
     glBegin(GL_POLYGON);
@@ -146,6 +143,7 @@ void startGame()
         roadDivBtm = 100;
         score++;
     }
+    
     // ������
     glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
@@ -195,7 +193,7 @@ void startGame()
     glVertex2f(lifeIndex + 14, 92);
     glVertex2f(lifeIndex + 13.5, 92.5);
     glEnd();
-    
+
     //코인(점수증가)
     randomcoin = rand() % 40;
 
@@ -332,7 +330,7 @@ void startGame()
         if (randomcoin == 5)
             coin5 = 0;
     }
-    
+
     // 부스터
     // 부스터 생성 확률
     if (createBoost == 0)
@@ -546,27 +544,26 @@ void startGame()
             delay = 0;
         }
     }
+
     //차량
-    GLfloat light0Position[] = { 27, 9, 0, 1.0 };
-    GLfloat light1Position[] = { 29, 9, 0, 1.0 };
-    
+    GLfloat light0Position[] = { 27, 9, 1.5, 1.0 };
+    GLfloat light1Position[] = { 29, 9, 1.5, 1.0 };
     glPushMatrix();
-        
-        glLightfv(GL_LIGHT0, GL_POSITION, light0Position);
-        glTranslatef(lrIndex + 27, 9, 0);
-        glDisable(GL_LIGHTING);
-        glColor3f(0.9, 0.9, 0.9);
-        glutSolidSphere(1, 40, 40);
-        glEnable(GL_LIGHTING);
+    glLightfv(GL_LIGHT0, GL_POSITION, light0Position);
+    glTranslatef(lrIndex + 27, 9, 0);
+    glDisable(GL_LIGHT0);
+    glColor3f(0.9, 0.9, 0.9);
+    glutSolidSphere(1, 40, 40);
+    glEnable(GL_LIGHT0);
     glPopMatrix();
-    
+
     glPushMatrix();
-        glLightfv(GL_LIGHT1, GL_POSITION, light1Position);
-        glTranslatef(lrIndex + 29, 9, 0);
-        glDisable(GL_LIGHTING);
-        glColor3d(0.9, 0.9, 0.9);
-        glutSolidSphere(1, 40, 40);
-        glEnable(GL_LIGHTING);
+    glLightfv(GL_LIGHT1, GL_POSITION, light1Position);
+    glTranslatef(lrIndex + 29, 9, 0);
+    glDisable(GL_LIGHT1);
+    glColor3d(0.9, 0.9, 0.9);
+    glutSolidSphere(1, 40, 40);
+    glEnable(GL_LIGHT1);
     glPopMatrix();
     glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
@@ -734,7 +731,7 @@ void newMenu() {
 
 void myDisplay()
 {
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (isGaming == 1)
     {
         glClearColor(0.0, 0.4, 0.0, 1);
@@ -746,12 +743,12 @@ void myDisplay()
 }
 void myReshape(int w, int h)
 {
-    glViewport(0,0,w,h);
+    glViewport(0, 0, w, h);
     //GLfloat widthFactor = (GLfloat)w / 300;
     //GLfloat heightFactor = (GLfloat)h / 300;
-    
+
     glMatrixMode(GL_PROJECTION); glLoadIdentity();
-    glOrtho(0, 100 , 0, 100 , -1, 1);
+    glOrtho(0, 100, 0, 100, -1, 1);
     glMatrixMode(GL_MODELVIEW); glLoadIdentity();
 }
 void myTimer(int value)
@@ -854,33 +851,36 @@ void init()
 
 void initLight()
 {
-    GLfloat light0Ambient[] = {0.5, 0.4, 0.3, 1.0};
-    GLfloat light0Diffuse[] = {0.8, 0.7, 0.6, 1.0};
-    GLfloat light0Specular[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat light0Cutoff[] = {80};
-    GLfloat materialAmbient[] = {0.4, 0.4, 0.4, 1.0};
-    GLfloat materialDiffuse[] = {0.9, 0.9, 0.9, 1.0};
-    GLfloat materialSpecular[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat materialShininess[] = {25.0};
+    GLfloat light0Ambient[] = { 0.5, 0.4, 0.3, 1.0 };
+    GLfloat light0Diffuse[] = { 0.8, 0.7, 0.6, 1.0 };
+    GLfloat light0Specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    //GLfloat light0Direction[] = { 0, 1, -1.0 };
+    GLfloat light0Cutoff[] = { 80 };
+    GLfloat materialAmbient[] = { 0.4, 0.4, 0.4, 1.0 };
+    GLfloat materialDiffuse[] = { 0.9, 0.9, 0.9, 1.0 };
+    GLfloat materialSpecular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat materialShininess[] = { 25.0 };
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHTING);
+    //glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light0Ambient);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light0Diffuse);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light0Specular);
-    //glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, Light0_Direction);
+    //glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light0Direction);
     glLightfv(GL_LIGHT0, GL_SPOT_CUTOFF, light0Cutoff);
-    
-    GLfloat light1Ambient[] = {0.5, 0.4, 0.3, 1.0};
-    GLfloat light1Diffuse[] = {0.8, 0.7, 0.6, 1.0};
-    GLfloat light1Specular[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat light1Cutoff[] = {80};
-    
+
+    GLfloat light1Ambient[] = { 0.5, 0.4, 0.3, 1.0 };
+    GLfloat light1Diffuse[] = { 0.8, 0.7, 0.6, 1.0 };
+    GLfloat light1Specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    //GLfloat light1Direction[] = { 0, 1, -1.0 };
+    GLfloat light1Cutoff[] = { 80 };
+
     glLightfv(GL_LIGHT1, GL_SPECULAR, light1Ambient);
     glLightfv(GL_LIGHT1, GL_SPECULAR, light1Diffuse);
     glLightfv(GL_LIGHT1, GL_SPECULAR, light1Specular);
-    //glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, Light0_Direction);
+    //glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light1Direction);
     glLightfv(GL_LIGHT1, GL_SPOT_CUTOFF, light1Cutoff);
 }
 void MenuProc(int entryID) {
@@ -927,5 +927,4 @@ int main(int argc, char* argv[])
 
     return 0;
 }
-
 
