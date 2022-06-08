@@ -10,8 +10,9 @@
 #pragma comment(lib,"winmm.lib")
 
 // 사운드
-#define CoinSound "C:\\Users\\이영근\\source\\repos\\2DRacingGame\\opengl_racingGame\\BGM\\CoinSound.wav"
+//#define CoinSound "C:\\Users\\이영근\\source\\repos\\2DRacingGame\\opengl_racingGame\\BGM\\CoinSound.wav"
 #define CoinSound "F:\\학교 공부\\컴퓨터그래픽스\\localRepo\\TeamProject\\opengl_racingGame\\BGM\\CoinSound.wav"
+#define background "F:\\학교 공부\\컴퓨터그래픽스\\localRepo\\TeamProject\\opengl_racingGame\\BGM\\background.wav"
 
 //게임화면상태, 게임 속도, 점수, 차량 스피드, 부스터 지속시간, 부스터 상태, 부스터 등장, 부스터 확률
 int isGaming = 0, FPS = 50, score = 0, speed = 1, i = 0, boosterFlag = 0, isBoosting = 0, randomBooster;
@@ -403,6 +404,7 @@ void startGame()
             score += 3;
             coin1score = 1;
             coin1 = -100;
+            //PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
         }
         if (randomcoin == 1 && coin1 < -100) {
             coinIdx1 = rand() % 45;
@@ -451,6 +453,7 @@ void startGame()
             score += 3;
             coin2score = 1;
             coin2 = -100;
+            //PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
         }
         if (randomcoin == 2 && coin2 < -100) {
             coinIdx2 = rand() % 45;
@@ -497,6 +500,7 @@ void startGame()
             score += 3;
             coin3score = 1;
             coin3 = -100;
+            //PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
         }
         if (randomcoin == 3 && coin3 < -100) {
             coinIdx3 = rand() % 45;
@@ -537,11 +541,13 @@ void startGame()
     glVertex2f(coinIdx4 + 26, coin4 + 94 - 1);
     glEnd();
     coin4 -= speed;
+
     if ((abs(lrIndex - coinIdx4) < 8) && (coin4 + 100 < 12)) {
         if (coin4score == 0) {
             score += 3;
             coin4score = 1;
             coin4 = -100;
+           //PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
         }
         if (randomcoin == 4 && coin4 < -100) {
             coinIdx4 = rand() % 45;
@@ -588,6 +594,7 @@ void startGame()
             score += 3;
             coin5score = 1;
             coin5 = -100;
+            //PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
         }
         if (randomcoin == 5 && coin5 < -100) {
             coinIdx5 = rand() % 45;
@@ -751,8 +758,9 @@ void NewMenu() {
 void startMenu()
 {
     //시작 화면
-    if (isGaming == 1)
+    if (isGaming == 1) {
         startGame();
+    }
     //종료 화면
     else
         NewMenu();
@@ -830,6 +838,8 @@ void myKey(unsigned char key, int x, int y)
     {
         if (key == 32)
         {
+            PlaySound(TEXT(background), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+
             score = 0, speed = 1, i = 0, boosterFlag = 0, isBoosting = 0;
             //int over = 0;
 
