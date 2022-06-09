@@ -7,12 +7,19 @@
 #include <stdio.h>
 #include <time.h>
 #include <mmsystem.h>
+#include <Digitalv.h>
 #pragma comment(lib,"winmm.lib")
 
 // 사운드
 //#define CoinSound "C:\\Users\\이영근\\source\\repos\\2DRacingGame\\opengl_racingGame\\BGM\\CoinSound.wav"
 #define CoinSound "F:\\학교 공부\\컴퓨터그래픽스\\localRepo\\TeamProject\\opengl_racingGame\\BGM\\CoinSound.wav"
 #define background "F:\\학교 공부\\컴퓨터그래픽스\\localRepo\\TeamProject\\opengl_racingGame\\BGM\\background.wav"
+
+//MCI_OPEN_PARMS mciOpen;
+//mciOpen.IpstrDeviceType = "waveaudio";
+//mciOpen.IpstrElementName = "background.wav"
+//mciSendCommand(0, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OEPN_TYPE | MCI_OPEN_TYPE)
+
 
 //게임화면상태, 게임 속도, 점수, 차량 스피드, 부스터 지속시간, 부스터 상태, 부스터 등장, 부스터 확률
 int isGaming = 0, FPS = 50, score = 0, speed = 1, i = 0, boosterFlag = 0, isBoosting = 0, randomBooster;
@@ -373,33 +380,33 @@ void startGame()
     //1번 코인
     glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx1 + 26, coin1 + 98);
-    glVertex2f(coinIdx1 + 29, coin1 + 98);
-    glVertex2f(coinIdx1 + 31, coin1 + 96);
-    glVertex2f(coinIdx1 + 31, coin1 + 94);
-    glVertex2f(coinIdx1 + 29, coin1 + 92);
-    glVertex2f(coinIdx1 + 26, coin1 + 92);
-    glVertex2f(coinIdx1 + 24, coin1 + 94);
-    glVertex2f(coinIdx1 + 24, coin1 + 96);
+    glVertex2f(coinIdx1 + 27, coin1 + 97);      //위 왼
+    glVertex2f(coinIdx1 + 29, coin1 + 97);      //위 오른
+    glVertex2f(coinIdx1 + 30, coin1 + 96);      //오른 위
+    glVertex2f(coinIdx1 + 30, coin1 + 95);      //오른 아래
+    glVertex2f(coinIdx1 + 29, coin1 + 94);      //아래 오른
+    glVertex2f(coinIdx1 + 27, coin1 + 94);      //아래 왼
+    glVertex2f(coinIdx1 + 26, coin1 + 95);      //왼 아래
+    glVertex2f(coinIdx1 + 26, coin1 + 96);      //왼 위
     glEnd();
 
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINE_LOOP);
-    glVertex2f(coinIdx1 + 25, coin1 + 95 - 1);
-    glVertex2f(coinIdx1 + 25, coin1 + 97 - 1);
-    glVertex2f(coinIdx1 + 26, coin1 + 98 - 1);
-    glVertex2f(coinIdx1 + 29, coin1 + 98 - 1);
-    glVertex2f(coinIdx1 + 29, coin1 + 97 - 1);
-    glVertex2f(coinIdx1 + 26, coin1 + 97 - 1);
-    glVertex2f(coinIdx1 + 26, coin1 + 95 - 1);
-    glVertex2f(coinIdx1 + 29, coin1 + 95 - 1);
-    glVertex2f(coinIdx1 + 29, coin1 + 94 - 1);
-    glVertex2f(coinIdx1 + 26, coin1 + 94 - 1);
+    glVertex2f(coinIdx1 + 26.4, coin1 + 95);      //바깥 왼 아래
+    glVertex2f(coinIdx1 + 26.4, coin1 + 96);      //바깥 왼 위
+    glVertex2f(coinIdx1 + 27.15, coin1 + 96.75);      //바깥 위 왼
+    glVertex2f(coinIdx1 + 28.9, coin1 + 96.75);      //바깥 위 오른
+    glVertex2f(coinIdx1 + 28.9, coin1 + 96.25);      //안쪽 위 오른
+    glVertex2f(coinIdx1 + 27.15, coin1 + 96.25);      //안쪽 위 왼
+    glVertex2f(coinIdx1 + 26.4, coin1 + 95);      //안쪽 아래 왼
+    glVertex2f(coinIdx1 + 28.9, coin1 + 95);      //안쪽 아래 오른
+    glVertex2f(coinIdx1 + 28.9, coin1 + 94.5);      //바깥 아래 오른
+    glVertex2f(coinIdx1 + 26.4, coin1 + 94.5);      //바깥 아래 왼
     glEnd();
 
     coin1 -= speed; //코인 이동
     // 코인 획득 감지
-    if ((abs(lrIndex - coinIdx1) < 8) && (coin1 + 100 < 12)) {
+    if ((abs(lrIndex - coinIdx1) < 8) && ((coin1 + 100) < 12)) {
         if (coin1score == 0) {
             score += 3;
             coin1score = 1;
@@ -423,32 +430,32 @@ void startGame()
     //2번 코인
     glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx2 + 26, coin2 + 98);
-    glVertex2f(coinIdx2 + 29, coin2 + 98);
-    glVertex2f(coinIdx2 + 31, coin2 + 96);
-    glVertex2f(coinIdx2 + 31, coin2 + 94);
-    glVertex2f(coinIdx2 + 29, coin2 + 92);
-    glVertex2f(coinIdx2 + 26, coin2 + 92);
-    glVertex2f(coinIdx2 + 24, coin2 + 94);
-    glVertex2f(coinIdx2 + 24, coin2 + 96);
+    glVertex2f(coinIdx2 + 27, coin2 + 97);      //위 왼
+    glVertex2f(coinIdx2 + 29, coin2 + 97);      //위 오른
+    glVertex2f(coinIdx2 + 30, coin2 + 96);      //오른 위
+    glVertex2f(coinIdx2 + 30, coin2 + 95);      //오른 아래
+    glVertex2f(coinIdx2 + 29, coin2 + 94);      //아래 오른
+    glVertex2f(coinIdx2 + 27, coin2 + 94);      //아래 왼
+    glVertex2f(coinIdx2 + 26, coin2 + 95);      //왼 아래
+    glVertex2f(coinIdx2 + 26, coin2 + 96);      //왼 위
     glEnd();
 
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINE_LOOP);
-    glVertex2f(coinIdx2 + 25, coin2 + 95 - 1);
-    glVertex2f(coinIdx2 + 25, coin2 + 97 - 1);
-    glVertex2f(coinIdx2 + 26, coin2 + 98 - 1);
-    glVertex2f(coinIdx2 + 29, coin2 + 98 - 1);
-    glVertex2f(coinIdx2 + 29, coin2 + 97 - 1);
-    glVertex2f(coinIdx2 + 26, coin2 + 97 - 1);
-    glVertex2f(coinIdx2 + 26, coin2 + 95 - 1);
-    glVertex2f(coinIdx2 + 29, coin2 + 95 - 1);
-    glVertex2f(coinIdx2 + 29, coin2 + 94 - 1);
-    glVertex2f(coinIdx2 + 26, coin2 + 94 - 1);
+    glVertex2f(coinIdx2 + 26.4, coin2 + 95);      //바깥 왼 아래
+    glVertex2f(coinIdx2 + 26.4, coin2 + 96);      //바깥 왼 위
+    glVertex2f(coinIdx2 + 27.15, coin2 + 96.75);      //바깥 위 왼
+    glVertex2f(coinIdx2 + 28.9, coin2 + 96.75);      //바깥 위 오른
+    glVertex2f(coinIdx2 + 28.9, coin2 + 96.25);      //안쪽 위 오른
+    glVertex2f(coinIdx2 + 27.15, coin2 + 96.25);      //안쪽 위 왼
+    glVertex2f(coinIdx2 + 26.4, coin2 + 95);      //안쪽 아래 왼
+    glVertex2f(coinIdx2 + 28.9, coin2 + 95);      //안쪽 아래 오른
+    glVertex2f(coinIdx2 + 28.9, coin2 + 94.5);      //바깥 아래 오른
+    glVertex2f(coinIdx2 + 26.4, coin2 + 94.5);      //바깥 아래 왼
     glEnd();
 
     coin2 -= speed;
-    if ((abs(lrIndex - coinIdx2) < 8) && (coin2 + 100 < 12)) {
+    if ((abs(lrIndex - coinIdx2) < 8) && ((coin2 + 100) < 12)) {
         if (coin2score == 0) {
             score += 3;
             coin2score = 1;
@@ -468,34 +475,33 @@ void startGame()
             coin2 = 0;
     }
     //3번 코인
-    glColor3f(0.0, 0.0, 0.0);
     glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx3 + 26, coin3 + 98);
-    glVertex2f(coinIdx3 + 29, coin3 + 98);
-    glVertex2f(coinIdx3 + 31, coin3 + 96);
-    glVertex2f(coinIdx3 + 31, coin3 + 94);
-    glVertex2f(coinIdx3 + 29, coin3 + 92);
-    glVertex2f(coinIdx3 + 26, coin3 + 92);
-    glVertex2f(coinIdx3 + 24, coin3 + 94);
-    glVertex2f(coinIdx3 + 24, coin3 + 96);
+    glVertex2f(coinIdx3 + 27, coin3 + 97);      //위 왼
+    glVertex2f(coinIdx3 + 29, coin3 + 97);      //위 오른
+    glVertex2f(coinIdx3 + 30, coin3 + 96);      //오른 위
+    glVertex2f(coinIdx3 + 30, coin3 + 95);      //오른 아래
+    glVertex2f(coinIdx3 + 29, coin3 + 94);      //아래 오른
+    glVertex2f(coinIdx3 + 27, coin3 + 94);      //아래 왼
+    glVertex2f(coinIdx3 + 26, coin3 + 95);      //왼 아래
+    glVertex2f(coinIdx3 + 26, coin3 + 96);      //왼 위
     glEnd();
 
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINE_LOOP);
-    glVertex2f(coinIdx3 + 25, coin3 + 95 - 1);
-    glVertex2f(coinIdx3 + 25, coin3 + 97 - 1);
-    glVertex2f(coinIdx3 + 26, coin3 + 98 - 1);
-    glVertex2f(coinIdx3 + 29, coin3 + 98 - 1);
-    glVertex2f(coinIdx3 + 29, coin3 + 97 - 1);
-    glVertex2f(coinIdx3 + 26, coin3 + 97 - 1);
-    glVertex2f(coinIdx3 + 26, coin3 + 95 - 1);
-    glVertex2f(coinIdx3 + 29, coin3 + 95 - 1);
-    glVertex2f(coinIdx3 + 29, coin3 + 94 - 1);
-    glVertex2f(coinIdx3 + 26, coin3 + 94 - 1);
+    glVertex2f(coinIdx3 + 26.4, coin3 + 95);      //바깥 왼 아래
+    glVertex2f(coinIdx3 + 26.4, coin3 + 96);      //바깥 왼 위
+    glVertex2f(coinIdx3 + 27.15, coin3 + 96.75);      //바깥 위 왼
+    glVertex2f(coinIdx3 + 28.9, coin3 + 96.75);      //바깥 위 오른
+    glVertex2f(coinIdx3 + 28.9, coin3 + 96.25);      //안쪽 위 오른
+    glVertex2f(coinIdx3 + 27.15, coin3 + 96.25);      //안쪽 위 왼
+    glVertex2f(coinIdx3 + 26.4, coin3 + 95);      //안쪽 아래 왼
+    glVertex2f(coinIdx3 + 28.9, coin3 + 95);      //안쪽 아래 오른
+    glVertex2f(coinIdx3 + 28.9, coin3 + 94.5);      //바깥 아래 오른
+    glVertex2f(coinIdx3 + 26.4, coin3 + 94.5);      //바깥 아래 왼
     glEnd();
     coin3 -= speed;
-    if ((abs(lrIndex - coinIdx3) < 8) && (coin3 + 100 < 12)) {
+    if ((abs(lrIndex - coinIdx3) < 8) && ((coin3 + 100) < 12)) {
         if (coin3score == 0) {
             score += 3;
             coin3score = 1;
@@ -517,32 +523,32 @@ void startGame()
     //4번 코인
     glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx4 + 26, coin4 + 98);
-    glVertex2f(coinIdx4 + 29, coin4 + 98);
-    glVertex2f(coinIdx4 + 31, coin4 + 96);
-    glVertex2f(coinIdx4 + 31, coin4 + 94);
-    glVertex2f(coinIdx4 + 29, coin4 + 92);
-    glVertex2f(coinIdx4 + 26, coin4 + 92);
-    glVertex2f(coinIdx4 + 24, coin4 + 94);
-    glVertex2f(coinIdx4 + 24, coin4 + 96);
+    glVertex2f(coinIdx4 + 27, coin4 + 97);      //위 왼
+    glVertex2f(coinIdx4 + 29, coin4 + 97);      //위 오른
+    glVertex2f(coinIdx4 + 30, coin4 + 96);      //오른 위
+    glVertex2f(coinIdx4 + 30, coin4 + 95);      //오른 아래
+    glVertex2f(coinIdx4 + 29, coin4 + 94);      //아래 오른
+    glVertex2f(coinIdx4 + 27, coin4 + 94);      //아래 왼
+    glVertex2f(coinIdx4 + 26, coin4 + 95);      //왼 아래
+    glVertex2f(coinIdx4 + 26, coin4 + 96);      //왼 위
     glEnd();
 
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINE_LOOP);
-    glVertex2f(coinIdx4 + 25, coin4 + 95 - 1);
-    glVertex2f(coinIdx4 + 25, coin4 + 97 - 1);
-    glVertex2f(coinIdx4 + 26, coin4 + 98 - 1);
-    glVertex2f(coinIdx4 + 29, coin4 + 98 - 1);
-    glVertex2f(coinIdx4 + 29, coin4 + 97 - 1);
-    glVertex2f(coinIdx4 + 26, coin4 + 97 - 1);
-    glVertex2f(coinIdx4 + 26, coin4 + 95 - 1);
-    glVertex2f(coinIdx4 + 29, coin4 + 95 - 1);
-    glVertex2f(coinIdx4 + 29, coin4 + 94 - 1);
-    glVertex2f(coinIdx4 + 26, coin4 + 94 - 1);
+    glVertex2f(coinIdx4 + 26.4, coin4 + 95);      //바깥 왼 아래
+    glVertex2f(coinIdx4 + 26.4, coin4 + 96);      //바깥 왼 위
+    glVertex2f(coinIdx4 + 27.15, coin4 + 96.75);      //바깥 위 왼
+    glVertex2f(coinIdx4 + 28.9, coin4 + 96.75);      //바깥 위 오른
+    glVertex2f(coinIdx4 + 28.9, coin4 + 96.25);      //안쪽 위 오른
+    glVertex2f(coinIdx4 + 27.15, coin4 + 96.25);      //안쪽 위 왼
+    glVertex2f(coinIdx4 + 26.4, coin4 + 95);      //안쪽 아래 왼
+    glVertex2f(coinIdx4 + 28.9, coin4 + 95);      //안쪽 아래 오른
+    glVertex2f(coinIdx4 + 28.9, coin4 + 94.5);      //바깥 아래 오른
+    glVertex2f(coinIdx4 + 26.4, coin4 + 94.5);      //바깥 아래 왼
     glEnd();
     coin4 -= speed;
 
-    if ((abs(lrIndex - coinIdx4) < 8) && (coin4 + 100 < 12)) {
+    if ((abs(lrIndex - coinIdx4) < 8) && ((coin4 + 100) < 12)) {
         if (coin4score == 0) {
             score += 3;
             coin4score = 1;
@@ -561,35 +567,35 @@ void startGame()
         if (randomcoin == 4)
             coin4 = 0;
     }
+
     //5번 코인
     glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx5 + 26, coin5 + 98);
-    glVertex2f(coinIdx5 + 29, coin5 + 98);
-    glVertex2f(coinIdx5 + 31, coin5 + 96);
-    glVertex2f(coinIdx5 + 31, coin5 + 94);
-    glVertex2f(coinIdx5 + 29, coin5 + 92);
-    glVertex2f(coinIdx5 + 26, coin5 + 92);
-    glVertex2f(coinIdx5 + 24, coin5 + 94);
-    glVertex2f(coinIdx5 + 24, coin5 + 96);
+    glVertex2f(coinIdx5 + 27, coin5 + 97);      //위 왼
+    glVertex2f(coinIdx5 + 29, coin5 + 97);      //위 오른
+    glVertex2f(coinIdx5 + 30, coin5 + 96);      //오른 위
+    glVertex2f(coinIdx5 + 30, coin5 + 95);      //오른 아래
+    glVertex2f(coinIdx5 + 29, coin5 + 94);      //아래 오른
+    glVertex2f(coinIdx5 + 27, coin5 + 94);      //아래 왼
+    glVertex2f(coinIdx5 + 26, coin5 + 95);      //왼 아래
+    glVertex2f(coinIdx5 + 26, coin5 + 96);      //왼 위
     glEnd();
 
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINE_LOOP);
-    glVertex2f(coinIdx5 + 25, coin5 + 95 - 1);
-    glVertex2f(coinIdx5 + 25, coin5 + 97 - 1);
-    glVertex2f(coinIdx5 + 26, coin5 + 98 - 1);
-    glVertex2f(coinIdx5 + 29, coin5 + 98 - 1);
-    glVertex2f(coinIdx5 + 29, coin5 + 97 - 1);
-    glVertex2f(coinIdx5 + 26, coin5 + 97 - 1);
-    glVertex2f(coinIdx5 + 26, coin5 + 95 - 1);
-    glVertex2f(coinIdx5 + 29, coin5 + 95 - 1);
-    glVertex2f(coinIdx5 + 29, coin5 + 94 - 1);
-    glVertex2f(coinIdx5 + 26, coin5 + 94 - 1);
-
+    glVertex2f(coinIdx5 + 26.4, coin5 + 95);      //바깥 왼 아래
+    glVertex2f(coinIdx5 + 26.4, coin5 + 96);      //바깥 왼 위
+    glVertex2f(coinIdx5 + 27.15, coin5 + 96.75);      //바깥 위 왼
+    glVertex2f(coinIdx5 + 28.9, coin5 + 96.75);      //바깥 위 오른
+    glVertex2f(coinIdx5 + 28.9, coin5 + 96.25);      //안쪽 위 오른
+    glVertex2f(coinIdx5 + 27.15, coin5 + 96.25);      //안쪽 위 왼
+    glVertex2f(coinIdx5 + 26.4, coin5 + 95);      //안쪽 아래 왼
+    glVertex2f(coinIdx5 + 28.9, coin5 + 95);      //안쪽 아래 오른
+    glVertex2f(coinIdx5 + 28.9, coin5 + 94.5);      //바깥 아래 오른
+    glVertex2f(coinIdx5 + 26.4, coin5 + 94.5);      //바깥 아래 왼
     glEnd();
     coin5 -= speed;
-    if ((abs(lrIndex - coinIdx5) < 8) && (coin5 + 100 < 12)) {
+    if ((abs(lrIndex - coinIdx5) < 8) && ((coin5 + 100) < 12)) {
         if (coin5score == 0) {
             score += 3;
             coin5score = 1;
