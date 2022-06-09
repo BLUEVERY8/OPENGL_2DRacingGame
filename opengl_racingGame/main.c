@@ -39,6 +39,8 @@ int lifeIndex = 80;
 // ���� ��
 int carColor;
 const GLfloat white[] = { 1.0, 1.0, 1.0, 1.0 };
+const GLfloat black[] = { 0.8, 0.8, 0.8, 1.0 };
+const GLfloat yellow[] = { 1.0, 1.0, 0.0, 1.0 };
 const GLfloat polished[] = { 100.0 };
 // ����
 int coin1 = 0, coin2 = 10, coin3 = 20, coin4 = 30, coin5 = 40;
@@ -72,34 +74,20 @@ void renderBitmapString(float x, float y, void* font, const char* string)
 void startGame()
 {
     glEnable(GL_LIGHTING);
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, white);
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, black);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, black);
     glMaterialfv(GL_FRONT, GL_SHININESS, polished);
-    glColor3f(0.412, 0.412, 0.412);
+    //glColor3f(0.412, 0.412, 0.412);
     glBegin(GL_POLYGON);
     glVertex2f(20, 0);
     glVertex2f(20, 100);
     glVertex2f(80, 100);
     glVertex2f(80, 0);
     glEnd();
-    glDisable(GL_LIGHTING);
-    //Road Left Border
-    glColor3f(1.0f, 1.0f, 1.0f);
-    glBegin(GL_POLYGON);
-    glVertex2f(20, 0);
-    glVertex2f(20, 100);
-    glVertex2f(23, 100);
-    glVertex2f(23, 0);
-    glEnd();
-
-    //Road Right Border
-    glColor3f(1.0f, 1.0f, 1.0f);
-    glBegin(GL_POLYGON);
-    glVertex2f(77, 0);
-    glVertex2f(77, 100);
-    glVertex2f(80, 100);
-    glVertex2f(80, 0);
-    glEnd();
+    
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, yellow);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, yellow);
+    glMaterialfv(GL_FRONT, GL_SHININESS, polished);
 
     //Road Middel Border
       //TOP
@@ -143,7 +131,27 @@ void startGame()
         roadDivBtm = 100;
         score++;
     }
+    glDisable(GL_LIGHTING);
+    //Road Left Border
+    glColor3f(1.0f, 1.0f, 1.0f);
+    glBegin(GL_POLYGON);
+    glVertex2f(20, 0);
+    glVertex2f(20, 100);
+    glVertex2f(23, 100);
+    glVertex2f(23, 0);
+    glEnd();
+
+    //Road Right Border
+    glColor3f(1.0f, 1.0f, 1.0f);
+    glBegin(GL_POLYGON);
+    glVertex2f(77, 0);
+    glVertex2f(77, 100);
+    glVertex2f(80, 100);
+    glVertex2f(80, 0);
+    glEnd();
+
     
+
     // ������
     glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
@@ -198,12 +206,32 @@ void startGame()
     randomcoin = rand() % 40;
 
     //1번 코인
-    glColor3f(0.0, 0.0, 0.0);
+    glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx1 + 28, coin1 + 100 - 2);
-    glVertex2f(coinIdx1 + 26, coin1 + 100 - 6);
-    glVertex2f(coinIdx1 + 30, coin1 + 100 - 6);
+    glVertex2f(coinIdx1 + 26, coin1 + 98);
+    glVertex2f(coinIdx1 + 29, coin1 + 98);
+    glVertex2f(coinIdx1 + 31, coin1 + 96);
+    glVertex2f(coinIdx1 + 31, coin1 + 94);
+    glVertex2f(coinIdx1 + 29, coin1 + 92);
+    glVertex2f(coinIdx1 + 26, coin1 + 92);
+    glVertex2f(coinIdx1 + 24, coin1 + 94);
+    glVertex2f(coinIdx1 + 24, coin1 + 96);
     glEnd();
+
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(coinIdx1 + 25, coin1 + 95 - 1);
+    glVertex2f(coinIdx1 + 25, coin1 + 97 - 1);
+    glVertex2f(coinIdx1 + 26, coin1 + 98 - 1);
+    glVertex2f(coinIdx1 + 29, coin1 + 98 - 1);
+    glVertex2f(coinIdx1 + 29, coin1 + 97 - 1);
+    glVertex2f(coinIdx1 + 26, coin1 + 97 - 1);
+    glVertex2f(coinIdx1 + 26, coin1 + 95 - 1);
+    glVertex2f(coinIdx1 + 29, coin1 + 95 - 1);
+    glVertex2f(coinIdx1 + 29, coin1 + 94 - 1);
+    glVertex2f(coinIdx1 + 26, coin1 + 94 - 1);
+    glEnd();
+
     coin1 -= speed; //코인 이동
     // 코인 획득 감지
     if ((abs(lrIndex - coinIdx1) < 8) && (coin1 + 100 < 12)) {
@@ -227,11 +255,30 @@ void startGame()
     }
 
     //2번 코인
-    glColor3f(0.0, 0.0, 0.0);
+    glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx2 + 28, coin2 + 100 - 2);
-    glVertex2f(coinIdx2 + 26, coin2 + 100 - 6);
-    glVertex2f(coinIdx2 + 30, coin2 + 100 - 6);
+    glVertex2f(coinIdx2 + 26, coin2 + 98);
+    glVertex2f(coinIdx2 + 29, coin2 + 98);
+    glVertex2f(coinIdx2 + 31, coin2 + 96);
+    glVertex2f(coinIdx2 + 31, coin2 + 94);
+    glVertex2f(coinIdx2 + 29, coin2 + 92);
+    glVertex2f(coinIdx2 + 26, coin2 + 92);
+    glVertex2f(coinIdx2 + 24, coin2 + 94);
+    glVertex2f(coinIdx2 + 24, coin2 + 96);
+    glEnd();
+
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(coinIdx2 + 25, coin2 + 95 - 1);
+    glVertex2f(coinIdx2 + 25, coin2 + 97 - 1);
+    glVertex2f(coinIdx2 + 26, coin2 + 98 - 1);
+    glVertex2f(coinIdx2 + 29, coin2 + 98 - 1);
+    glVertex2f(coinIdx2 + 29, coin2 + 97 - 1);
+    glVertex2f(coinIdx2 + 26, coin2 + 97 - 1);
+    glVertex2f(coinIdx2 + 26, coin2 + 95 - 1);
+    glVertex2f(coinIdx2 + 29, coin2 + 95 - 1);
+    glVertex2f(coinIdx2 + 29, coin2 + 94 - 1);
+    glVertex2f(coinIdx2 + 26, coin2 + 94 - 1);
     glEnd();
     coin2 -= speed;
     if ((abs(lrIndex - coinIdx2) < 8) && (coin2 + 100 < 12)) {
@@ -254,10 +301,30 @@ void startGame()
     }
     //3번 코인
     glColor3f(0.0, 0.0, 0.0);
+    glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx3 + 28, coin3 + 100 - 2);
-    glVertex2f(coinIdx3 + 26, coin3 + 100 - 6);
-    glVertex2f(coinIdx3 + 30, coin3 + 100 - 6);
+    glVertex2f(coinIdx3 + 26, coin3 + 98);
+    glVertex2f(coinIdx3 + 29, coin3 + 98);
+    glVertex2f(coinIdx3 + 31, coin3 + 96);
+    glVertex2f(coinIdx3 + 31, coin3 + 94);
+    glVertex2f(coinIdx3 + 29, coin3 + 92);
+    glVertex2f(coinIdx3 + 26, coin3 + 92);
+    glVertex2f(coinIdx3 + 24, coin3 + 94);
+    glVertex2f(coinIdx3 + 24, coin3 + 96);
+    glEnd();
+
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(coinIdx3 + 25, coin3 + 95 - 1);
+    glVertex2f(coinIdx3 + 25, coin3 + 97 - 1);
+    glVertex2f(coinIdx3 + 26, coin3 + 98 - 1);
+    glVertex2f(coinIdx3 + 29, coin3 + 98 - 1);
+    glVertex2f(coinIdx3 + 29, coin3 + 97 - 1);
+    glVertex2f(coinIdx3 + 26, coin3 + 97 - 1);
+    glVertex2f(coinIdx3 + 26, coin3 + 95 - 1);
+    glVertex2f(coinIdx3 + 29, coin3 + 95 - 1);
+    glVertex2f(coinIdx3 + 29, coin3 + 94 - 1);
+    glVertex2f(coinIdx3 + 26, coin3 + 94 - 1);
     glEnd();
     coin3 -= speed;
     if ((abs(lrIndex - coinIdx3) < 8) && (coin3 + 100 < 12)) {
@@ -279,11 +346,30 @@ void startGame()
             coin3 = 0;
     }
     //4번 코인
-    glColor3f(0.0, 0.0, 0.0);
+    glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx4 + 28, coin4 + 100 - 2);
-    glVertex2f(coinIdx4 + 26, coin4 + 100 - 6);
-    glVertex2f(coinIdx4 + 30, coin4 + 100 - 6);
+    glVertex2f(coinIdx4 + 26, coin4 + 98);
+    glVertex2f(coinIdx4 + 29, coin4 + 98);
+    glVertex2f(coinIdx4 + 31, coin4 + 96);
+    glVertex2f(coinIdx4 + 31, coin4 + 94);
+    glVertex2f(coinIdx4 + 29, coin4 + 92);
+    glVertex2f(coinIdx4 + 26, coin4 + 92);
+    glVertex2f(coinIdx4 + 24, coin4 + 94);
+    glVertex2f(coinIdx4 + 24, coin4 + 96);
+    glEnd();
+
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(coinIdx4 + 25, coin4 + 95 - 1);
+    glVertex2f(coinIdx4 + 25, coin4 + 97 - 1);
+    glVertex2f(coinIdx4 + 26, coin4 + 98 - 1);
+    glVertex2f(coinIdx4 + 29, coin4 + 98 - 1);
+    glVertex2f(coinIdx4 + 29, coin4 + 97 - 1);
+    glVertex2f(coinIdx4 + 26, coin4 + 97 - 1);
+    glVertex2f(coinIdx4 + 26, coin4 + 95 - 1);
+    glVertex2f(coinIdx4 + 29, coin4 + 95 - 1);
+    glVertex2f(coinIdx4 + 29, coin4 + 94 - 1);
+    glVertex2f(coinIdx4 + 26, coin4 + 94 - 1);
     glEnd();
     coin4 -= speed;
     if ((abs(lrIndex - coinIdx4) < 8) && (coin4 + 100 < 12)) {
@@ -305,14 +391,34 @@ void startGame()
             coin4 = 0;
     }
     //5번 코인
-    glColor3f(0.0, 0.0, 0.0);
+    glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx5 + 28, coin5 + 100 - 2);
-    glVertex2f(coinIdx5 + 26, coin5 + 100 - 6);
-    glVertex2f(coinIdx5 + 30, coin5 + 100 - 6);
+    glVertex2f(coinIdx5 + 26, coin5 + 98);
+    glVertex2f(coinIdx5 + 29, coin5 + 98);
+    glVertex2f(coinIdx5 + 31, coin5 + 96);
+    glVertex2f(coinIdx5 + 31, coin5 + 94);
+    glVertex2f(coinIdx5 + 29, coin5 + 92);
+    glVertex2f(coinIdx5 + 26, coin5 + 92);
+    glVertex2f(coinIdx5 + 24, coin5 + 94);
+    glVertex2f(coinIdx5 + 24, coin5 + 96);
+    glEnd();
+
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(coinIdx5 + 25, coin5 + 95 - 1);
+    glVertex2f(coinIdx5 + 25, coin5 + 97 - 1);
+    glVertex2f(coinIdx5 + 26, coin5 + 98 - 1);
+    glVertex2f(coinIdx5 + 29, coin5 + 98 - 1);
+    glVertex2f(coinIdx5 + 29, coin5 + 97 - 1);
+    glVertex2f(coinIdx5 + 26, coin5 + 97 - 1);
+    glVertex2f(coinIdx5 + 26, coin5 + 95 - 1);
+    glVertex2f(coinIdx5 + 29, coin5 + 95 - 1);
+    glVertex2f(coinIdx5 + 29, coin5 + 94 - 1);
+    glVertex2f(coinIdx5 + 26, coin5 + 94 - 1);
+
     glEnd();
     coin5 -= speed;
-    if ((abs(lrIndex - coinIdx5) < 8) && (coin5 + 100 < 12)) {
+    if ((abs(lrIndex - coinIdx5) < 8) && ((coin5 + 100) < 12)) {
         if (coin5score == 0) {
             score += 3;
             coin5score = 1;
@@ -546,25 +652,35 @@ void startGame()
     }
 
     //차량
-    GLfloat light0Position[] = { 27, 9, 1.5, 1.0 };
-    GLfloat light1Position[] = { 29, 9, 1.5, 1.0 };
+    GLfloat light0Position[] = { 0, 5, 3, 1.0 };
+    GLfloat light1Position[] = { 0, 5, 3, 1.0 };
     glPushMatrix();
+    glTranslatef(lrIndex + 27, 9, 1);
     glLightfv(GL_LIGHT0, GL_POSITION, light0Position);
-    glTranslatef(lrIndex + 27, 9, 0);
-    glDisable(GL_LIGHT0);
-    glColor3f(0.9, 0.9, 0.9);
-    glutSolidSphere(1, 40, 40);
     glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHTING);
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, white);
+    glMaterialfv(GL_FRONT, GL_SHININESS, polished);
+    //glColor3f(0.9, 0.9, 0.9);
+    glutSolidSphere(1, 40, 40);
+    glDisable(GL_LIGHTING);
+    //glEnable(GL_LIGHT0);
     glPopMatrix();
 
     glPushMatrix();
+    glTranslatef(lrIndex + 29, 9, 1);
     glLightfv(GL_LIGHT1, GL_POSITION, light1Position);
-    glTranslatef(lrIndex + 29, 9, 0);
-    glDisable(GL_LIGHT1);
-    glColor3d(0.9, 0.9, 0.9);
-    glutSolidSphere(1, 40, 40);
     glEnable(GL_LIGHT1);
+    glEnable(GL_LIGHTING);
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, white);
+    glMaterialfv(GL_FRONT, GL_SHININESS, polished);
+    //glColor3d(0.9, 0.9, 0.9);
+    glutSolidSphere(1, 40, 40);
+    glDisable(GL_LIGHTING);
     glPopMatrix();
+
     glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(lrIndex + 26 - 2, 5);
@@ -748,7 +864,7 @@ void myReshape(int w, int h)
     //GLfloat heightFactor = (GLfloat)h / 300;
 
     glMatrixMode(GL_PROJECTION); glLoadIdentity();
-    glOrtho(0, 100, 0, 100, -1, 1);
+    glOrtho(0, 100, 0, 100, -5, 5);
     glMatrixMode(GL_MODELVIEW); glLoadIdentity();
 }
 void myTimer(int value)
@@ -854,13 +970,13 @@ void initLight()
     GLfloat light0Ambient[] = { 0.5, 0.4, 0.3, 1.0 };
     GLfloat light0Diffuse[] = { 0.8, 0.7, 0.6, 1.0 };
     GLfloat light0Specular[] = { 1.0, 1.0, 1.0, 1.0 };
-    //GLfloat light0Direction[] = { 0, 1, -1.0 };
-    GLfloat light0Cutoff[] = { 80 };
+    //GLfloat light0Direction[] = { 0, 0, 0.0 };
+    GLfloat light0Cutoff[] = { 20 };
     GLfloat materialAmbient[] = { 0.4, 0.4, 0.4, 1.0 };
     GLfloat materialDiffuse[] = { 0.9, 0.9, 0.9, 1.0 };
     GLfloat materialSpecular[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat materialShininess[] = { 25.0 };
-    glShadeModel(GL_SMOOTH);
+    glShadeModel(GL_FLAT);
     glEnable(GL_DEPTH_TEST);
     //glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
@@ -868,20 +984,23 @@ void initLight()
     glLightfv(GL_LIGHT0, GL_SPECULAR, light0Ambient);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light0Diffuse);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light0Specular);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, white);
     //glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light0Direction);
     glLightfv(GL_LIGHT0, GL_SPOT_CUTOFF, light0Cutoff);
 
     GLfloat light1Ambient[] = { 0.5, 0.4, 0.3, 1.0 };
     GLfloat light1Diffuse[] = { 0.8, 0.7, 0.6, 1.0 };
     GLfloat light1Specular[] = { 1.0, 1.0, 1.0, 1.0 };
-    //GLfloat light1Direction[] = { 0, 1, -1.0 };
-    GLfloat light1Cutoff[] = { 80 };
+    //GLfloat light1Direction[] = { 0, 0, 0.0 };
+    GLfloat light1Cutoff[] = { 20 };
 
     glLightfv(GL_LIGHT1, GL_SPECULAR, light1Ambient);
     glLightfv(GL_LIGHT1, GL_SPECULAR, light1Diffuse);
     glLightfv(GL_LIGHT1, GL_SPECULAR, light1Specular);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, white);
     //glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light1Direction);
     glLightfv(GL_LIGHT1, GL_SPOT_CUTOFF, light1Cutoff);
+    glEnable(GL_LIGHT0); 
 }
 void MenuProc(int entryID) {
     if (entryID == 3) {
@@ -927,4 +1046,3 @@ int main(int argc, char* argv[])
 
     return 0;
 }
-
