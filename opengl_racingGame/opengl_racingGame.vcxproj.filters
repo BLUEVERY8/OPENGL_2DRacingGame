@@ -20,9 +20,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="BGM\CoinSound.wav">
-      <Filter>리소스 파일</Filter>
-    </Media>
     <Media Include="BGM\background.wav">
       <Filter>리소스 파일</Filter>
     </Media>

@@ -23,7 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <Media Include="BGM\background.wav" />
-    <Media Include="BGM\CoinSound.wav" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

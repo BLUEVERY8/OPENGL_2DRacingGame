@@ -1,45 +1,54 @@
 #pragma warning (disable:4996)
-#include <windows.h> //윈도우는 windows.h
-#include <glut.h> //윈도우는 glut.h, glu.h, gl.h
+#include <windows.h>
+#include <glut.h>
 #include <glu.h> 
 #include <gl.h> 
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 #include <mmsystem.h>
+#include <Digitalv.h>
 #pragma comment(lib,"winmm.lib")
 
-// 사운드
-//#define CoinSound "C:\\Users\\이영근\\source\\repos\\2DRacingGame\\opengl_racingGame\\BGM\\CoinSound.wav"
-#define CoinSound "F:\\학교 공부\\컴퓨터그래픽스\\localRepo\\TeamProject\\opengl_racingGame\\BGM\\CoinSound.wav"
-#define background "F:\\학교 공부\\컴퓨터그래픽스\\localRepo\\TeamProject\\opengl_racingGame\\BGM\\background.wav"
+// Sound
+#define background "BGM\\background.wav"
 
-//게임화면상태, 게임 속도, 점수, 차량 스피드, 부스터 지속시간, 부스터 상태, 부스터 등장, 부스터 확률
+// Game Status, GameSpeed, Score, Car Speed, Booster Duration, Booster Status, Booster Shown, Booster Probability
 int isGaming = 0, FPS = 50, score = 0, speed = 1, i = 0, boosterFlag = 0, isBoosting = 0, randomBooster;
-int over = 0;
-// 맵
+int isCrash = 0;
+double delay = 0;
+
+// Map
 int roadDivTopMost = 0;
 int roadDivTop = 0;
 int roadDivMdl = 0;
 int roadDivBtm = 0;
-//차량 x 인덱스
+// Car x Index
 int lrIndex = 0;
 
-//장애물 차량 , 장애물 차량 인덱스
+// ComingCars Index
 int comingCar1 = 0;
 int cCar1Index = 0;
 int comingCar2 = 35;
 int cCar2Index = 0;
 int comingCar3 = 70;
 int cCar3Index = 0;
-int randomCar1;
 
-// 라이프
+// Life
 GLfloat life1 = 1, life2 = 1, life3 = 1;
 int lifeIndex = 80;
-// 차량 색
+
+// Car Color
 int carColor;
-// 코인
+
+// Light
+int carColor;
+const GLfloat white[] = { 1.0, 1.0, 1.0, 1.0 };
+const GLfloat black[] = { 0.8, 0.8, 0.8, 1.0 };
+const GLfloat yellow[] = { 1.0, 1.0, 0.0, 1.0 };
+const GLfloat polished[] = { 100.0 };
+
+// Coin & Booster
 int coin1 = 0, coin2 = 10, coin3 = 20, coin4 = 30, coin5 = 40;
 int coinIdx1 = 0, coinIdx2 = 0, coinIdx3 = 0, coinIdx4 = 0, coinIdx5 = 0;
 int booster = 0;
@@ -47,13 +56,20 @@ int boosterIdx = 0;
 int coin1score = 0, coin2score = 0, coin3score = 0, coin4score = 0, coin5score = 0;
 int randomcoin = 0;
 
-//글자 폰트
+// Play Time
+int play = 0;
+// Save Name & Score
+char* player[10][10], record[10];
+
+// Text Font
 void* font1 = GLUT_BITMAP_TIMES_ROMAN_24;
 void* font2 = GLUT_BITMAP_HELVETICA_18;
 void* font3 = GLUT_BITMAP_8_BY_13;
-// 점수 저장 버퍼
+
+// Save Score Buffer
 char buffer1[50], buffer2[50];
-//화면에 글자 출력
+
+// Print text on screen
 void renderBitmapString(float x, float y, void* font, const char* string)
 {
     const char* c;
@@ -66,6 +82,12 @@ void renderBitmapString(float x, float y, void* font, const char* string)
 
 void startGame()
 {
+
+   /* glEnable(GL_LIGHTING);
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, black);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, black);
+    glMaterialfv(GL_FRONT, GL_SHININESS, polished);*/
+
     glColor3f(0.412, 0.412, 0.412);
     glBegin(GL_POLYGON);
     glVertex2f(20, 0);
@@ -101,11 +123,13 @@ void startGame()
     glVertex2f(52, roadDivTop + 100);
     glVertex2f(52, roadDivTop + 80);
     glEnd();
+
     roadDivTop -= speed;
     if (roadDivTop < -100) {
         roadDivTop = 20;
         score++;
     }
+
     glColor3f(1.0f, 1.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(48, roadDivMdl + 40);
@@ -113,8 +137,6 @@ void startGame()
     glVertex2f(52, roadDivMdl + 60);
     glVertex2f(52, roadDivMdl + 40);
     glEnd();
-
-
 
     roadDivMdl -= speed;
     if (roadDivMdl < -60) {
@@ -134,7 +156,8 @@ void startGame()
         roadDivBtm = 100;
         score++;
     }
-    // 점수판
+
+    // Score Board
     glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(80, 97);
@@ -147,7 +170,7 @@ void startGame()
     glColor3f(0.0f, 1.0f, 0.0f);
     renderBitmapString(80.5, 95, (void*)font3, buffer1);
 
-    // 라이프
+    // Life
     glColor3f(life1, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(lifeIndex + 4, 93);
@@ -184,6 +207,39 @@ void startGame()
     glVertex2f(lifeIndex + 13.5, 92.5);
     glEnd();
 
+   
+
+    //// HeadLight
+    //GLfloat light0Position[] = { 0, 5, 3, 1.0 };
+    //GLfloat light1Position[] = { 0, 5, 3, 1.0 };
+    //glPushMatrix();
+    //glTranslatef(lrIndex + 27, 9, 1);
+    //glLightfv(GL_LIGHT0, GL_POSITION, light0Position);
+    //glEnable(GL_LIGHT0);
+    //glEnable(GL_LIGHTING);
+    //glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
+    //glMaterialfv(GL_FRONT, GL_SPECULAR, white);
+    //glMaterialfv(GL_FRONT, GL_SHININESS, polished);
+    ////glColor3f(0.9, 0.9, 0.9);
+    //glutSolidSphere(1, 40, 40);
+    //glDisable(GL_LIGHTING);
+    ////glEnable(GL_LIGHT0);
+    //glPopMatrix();
+
+    //glPushMatrix();
+    //glTranslatef(lrIndex + 29, 9, 1);
+    //glLightfv(GL_LIGHT1, GL_POSITION, light1Position);
+    //glEnable(GL_LIGHT1);
+    //glEnable(GL_LIGHTING);
+    //glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
+    //glMaterialfv(GL_FRONT, GL_SPECULAR, white);
+    //glMaterialfv(GL_FRONT, GL_SHININESS, polished);
+    ////glColor3d(0.9, 0.9, 0.9);
+    //glutSolidSphere(1, 40, 40);
+    //glDisable(GL_LIGHTING);
+    //glPopMatrix();
+
+    //Front Tire
     glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(lrIndex + 26 - 2, 5);
@@ -191,6 +247,7 @@ void startGame()
     glVertex2f(lrIndex + 30 + 2, 7);
     glVertex2f(lrIndex + 30 + 2, 5);
     glEnd();
+
     //Back Tire
     glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
@@ -199,6 +256,7 @@ void startGame()
     glVertex2f(lrIndex + 30 + 2, 3);
     glVertex2f(lrIndex + 30 + 2, 1);
     glEnd();
+
     //Car Body
     if (carColor == 3) {
         glColor3f(0.0f, 0.0f, 1.0f);
@@ -210,19 +268,17 @@ void startGame()
         glColor3f(1.0f, 0.0f, 0.0f);
     }
     else
-        glColor3f(0.678, 1.0f, 0.184);
+        glColor3f(1.0f, 0.1f, 0.1f);
     glBegin(GL_POLYGON);
     glVertex2f(lrIndex + 26, 1);
     glVertex2f(lrIndex + 26, 8);
-    glColor3f(0.0f, 0.545, 0.545);
-
     glVertex2f(lrIndex + 28, 10);
     glVertex2f(lrIndex + 30, 8);
     glVertex2f(lrIndex + 30, 1);
     glEnd();
 
 
-    // 장애물 차량 1번
+    // Comingcar 1
     glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(cCar1Index + 26 - 2, comingCar1 + 100 - 4);
@@ -253,24 +309,40 @@ void startGame()
         comingCar1 = 0;
         cCar1Index = rand() % 45;
     }
-
-    // 장애물 차량 1번에 부딪혔는지 체크
-    if ((abs(lrIndex - cCar1Index) < 8) && (comingCar1 + 100 < 10)) {
-        if ((life1 == 1) && (life2 == 1) && (life3 == 1)) {
-            life3 = 0;
+    delay += 0.9;
+    if (isBoosting == 0) {
+        if (delay > 10) {
+            isCrash = 0;
+            delay = 0;
         }
-        else if ((life1 == 1) && (life2 == 1) && (life3 == 0)) {
-            life2 = 0;
-        }
-        else if ((life1 == 1) && (life2 == 0) && (life3 == 0)) {
-            life1 = 0;
-        }
-        if ((life1 == 0) && (life2 == 0) && (life3 == 0)) {
-            isGaming = 2;
-        }
-        over = 1;
     }
-    // 장애물 차량 2번
+    else {
+        if (delay > 4) {
+            isCrash = 0;
+            delay = 0;
+        }
+    }
+
+    // Check crash with Comingcar 1
+    if (isCrash == 0) {
+        if ((abs(lrIndex - cCar1Index) < 8) && (comingCar1 + 100 < 10)) {
+            if ((life1 == 1) && (life2 == 1) && (life3 == 1)) {
+                life3 = 0;
+            }
+            else if ((life1 == 1) && (life2 == 1) && (life3 == 0)) {
+                life2 = 0;
+            }
+            else if ((life1 == 1) && (life2 == 0) && (life3 == 0)) {
+                life1 = 0;
+            }
+            if ((life1 == 0) && (life2 == 0) && (life3 == 0)) {
+                isGaming = 2;
+            }
+            isCrash = 1;
+            delay = 0;
+        }
+    }
+    // Comingcar 2
     glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(cCar2Index + 26 - 2, comingCar2 + 100 - 4);
@@ -301,25 +373,28 @@ void startGame()
         comingCar2 = 0;
         cCar2Index = rand() % 45;
     }
-    // 장애물 차량 2번에 부딪혔는지 체크
-    if ((abs(lrIndex - cCar2Index) < 8) && (comingCar2 + 100 < 10)) {
-        if ((life1 == 1) && (life2 == 1) && (life3 == 1)) {
-            life3 = 0;
+
+    // Check crash with Comingcar 2
+    if (isCrash == 0) {
+        if ((abs(lrIndex - cCar2Index) < 8) && (comingCar2 + 100 < 10)) {
+            if ((life1 == 1) && (life2 == 1) && (life3 == 1)) {
+                life3 = 0;
+            }
+            else if ((life1 == 1) && (life2 == 1) && (life3 == 0)) {
+                life2 = 0;
+            }
+            else if ((life1 == 1) && (life2 == 0) && (life3 == 0)) {
+                life1 = 0;
+            }
+            if ((life1 == 0) && (life2 == 0) && (life3 == 0)) {
+                isGaming = 2;
+            }
+            isCrash = 1;
+            delay = 0;
         }
-        else if ((life1 == 1) && (life2 == 1) && (life3 == 0)) {
-            life2 = 0;
-        }
-        else if ((life1 == 1) && (life2 == 0) && (life3 == 0)) {
-            life1 = 0;
-        }
-        if ((life1 == 0) && (life2 == 0) && (life3 == 0)) {
-            isGaming = 2;
-        }
-        over = 1;
     }
 
-
-    // 장애물 차량 3번
+    // Comingcar 3
     glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(cCar3Index + 26 - 2, comingCar3 + 100 - 4);
@@ -342,6 +417,7 @@ void startGame()
     glVertex2f(cCar3Index + 30, comingCar3 + 100 - 7);
     glVertex2f(cCar3Index + 30, comingCar3 + 100);
     glEnd();
+
     if (speed == 1)
         comingCar3--;
     else
@@ -350,61 +426,63 @@ void startGame()
         comingCar3 = 0;
         cCar3Index = rand() % 45;
     }
-    // 장애물 차량 3번에 부딪혔는지 체크
-    if ((abs(lrIndex - cCar3Index) < 8) && (comingCar3 + 100 < 10)) {
-        if ((life1 == 1) && (life2 == 1) && (life3 == 1)) {
-            life3 = 0;
-        }
-        else if ((life1 == 1) && (life2 == 1) && (life3 == 0)) {
-            life2 = 0;
-        }
-        else if ((life1 == 1) && (life2 == 0) && (life3 == 0)) {
-            life1 = 0;
-        }
-        if ((life1 == 0) && (life2 == 0) && (life3 == 0)) {
-            isGaming = 2;
-        }
-        over = 1;
-    }
 
-    //코인(점수증가)
+    // Check crash with Comingcar 3
+    if (isCrash == 0) {
+        if ((abs(lrIndex - cCar3Index) < 8) && (comingCar3 + 100 < 10)) {
+            if ((life1 == 1) && (life2 == 1) && (life3 == 1)) {
+                life3 = 0;
+            }
+            else if ((life1 == 1) && (life2 == 1) && (life3 == 0)) {
+                life2 = 0;
+            }
+            else if ((life1 == 1) && (life2 == 0) && (life3 == 0)) {
+                life1 = 0;
+            }
+            if ((life1 == 0) && (life2 == 0) && (life3 == 0)) {
+                isGaming = 2;
+            }
+            isCrash = 1;
+            delay = 0;
+        }
+    }
+    // Coin (Increase Point)
 
     randomcoin = rand() % 40;
-    //1번 코인
+    // Coin 1
     glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx1 + 26, coin1 + 98);
-    glVertex2f(coinIdx1 + 29, coin1 + 98);
-    glVertex2f(coinIdx1 + 31, coin1 + 96);
-    glVertex2f(coinIdx1 + 31, coin1 + 94);
-    glVertex2f(coinIdx1 + 29, coin1 + 92);
-    glVertex2f(coinIdx1 + 26, coin1 + 92);
-    glVertex2f(coinIdx1 + 24, coin1 + 94);
-    glVertex2f(coinIdx1 + 24, coin1 + 96);
+    glVertex2f(coinIdx1 + 27, coin1 + 97);
+    glVertex2f(coinIdx1 + 29, coin1 + 97);
+    glVertex2f(coinIdx1 + 30, coin1 + 96);
+    glVertex2f(coinIdx1 + 30, coin1 + 95);
+    glVertex2f(coinIdx1 + 29, coin1 + 94);
+    glVertex2f(coinIdx1 + 27, coin1 + 94);
+    glVertex2f(coinIdx1 + 26, coin1 + 95);
+    glVertex2f(coinIdx1 + 26, coin1 + 96);
     glEnd();
 
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINE_LOOP);
-    glVertex2f(coinIdx1 + 25, coin1 + 95 - 1);
-    glVertex2f(coinIdx1 + 25, coin1 + 97 - 1);
-    glVertex2f(coinIdx1 + 26, coin1 + 98 - 1);
-    glVertex2f(coinIdx1 + 29, coin1 + 98 - 1);
-    glVertex2f(coinIdx1 + 29, coin1 + 97 - 1);
-    glVertex2f(coinIdx1 + 26, coin1 + 97 - 1);
-    glVertex2f(coinIdx1 + 26, coin1 + 95 - 1);
-    glVertex2f(coinIdx1 + 29, coin1 + 95 - 1);
-    glVertex2f(coinIdx1 + 29, coin1 + 94 - 1);
-    glVertex2f(coinIdx1 + 26, coin1 + 94 - 1);
+    glVertex2f(coinIdx1 + 26.5, coin1 + 95);
+    glVertex2f(coinIdx1 + 26.5, coin1 + 96);
+    glVertex2f(coinIdx1 + 27.25, coin1 + 96.75);
+    glVertex2f(coinIdx1 + 29, coin1 + 96.75);
+    glVertex2f(coinIdx1 + 29, coin1 + 96.25);
+    glVertex2f(coinIdx1 + 27.25, coin1 + 96.25);
+    glVertex2f(coinIdx1 + 26.5, coin1 + 95);
+    glVertex2f(coinIdx1 + 29, coin1 + 95);
+    glVertex2f(coinIdx1 + 29, coin1 + 94.5);
+    glVertex2f(coinIdx1 + 26.5, coin1 + 94.5);
     glEnd();
 
-    coin1 -= speed; //코인 이동
-    // 코인 획득 감지
-    if ((abs(lrIndex - coinIdx1) < 8) && (coin1 + 100 < 12)) {
+    coin1 -= speed; // Coin Move
+    // Coin detection
+    if ((abs(lrIndex - coinIdx1) < 8) && ((coin1 + 100) < 12)) {
         if (coin1score == 0) {
             score += 3;
             coin1score = 1;
             coin1 = -100;
-            //PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
         }
         if (randomcoin == 1 && coin1 < -100) {
             coinIdx1 = rand() % 45;
@@ -412,7 +490,7 @@ void startGame()
             coin1score = 0;
         }
     }
-    //코인 재생성
+    // Coin Remake
     else if (coin1 < -100)
     {
         coinIdx1 = rand() % 45;
@@ -420,40 +498,39 @@ void startGame()
             coin1 = 0;
     }
 
-    //2번 코인
+    // Coin 2
     glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx2 + 26, coin2 + 98);
-    glVertex2f(coinIdx2 + 29, coin2 + 98);
-    glVertex2f(coinIdx2 + 31, coin2 + 96);
-    glVertex2f(coinIdx2 + 31, coin2 + 94);
-    glVertex2f(coinIdx2 + 29, coin2 + 92);
-    glVertex2f(coinIdx2 + 26, coin2 + 92);
-    glVertex2f(coinIdx2 + 24, coin2 + 94);
-    glVertex2f(coinIdx2 + 24, coin2 + 96);
+    glVertex2f(coinIdx2 + 27, coin2 + 97);
+    glVertex2f(coinIdx2 + 29, coin2 + 97);
+    glVertex2f(coinIdx2 + 30, coin2 + 96);
+    glVertex2f(coinIdx2 + 30, coin2 + 95);
+    glVertex2f(coinIdx2 + 29, coin2 + 94);
+    glVertex2f(coinIdx2 + 27, coin2 + 94);
+    glVertex2f(coinIdx2 + 26, coin2 + 95);
+    glVertex2f(coinIdx2 + 26, coin2 + 96);
     glEnd();
 
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINE_LOOP);
-    glVertex2f(coinIdx2 + 25, coin2 + 95 - 1);
-    glVertex2f(coinIdx2 + 25, coin2 + 97 - 1);
-    glVertex2f(coinIdx2 + 26, coin2 + 98 - 1);
-    glVertex2f(coinIdx2 + 29, coin2 + 98 - 1);
-    glVertex2f(coinIdx2 + 29, coin2 + 97 - 1);
-    glVertex2f(coinIdx2 + 26, coin2 + 97 - 1);
-    glVertex2f(coinIdx2 + 26, coin2 + 95 - 1);
-    glVertex2f(coinIdx2 + 29, coin2 + 95 - 1);
-    glVertex2f(coinIdx2 + 29, coin2 + 94 - 1);
-    glVertex2f(coinIdx2 + 26, coin2 + 94 - 1);
+    glVertex2f(coinIdx2 + 26.5, coin2 + 95);
+    glVertex2f(coinIdx2 + 26.5, coin2 + 96);
+    glVertex2f(coinIdx2 + 27.25, coin2 + 96.75);
+    glVertex2f(coinIdx2 + 29, coin2 + 96.75);
+    glVertex2f(coinIdx2 + 29, coin2 + 96.25);
+    glVertex2f(coinIdx2 + 27.25, coin2 + 96.25);
+    glVertex2f(coinIdx2 + 26.5, coin2 + 95);
+    glVertex2f(coinIdx2 + 29, coin2 + 95);
+    glVertex2f(coinIdx2 + 29, coin2 + 94.5);
+    glVertex2f(coinIdx2 + 26.5, coin2 + 94.5);
     glEnd();
 
     coin2 -= speed;
-    if ((abs(lrIndex - coinIdx2) < 8) && (coin2 + 100 < 12)) {
+    if ((abs(lrIndex - coinIdx2) < 8) && ((coin2 + 100) < 12)) {
         if (coin2score == 0) {
             score += 3;
             coin2score = 1;
             coin2 = -100;
-            //PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
         }
         if (randomcoin == 2 && coin2 < -100) {
             coinIdx2 = rand() % 45;
@@ -467,40 +544,39 @@ void startGame()
         if (randomcoin == 2)
             coin2 = 0;
     }
-    //3번 코인
-    glColor3f(0.0, 0.0, 0.0);
+
+    //Coin 3
     glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx3 + 26, coin3 + 98);
-    glVertex2f(coinIdx3 + 29, coin3 + 98);
-    glVertex2f(coinIdx3 + 31, coin3 + 96);
-    glVertex2f(coinIdx3 + 31, coin3 + 94);
-    glVertex2f(coinIdx3 + 29, coin3 + 92);
-    glVertex2f(coinIdx3 + 26, coin3 + 92);
-    glVertex2f(coinIdx3 + 24, coin3 + 94);
-    glVertex2f(coinIdx3 + 24, coin3 + 96);
+    glVertex2f(coinIdx3 + 27, coin3 + 97);
+    glVertex2f(coinIdx3 + 29, coin3 + 97);
+    glVertex2f(coinIdx3 + 30, coin3 + 96);
+    glVertex2f(coinIdx3 + 30, coin3 + 95);
+    glVertex2f(coinIdx3 + 29, coin3 + 94);
+    glVertex2f(coinIdx3 + 27, coin3 + 94);
+    glVertex2f(coinIdx3 + 26, coin3 + 95);
+    glVertex2f(coinIdx3 + 26, coin3 + 96);
     glEnd();
 
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINE_LOOP);
-    glVertex2f(coinIdx3 + 25, coin3 + 95 - 1);
-    glVertex2f(coinIdx3 + 25, coin3 + 97 - 1);
-    glVertex2f(coinIdx3 + 26, coin3 + 98 - 1);
-    glVertex2f(coinIdx3 + 29, coin3 + 98 - 1);
-    glVertex2f(coinIdx3 + 29, coin3 + 97 - 1);
-    glVertex2f(coinIdx3 + 26, coin3 + 97 - 1);
-    glVertex2f(coinIdx3 + 26, coin3 + 95 - 1);
-    glVertex2f(coinIdx3 + 29, coin3 + 95 - 1);
-    glVertex2f(coinIdx3 + 29, coin3 + 94 - 1);
-    glVertex2f(coinIdx3 + 26, coin3 + 94 - 1);
+    glVertex2f(coinIdx3 + 26.5, coin3 + 95);
+    glVertex2f(coinIdx3 + 26.5, coin3 + 96);
+    glVertex2f(coinIdx3 + 27.25, coin3 + 96.75);
+    glVertex2f(coinIdx3 + 29, coin3 + 96.75);
+    glVertex2f(coinIdx3 + 29, coin3 + 96.25);
+    glVertex2f(coinIdx3 + 27.25, coin3 + 96.25);
+    glVertex2f(coinIdx3 + 26.5, coin3 + 95);
+    glVertex2f(coinIdx3 + 29, coin3 + 95);
+    glVertex2f(coinIdx3 + 29, coin3 + 94.5);
+    glVertex2f(coinIdx3 + 26.5, coin3 + 94.5);
     glEnd();
     coin3 -= speed;
-    if ((abs(lrIndex - coinIdx3) < 8) && (coin3 + 100 < 12)) {
+    if ((abs(lrIndex - coinIdx3) < 8) && ((coin3 + 100) < 12)) {
         if (coin3score == 0) {
             score += 3;
             coin3score = 1;
             coin3 = -100;
-            //PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
         }
         if (randomcoin == 3 && coin3 < -100) {
             coinIdx3 = rand() % 45;
@@ -514,40 +590,40 @@ void startGame()
         if (randomcoin == 3)
             coin3 = 0;
     }
-    //4번 코인
+
+    // Coin 4
     glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx4 + 26, coin4 + 98);
-    glVertex2f(coinIdx4 + 29, coin4 + 98);
-    glVertex2f(coinIdx4 + 31, coin4 + 96);
-    glVertex2f(coinIdx4 + 31, coin4 + 94);
-    glVertex2f(coinIdx4 + 29, coin4 + 92);
-    glVertex2f(coinIdx4 + 26, coin4 + 92);
-    glVertex2f(coinIdx4 + 24, coin4 + 94);
-    glVertex2f(coinIdx4 + 24, coin4 + 96);
+    glVertex2f(coinIdx4 + 27, coin4 + 97);
+    glVertex2f(coinIdx4 + 29, coin4 + 97);
+    glVertex2f(coinIdx4 + 30, coin4 + 96);
+    glVertex2f(coinIdx4 + 30, coin4 + 95);
+    glVertex2f(coinIdx4 + 29, coin4 + 94);
+    glVertex2f(coinIdx4 + 27, coin4 + 94);
+    glVertex2f(coinIdx4 + 26, coin4 + 95);
+    glVertex2f(coinIdx4 + 26, coin4 + 96);
     glEnd();
 
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINE_LOOP);
-    glVertex2f(coinIdx4 + 25, coin4 + 95 - 1);
-    glVertex2f(coinIdx4 + 25, coin4 + 97 - 1);
-    glVertex2f(coinIdx4 + 26, coin4 + 98 - 1);
-    glVertex2f(coinIdx4 + 29, coin4 + 98 - 1);
-    glVertex2f(coinIdx4 + 29, coin4 + 97 - 1);
-    glVertex2f(coinIdx4 + 26, coin4 + 97 - 1);
-    glVertex2f(coinIdx4 + 26, coin4 + 95 - 1);
-    glVertex2f(coinIdx4 + 29, coin4 + 95 - 1);
-    glVertex2f(coinIdx4 + 29, coin4 + 94 - 1);
-    glVertex2f(coinIdx4 + 26, coin4 + 94 - 1);
+    glVertex2f(coinIdx4 + 26.5, coin4 + 95);
+    glVertex2f(coinIdx4 + 26.5, coin4 + 96);
+    glVertex2f(coinIdx4 + 27.25, coin4 + 96.75);
+    glVertex2f(coinIdx4 + 29, coin4 + 96.75);
+    glVertex2f(coinIdx4 + 29, coin4 + 96.25);
+    glVertex2f(coinIdx4 + 27.25, coin4 + 96.25);
+    glVertex2f(coinIdx4 + 26.5, coin4 + 95);
+    glVertex2f(coinIdx4 + 29, coin4 + 95);
+    glVertex2f(coinIdx4 + 29, coin4 + 94.5);
+    glVertex2f(coinIdx4 + 26.5, coin4 + 94.5);
     glEnd();
     coin4 -= speed;
 
-    if ((abs(lrIndex - coinIdx4) < 8) && (coin4 + 100 < 12)) {
+    if ((abs(lrIndex - coinIdx4) < 8) && ((coin4 + 100) < 12)) {
         if (coin4score == 0) {
             score += 3;
             coin4score = 1;
             coin4 = -100;
-           //PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
         }
         if (randomcoin == 4 && coin4 < -100) {
             coinIdx4 = rand() % 45;
@@ -561,40 +637,39 @@ void startGame()
         if (randomcoin == 4)
             coin4 = 0;
     }
-    //5번 코인
+
+    //Coin 5
     glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
-    glVertex2f(coinIdx5 + 26, coin5 + 98);
-    glVertex2f(coinIdx5 + 29, coin5 + 98);
-    glVertex2f(coinIdx5 + 31, coin5 + 96);
-    glVertex2f(coinIdx5 + 31, coin5 + 94);
-    glVertex2f(coinIdx5 + 29, coin5 + 92);
-    glVertex2f(coinIdx5 + 26, coin5 + 92);
-    glVertex2f(coinIdx5 + 24, coin5 + 94);
-    glVertex2f(coinIdx5 + 24, coin5 + 96);
+    glVertex2f(coinIdx5 + 27, coin5 + 97);
+    glVertex2f(coinIdx5 + 29, coin5 + 97);
+    glVertex2f(coinIdx5 + 30, coin5 + 96);
+    glVertex2f(coinIdx5 + 30, coin5 + 95);
+    glVertex2f(coinIdx5 + 29, coin5 + 94);
+    glVertex2f(coinIdx5 + 27, coin5 + 94);
+    glVertex2f(coinIdx5 + 26, coin5 + 95);
+    glVertex2f(coinIdx5 + 26, coin5 + 96);
     glEnd();
 
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINE_LOOP);
-    glVertex2f(coinIdx5 + 25, coin5 + 95 - 1);
-    glVertex2f(coinIdx5 + 25, coin5 + 97 - 1);
-    glVertex2f(coinIdx5 + 26, coin5 + 98 - 1);
-    glVertex2f(coinIdx5 + 29, coin5 + 98 - 1);
-    glVertex2f(coinIdx5 + 29, coin5 + 97 - 1);
-    glVertex2f(coinIdx5 + 26, coin5 + 97 - 1);
-    glVertex2f(coinIdx5 + 26, coin5 + 95 - 1);
-    glVertex2f(coinIdx5 + 29, coin5 + 95 - 1);
-    glVertex2f(coinIdx5 + 29, coin5 + 94 - 1);
-    glVertex2f(coinIdx5 + 26, coin5 + 94 - 1);
-
+    glVertex2f(coinIdx5 + 26.5, coin5 + 95);
+    glVertex2f(coinIdx5 + 26.5, coin5 + 96);
+    glVertex2f(coinIdx5 + 27.25, coin5 + 96.75);
+    glVertex2f(coinIdx5 + 29, coin5 + 96.75);
+    glVertex2f(coinIdx5 + 29, coin5 + 96.25);
+    glVertex2f(coinIdx5 + 27.25, coin5 + 96.25);
+    glVertex2f(coinIdx5 + 26.5, coin5 + 95);   
+    glVertex2f(coinIdx5 + 29, coin5 + 95);     
+    glVertex2f(coinIdx5 + 29, coin5 + 94.5);   
+    glVertex2f(coinIdx5 + 26.5, coin5 + 94.5); 
     glEnd();
     coin5 -= speed;
-    if ((abs(lrIndex - coinIdx5) < 8) && (coin5 + 100 < 12)) {
+    if ((abs(lrIndex - coinIdx5) < 8) && ((coin5 + 100) < 12)) {
         if (coin5score == 0) {
             score += 3;
             coin5score = 1;
             coin5 = -100;
-            //PlaySound(TEXT(CoinSound), NULL, SND_FILENAME | SND_ASYNC);
         }
         if (randomcoin == 5 && coin5 < -100) {
             coinIdx5 = rand() % 45;
@@ -608,13 +683,15 @@ void startGame()
         if (randomcoin == 5)
             coin5 = 0;
     }
-    //부스터(속도 증가)
-    //부스터 확률 설정
+
+    // Booster (Increase Speed)
+    
+    // Set booster probability
     if (isBoosting == 0)
     {
         randomBooster = rand() % 20;
     }
-    //20분의 1 확률로 부스터 생성
+
     if (randomBooster == 8)
     {
         isBoosting = 1;
@@ -632,7 +709,7 @@ void startGame()
             booster--;
         else
             booster -= speed;
-        //부스터 획득 감지
+        // Booster detection
         if ((abs(lrIndex - boosterIdx) < 8) && (booster + 100 < 10)) {
             speed = 3;
             boosterIdx = rand() % 45;
@@ -652,8 +729,8 @@ void startGame()
 }
 
 void NewMenu() {
-    // 게임이 끝났을 때 나오는 메뉴
-    if (over == 1) {
+    // The menu when Game is finished
+    if (isGaming == 2) {
         glColor3f(0.098, 0.098, 0.439);
         glBegin(GL_POLYGON);
         glVertex2f(32 - 4, 35);
@@ -705,22 +782,43 @@ void NewMenu() {
         renderBitmapString(30, 18, (void*)font3, "Press LEFT to move Left");
 
     }
-    // 기본 메뉴 창
+    else if (isGaming == 3)
+    {
+        printf("Type your name. ex)AAA, BBB, ABC\nNAME : ");
+        scanf("%s", (const char*)player[play]);
+        play++;
+        glColor3f(1.0, 1.0, 1.0);
+        if (play == 0)
+        {
+            renderBitmapString(30, 50 + 10, font2, "No Record");
+            renderBitmapString(30, 50 + 10 - 3, font2, "Press B to move start menu");
+        }
+        else if (play != 0) {
+            for (int i = 0; i < play; i++)
+            {
+                renderBitmapString(5, 95 - (i * 2), font3, (const char*)player[i]);
+                renderBitmapString(10, 95 - (i * 2), font3, buffer2);
+            }
+            renderBitmapString(30, 50, font2, "Press B to move start menu");
+        }
+    }
+
+    // Basic Menu
     else {
         glColor3f(0.098, 0.098, 0.439);
         glBegin(GL_POLYGON);
-        glVertex2f(28-7, 65 + 2.5);
-        glVertex2f(78+7, 65 + 2.5);
-        glVertex2f(78+7, 45 - 2.5);
-        glVertex2f(28-7, 45 - 2.5);
+        glVertex2f(28 - 7, 65 + 2.5);
+        glVertex2f(78 + 7, 65 + 2.5);
+        glVertex2f(78 + 7, 45 - 2.5);
+        glVertex2f(28 - 7, 45 - 2.5);
         glEnd();
 
         glColor3f(0.0, 0.0, 0.0);
         glBegin(GL_POLYGON);
-        glVertex2f(28-7, 65+2.5);
-        glVertex2f(78+7, 65 + 2.5);
-        glVertex2f(78+7, 64 + 2.5);
-        glVertex2f(28-7, 64 + 2.5);
+        glVertex2f(28 - 7, 65 + 2.5);
+        glVertex2f(78 + 7, 65 + 2.5);
+        glVertex2f(78 + 7, 64 + 2.5);
+        glVertex2f(28 - 7, 64 + 2.5);
         glEnd();
         glBegin(GL_POLYGON);
         glVertex2f(77 + 7, 65 + 2.5);
@@ -729,18 +827,17 @@ void NewMenu() {
         glVertex2f(77 + 7, 45 - 2.5);
         glEnd();
         glBegin(GL_POLYGON);
-        glVertex2f(28-7, 46 - 2.5);
-        glVertex2f(78+7, 46 - 2.5);
-        glVertex2f(78+7, 45 - 2.5);
-        glVertex2f(28-7, 45 - 2.5);
+        glVertex2f(28 - 7, 46 - 2.5);
+        glVertex2f(78 + 7, 46 - 2.5);
+        glVertex2f(78 + 7, 45 - 2.5);
+        glVertex2f(28 - 7, 45 - 2.5);
         glEnd();
         glBegin(GL_POLYGON);
-        glVertex2f(28-7, 65 + 2.5);
-        glVertex2f(27-7, 65 + 2.5);
-        glVertex2f(27-7, 45 - 2.5);
-        glVertex2f(28-7, 45 - 2.5);
+        glVertex2f(28 - 7, 65 + 2.5);
+        glVertex2f(27 - 7, 65 + 2.5);
+        glVertex2f(27 - 7, 45 - 2.5);
+        glVertex2f(28 - 7, 45 - 2.5);
         glEnd();
-
 
         glColor3f(1.0f, 1.0f, 0.0f);
         renderBitmapString(40, 85, font1, "The racer");
@@ -757,11 +854,11 @@ void NewMenu() {
 
 void startMenu()
 {
-    //시작 화면
+    // Start Menu
     if (isGaming == 1) {
         startGame();
     }
-    //종료 화면
+    // Finish Menu
     else
         NewMenu();
 
@@ -781,11 +878,22 @@ void myDisplay()
     glFlush();
     glutSwapBuffers();
 }
+
+void myReshape(int w, int h)
+{
+    glViewport(0, 0, w, h);
+    //GLfloat widthFactor = (GLfloat)w / 300;
+    //GLfloat heightFactor = (GLfloat)h / 300;
+
+    glMatrixMode(GL_PROJECTION); glLoadIdentity();
+    glOrtho(0, 100, 0, 100, -5, 5);
+    glMatrixMode(GL_MODELVIEW); glLoadIdentity();
+}
+
 void myTimer(int value)
 {
-    if (value == 0)
-    {
-        i++; //부스터 지속시간 측정
+    if (value == 0) {
+        i++; // Booster Duration Measurement
         if (i == 500)
             speed = 1;
         if (boosterFlag == 1)
@@ -800,15 +908,12 @@ void myTimer(int value)
             glutTimerFunc(1000 / FPS, myTimer, 0);
         }
     }
-    //부스터 감지 후 지속 시간 설정
-    else if (value == 1)
-    {
+    // Set duration after booster detection
+    else if (value == 1) {
         i = 0;
         glutPostRedisplay();
         glutTimerFunc(1000 / FPS, myTimer, 0);
-
     }
-
 }
 
 void mySpecialKey(int key, int x, int y)
@@ -841,17 +946,15 @@ void myKey(unsigned char key, int x, int y)
             PlaySound(TEXT(background), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 
             score = 0, speed = 1, i = 0, boosterFlag = 0, isBoosting = 0;
-            //int over = 0;
-
             lrIndex = 0;
 
-            //장애물 차량 , 장애물 차량 인덱스
+            // ComingCars Index
             comingCar1 = 0;
             comingCar2 = 35;
             comingCar3 = 70;
 
 
-            //Car Coming
+            // Coin & Booster
             coin1 = 0, coin2 = 10, coin3 = 20, coin4 = 30, coin5 = 40;
             coinIdx1 = 0, coinIdx2 = 0, coinIdx3 = 0, coinIdx4 = 0, coinIdx5 = 0;
             booster = 0;
@@ -861,13 +964,19 @@ void myKey(unsigned char key, int x, int y)
             coinIdx3 = rand() % 45;
             coinIdx4 = rand() % 45;
             coinIdx5 = rand() % 45;
+
+            // Change Game Status & Set Life Color
             isGaming = 1;
-            over = 0;
             life1 = 1; life2 = 1; life3 = 1;
-            glutPostRedisplay();
         }
 
+        else if (key == 's' && isGaming == 2) {
+            isGaming = 3;
+        }
     }
+    if (isGaming == 3)
+        if (key == 'b')
+            isGaming = 0;
     glutPostRedisplay();
 }
 void init()
@@ -876,18 +985,56 @@ void init()
     glClearColor(0.184, 0.310, 0.310, 1);
 }
 
+//void initLight()
+//{
+//    GLfloat light0Ambient[] = { 0.5, 0.4, 0.3, 1.0 };
+//    GLfloat light0Diffuse[] = { 0.8, 0.7, 0.6, 1.0 };
+//    GLfloat light0Specular[] = { 1.0, 1.0, 1.0, 1.0 };
+//    //GLfloat light0Direction[] = { 0, 0, 0.0 };
+//    GLfloat light0Cutoff[] = { 20 };
+//    GLfloat materialAmbient[] = { 0.4, 0.4, 0.4, 1.0 };
+//    GLfloat materialDiffuse[] = { 0.9, 0.9, 0.9, 1.0 };
+//    GLfloat materialSpecular[] = { 1.0, 1.0, 1.0, 1.0 };
+//    GLfloat materialShininess[] = { 25.0 };
+//    glShadeModel(GL_FLAT);
+//    glEnable(GL_DEPTH_TEST);
+//    //glEnable(GL_LIGHTING);
+//    glEnable(GL_LIGHT0);
+//    glEnable(GL_LIGHT1);
+//    glLightfv(GL_LIGHT0, GL_SPECULAR, light0Ambient);
+//    glLightfv(GL_LIGHT0, GL_SPECULAR, light0Diffuse);
+//    glLightfv(GL_LIGHT0, GL_SPECULAR, light0Specular);
+//    glLightfv(GL_LIGHT0, GL_SPECULAR, white);
+//    //glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light0Direction);
+//    glLightfv(GL_LIGHT0, GL_SPOT_CUTOFF, light0Cutoff);
+//
+//    GLfloat light1Ambient[] = { 0.5, 0.4, 0.3, 1.0 };
+//    GLfloat light1Diffuse[] = { 0.8, 0.7, 0.6, 1.0 };
+//    GLfloat light1Specular[] = { 1.0, 1.0, 1.0, 1.0 };
+//    //GLfloat light1Direction[] = { 0, 0, 0.0 };
+//    GLfloat light1Cutoff[] = { 20 };
+//
+//    glLightfv(GL_LIGHT1, GL_SPECULAR, light1Ambient);
+//    glLightfv(GL_LIGHT1, GL_SPECULAR, light1Diffuse);
+//    glLightfv(GL_LIGHT1, GL_SPECULAR, light1Specular);
+//    glLightfv(GL_LIGHT1, GL_SPECULAR, white);
+//    //glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light1Direction);
+//    glLightfv(GL_LIGHT1, GL_SPOT_CUTOFF, light1Cutoff);
+//    glEnable(GL_LIGHT0);
+//}
+
 void MenuProc(int entryID) {
     if (entryID == 3) {
         carColor = entryID;
-        printf("선택한 차량색 => Blue\n");
+        printf("Selected Car Color => Blue\n");
     }
-    else if (entryID == 2) { 
-        carColor = entryID; 
-        printf("선택한 차량색 => Green\n");
+    else if (entryID == 2) {
+        carColor = entryID;
+        printf("Selected Car Color => Green\n");
     }
     else if (entryID == 1) {
         carColor = entryID;
-        printf("선택한 차량색 => Red\n");
+        printf("Selected Car Color => Red\n");
     }
     glutPostRedisplay();
 }
@@ -899,18 +1046,6 @@ void MenuFunc() {
     glutAddMenuEntry("Blue", 3);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
-//void myReshape(int w, int h) {
-//    GLfloat fAspect;
-//    if (h == 0) h = 1;
-//    glViewport(0, 0, w, h);
-//    fAspect = (GLfloat)w / (GLfloat)h;
-//    glMatrixMode(GL_PROJECTION);
-//    glLoadIdentity();
-//    gluPerspective(35.0f, fAspect, 1.0, 40.0);
-//    glMatrixMode(GL_MODELVIEW);
-//    glLoadIdentity();
-//    glClearColor(0.5, 0.5, 0.5, 1.0);
-//}
 
 int main(int argc, char* argv[])
 {
@@ -920,14 +1055,14 @@ int main(int argc, char* argv[])
     glutInitWindowPosition(200, 20);
     glutCreateWindow("The racer");
     init();
+    //initLight();
     srand((unsigned int)time(NULL));
     glutDisplayFunc(myDisplay);
+    glutReshapeFunc(myReshape);
     glutSpecialFunc(mySpecialKey);
     glutKeyboardFunc(myKey);
     glutTimerFunc(1000, myTimer, 0);
     MenuFunc();
-    //glutReshapeFunc(myReshape);
-
     glutMainLoop();
 
     return 0;
