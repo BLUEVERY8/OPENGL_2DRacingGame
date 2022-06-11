@@ -8,11 +8,14 @@
 #include <mmsystem.h>
 #pragma comment(lib, "winmm.lib")
 #include <time.h>
-
 // ����
 #define _C 1046.502
 #define CoinSound "F:\\�б� ����\\��ǻ�ͱ׷��Ƚ�\\localRepo\\TeamProject\\opengl_racingGame\\BGM\\CoinSound.wav"
 
+void initLight();
+
+GLfloat light0Position[] = { 0, 8, 3, 1.0 };
+GLfloat light1Position[] = { 0, 8, 3, 1.0 };
 //����ȭ�����, ���� �ӵ�, ����, ���� ���ǵ�, �ν��� ���ӽð�, �ν��� ����, �ν��� ����, �ν��� Ȯ��
 int isGaming = 0, FPS = 50, score = 0, speed = 1, i = 0, isBoosting = 0, createBoost = 0, randomBooster;
 int isCrash = 0, delay = 0;
@@ -38,9 +41,9 @@ GLfloat life1 = 1, life2 = 1, life3 = 1;
 int lifeIndex = 80;
 // ���� ��
 int carColor;
-const GLfloat white[] = { 1.0, 1.0, 1.0, 1.0 };
-const GLfloat black[] = { 0.8, 0.8, 0.8, 1.0 };
-const GLfloat yellow[] = { 1.0, 1.0, 0.0, 1.0 };
+const GLfloat white[] = { 1.0, 1.0, 1.0, 0.2 };
+const GLfloat black[] = { 0.5, 0.5, 0.5, 0.2 };
+const GLfloat yellow[] = { 1.0, 1.0, 0.0, 0.5 };
 const GLfloat polished[] = { 100.0 };
 // ����
 int coin1 = 0, coin2 = 10, coin3 = 20, coin4 = 30, coin5 = 40;
@@ -84,14 +87,14 @@ void startGame()
     glVertex2f(80, 100);
     glVertex2f(80, 0);
     glEnd();
-    
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, yellow);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, yellow);
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, white);
     glMaterialfv(GL_FRONT, GL_SHININESS, polished);
 
     //Road Middel Border
       //TOP
-    glColor3f(1.0f, 1.0f, 0.0f);
+    //glColor3f(1.0f, 1.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(48, roadDivTop + 80);
     glVertex2f(48, roadDivTop + 100);
@@ -103,7 +106,7 @@ void startGame()
         roadDivTop = 20;
         score++;
     }
-    glColor3f(1.0f, 1.0f, 0.0f);
+    //glColor3f(1.0f, 1.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(48, roadDivMdl + 40);
     glVertex2f(48, roadDivMdl + 60);
@@ -119,7 +122,7 @@ void startGame()
         score++;
     }
     //Bottom
-    glColor3f(1.0f, 1.0f, 0.0f);
+    //glColor3f(1.0f, 1.0f, 0.0f);
     glBegin(GL_POLYGON);
     glVertex2f(48, roadDivBtm + 0);
     glVertex2f(48, roadDivBtm + 20);
@@ -131,9 +134,9 @@ void startGame()
         roadDivBtm = 100;
         score++;
     }
-    glDisable(GL_LIGHTING);
+    
     //Road Left Border
-    glColor3f(1.0f, 1.0f, 1.0f);
+    //glColor3f(1.0f, 1.0f, 1.0f);
     glBegin(GL_POLYGON);
     glVertex2f(20, 0);
     glVertex2f(20, 100);
@@ -142,15 +145,15 @@ void startGame()
     glEnd();
 
     //Road Right Border
-    glColor3f(1.0f, 1.0f, 1.0f);
+    //glColor3f(1.0f, 1.0f, 1.0f);
     glBegin(GL_POLYGON);
     glVertex2f(77, 0);
     glVertex2f(77, 100);
     glVertex2f(80, 100);
     glVertex2f(80, 0);
     glEnd();
+    glDisable(GL_LIGHTING);
 
-    
 
     // ������
     glColor3f(0.0f, 0.0f, 0.0f);
@@ -234,24 +237,15 @@ void startGame()
 
     coin1 -= speed; //코인 이동
     // 코인 획득 감지
-    if ((abs(lrIndex - coinIdx1) < 8) && (coin1 + 100 < 12)) {
-        if (coin1score == 0) {
-            score += 3;
-            coin1score = 1;
-            coin1 = -100;
-        }
-        if (randomcoin == 1 && coin1 < -100) {
-            coinIdx1 = rand() % 45;
-            coin1 = 6;
-            coin1score = 0;
-        }
+    if ((abs(lrIndex - coinIdx1) < 4) && ((coin5 + 100) > 7) && ((coin5 + 100) < 14)) {
+         score += 3;
+         coin1 = -100;
     }
     //코인 재생성
-    else if (coin1 < -100)
+    if (coin1 < -100 && randomcoin == 1)
     {
         coinIdx1 = rand() % 45;
-        if (randomcoin == 1)
-            coin1 = 0;
+        coin1 = 0;
     }
 
     //2번 코인
@@ -281,23 +275,16 @@ void startGame()
     glVertex2f(coinIdx2 + 26, coin2 + 94 - 1);
     glEnd();
     coin2 -= speed;
-    if ((abs(lrIndex - coinIdx2) < 8) && (coin2 + 100 < 12)) {
-        if (coin2score == 0) {
-            score += 3;
-            coin2score = 1;
-            coin2 = -100;
-        }
-        if (randomcoin == 2 && coin2 < -100) {
-            coinIdx2 = rand() % 45;
-            coin2 = 6;
-            coin2score = 0;
-        }
+    // 코인 획득 감지
+    if ((abs(lrIndex - coinIdx2) < 4) && ((coin5 + 100) > 7) && ((coin5 + 100) < 14)) {
+        score += 3;
+        coin2 = -100;
     }
-    else if (coin2 < -100)
+    //코인 재생성
+    if (coin2 < -100 && randomcoin == 1)
     {
         coinIdx2 = rand() % 45;
-        if (randomcoin == 2)
-            coin2 = 0;
+        coin2 = 0;
     }
     //3번 코인
     glColor3f(0.0, 0.0, 0.0);
@@ -327,23 +314,16 @@ void startGame()
     glVertex2f(coinIdx3 + 26, coin3 + 94 - 1);
     glEnd();
     coin3 -= speed;
-    if ((abs(lrIndex - coinIdx3) < 8) && (coin3 + 100 < 12)) {
-        if (coin3score == 0) {
-            score += 3;
-            coin3score = 1;
-            coin3 = -100;
-        }
-        if (randomcoin == 3 && coin3 < -100) {
-            coinIdx3 = rand() % 45;
-            coin3 = 6;
-            coin3score = 0;
-        }
+    // 코인 획득 감지
+    if ((abs(lrIndex - coinIdx3) < 4) && ((coin5 + 100) > 7) && ((coin5 + 100) < 14)) {
+        score += 3;
+        coin3 = -100;
     }
-    else if (coin3 < -100)
+    //코인 재생성
+    if (coin3 < -100 && randomcoin == 1)
     {
         coinIdx3 = rand() % 45;
-        if (randomcoin == 3)
-            coin3 = 0;
+        coin3 = 0;
     }
     //4번 코인
     glColor3f(1.0, 1.0, 0.0);
@@ -372,23 +352,16 @@ void startGame()
     glVertex2f(coinIdx4 + 26, coin4 + 94 - 1);
     glEnd();
     coin4 -= speed;
-    if ((abs(lrIndex - coinIdx4) < 8) && (coin4 + 100 < 12)) {
-        if (coin4score == 0) {
-            score += 3;
-            coin4score = 1;
-            coin4 = -100;
-        }
-        if (randomcoin == 4 && coin4 < -100) {
-            coinIdx4 = rand() % 45;
-            coin4 = 6;
-            coin4score = 0;
-        }
+    // 코인 획득 감지
+    if ((abs(lrIndex - coinIdx4) < 4) && ((coin5 + 100) > 7) && ((coin5 + 100) < 14)) {
+        score += 3;
+        coin4 = -100;
     }
-    else if (coin4 < -100)
+    //코인 재생성
+    if (coin4 < -100 && randomcoin == 1)
     {
         coinIdx4 = rand() % 45;
-        if (randomcoin == 4)
-            coin4 = 0;
+        coin4 = 0;
     }
     //5번 코인
     glColor3f(1.0, 1.0, 0.0);
@@ -418,23 +391,16 @@ void startGame()
 
     glEnd();
     coin5 -= speed;
-    if ((abs(lrIndex - coinIdx5) < 8) && ((coin5 + 100) < 12)) {
-        if (coin5score == 0) {
-            score += 3;
-            coin5score = 1;
-            coin5 = -100;
-        }
-        if (randomcoin == 5 && coin5 < -100) {
-            coinIdx5 = rand() % 45;
-            coin5 = 6;
-            coin5score = 0;
-        }
+    // 코인 획득 감지
+    if ((abs(lrIndex - coinIdx5) < 4) && ((coin5 + 100) > 7) && ((coin5 + 100) < 14)) {
+        score += 3;
+        coin5 = -100;
     }
-    else if (coin5 < -100)
+    //코인 재생성
+    if (coin5 < -100 && randomcoin == 1)
     {
         coinIdx5 = rand() % 45;
-        if (randomcoin == 5)
-            coin5 = 0;
+        coin5 = 0;
     }
 
     // 부스터
@@ -462,7 +428,7 @@ void startGame()
         else
             booster -= speed;
         //부스터 획득시
-        if ((abs(lrIndex - boosterIdx) < 8) && (booster + 100 < 10)) {
+        if ((abs(lrIndex - boosterIdx) < 4) && ((booster + 100) > 7) && ((booster + 100) < 14)) {
             speed = 3;
             boosterIdx = rand() % 45;
             booster = 0;
@@ -652,33 +618,35 @@ void startGame()
     }
 
     //차량
-    GLfloat light0Position[] = { 0, 5, 3, 1.0 };
-    GLfloat light1Position[] = { 0, 5, 3, 1.0 };
+    //headLight
+    
     glPushMatrix();
-    glTranslatef(lrIndex + 27, 9, 1);
+    
+    glTranslatef(lrIndex+27, 9, 3);
     glLightfv(GL_LIGHT0, GL_POSITION, light0Position);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_LIGHTING);
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
+    glDisable(GL_LIGHT0);
+    /*glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
     glMaterialfv(GL_FRONT, GL_SPECULAR, white);
-    glMaterialfv(GL_FRONT, GL_SHININESS, polished);
-    //glColor3f(0.9, 0.9, 0.9);
+    glMaterialfv(GL_FRONT, GL_SHININESS, polished);*/
+    
+    glColor3f(0.9, 0.9, 0.9);
     glutSolidSphere(1, 40, 40);
-    glDisable(GL_LIGHTING);
-    //glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT0);
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(lrIndex + 29, 9, 1);
+
+    
+    glTranslatef(lrIndex+29, 9, 3);
     glLightfv(GL_LIGHT1, GL_POSITION, light1Position);
-    glEnable(GL_LIGHT1);
-    glEnable(GL_LIGHTING);
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
+    glDisable(GL_LIGHT1);
+
+    /*glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
     glMaterialfv(GL_FRONT, GL_SPECULAR, white);
-    glMaterialfv(GL_FRONT, GL_SHININESS, polished);
-    //glColor3d(0.9, 0.9, 0.9);
+    glMaterialfv(GL_FRONT, GL_SHININESS, polished);*/
+    glColor3d(0.9, 0.9, 0.9);
     glutSolidSphere(1, 40, 40);
-    glDisable(GL_LIGHTING);
+    glEnable(GL_LIGHT1);
     glPopMatrix();
 
     glColor3f(0.0f, 0.0f, 0.0f);
@@ -967,20 +935,18 @@ void init()
 
 void initLight()
 {
-    GLfloat light0Ambient[] = { 0.5, 0.4, 0.3, 1.0 };
-    GLfloat light0Diffuse[] = { 0.8, 0.7, 0.6, 1.0 };
-    GLfloat light0Specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat light0Ambient[] = { 1, 1, 1, 0.2 };
+    GLfloat light0Diffuse[] = { 1, 1, 1, 1.0 };
+    GLfloat light0Specular[] = { 1.0, 1.0, 1.0, 1 };
     //GLfloat light0Direction[] = { 0, 0, 0.0 };
-    GLfloat light0Cutoff[] = { 20 };
-    GLfloat materialAmbient[] = { 0.4, 0.4, 0.4, 1.0 };
-    GLfloat materialDiffuse[] = { 0.9, 0.9, 0.9, 1.0 };
-    GLfloat materialSpecular[] = { 1.0, 1.0, 1.0, 1.0 };
-    GLfloat materialShininess[] = { 25.0 };
-    glShadeModel(GL_FLAT);
-    glEnable(GL_DEPTH_TEST);
-    //glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_LIGHT1);
+    GLfloat light0Cutoff[] = { 80 };
+    GLfloat materialAmbient[] = { 1, 1, 1, 0.2 };
+    GLfloat materialDiffuse[] = { 1, 1, 1, 1.0 };
+    GLfloat materialSpecular[] = { 1.0, 1.0, 1.0, 1 };
+    GLfloat materialShininess[] = { 80 };
+    
+    glShadeModel(GL_SMOOTH);
+   
     glLightfv(GL_LIGHT0, GL_SPECULAR, light0Ambient);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light0Diffuse);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light0Specular);
@@ -988,11 +954,11 @@ void initLight()
     //glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light0Direction);
     glLightfv(GL_LIGHT0, GL_SPOT_CUTOFF, light0Cutoff);
 
-    GLfloat light1Ambient[] = { 0.5, 0.4, 0.3, 1.0 };
-    GLfloat light1Diffuse[] = { 0.8, 0.7, 0.6, 1.0 };
+    GLfloat light1Ambient[] = { 1, 1, 1, 0.2 };
+    GLfloat light1Diffuse[] = { 1, 1, 1, 1.0 };
     GLfloat light1Specular[] = { 1.0, 1.0, 1.0, 1.0 };
     //GLfloat light1Direction[] = { 0, 0, 0.0 };
-    GLfloat light1Cutoff[] = { 20 };
+    GLfloat light1Cutoff[] = { 80 };
 
     glLightfv(GL_LIGHT1, GL_SPECULAR, light1Ambient);
     glLightfv(GL_LIGHT1, GL_SPECULAR, light1Diffuse);
@@ -1000,7 +966,6 @@ void initLight()
     glLightfv(GL_LIGHT1, GL_SPECULAR, white);
     //glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light1Direction);
     glLightfv(GL_LIGHT1, GL_SPOT_CUTOFF, light1Cutoff);
-    glEnable(GL_LIGHT0); 
 }
 void MenuProc(int entryID) {
     if (entryID == 3) {
@@ -1033,8 +998,7 @@ int main(int argc, char* argv[])
     glutInitWindowSize(500, 650);
     glutInitWindowPosition(200, 20);
     glutCreateWindow("The racer");
-    init();
-    //initLight();
+    init(); initLight();
     srand((unsigned int)time(NULL));
     glutDisplayFunc(myDisplay);
     glutReshapeFunc(myReshape);
