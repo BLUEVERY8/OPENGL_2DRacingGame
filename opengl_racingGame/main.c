@@ -83,10 +83,10 @@ void renderBitmapString(float x, float y, void* font, const char* string)
 void startGame()
 {
 
-   /* glEnable(GL_LIGHTING);
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, black);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, black);
-    glMaterialfv(GL_FRONT, GL_SHININESS, polished);*/
+    /* glEnable(GL_LIGHTING);
+     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, black);
+     glMaterialfv(GL_FRONT, GL_SPECULAR, black);
+     glMaterialfv(GL_FRONT, GL_SHININESS, polished);*/
 
     glColor3f(0.412, 0.412, 0.412);
     glBegin(GL_POLYGON);
@@ -207,7 +207,7 @@ void startGame()
     glVertex2f(lifeIndex + 13.5, 92.5);
     glEnd();
 
-   
+
 
     //// HeadLight
     //GLfloat light0Position[] = { 0, 5, 3, 1.0 };
@@ -659,10 +659,10 @@ void startGame()
     glVertex2f(coinIdx5 + 29, coin5 + 96.75);
     glVertex2f(coinIdx5 + 29, coin5 + 96.25);
     glVertex2f(coinIdx5 + 27.25, coin5 + 96.25);
-    glVertex2f(coinIdx5 + 26.5, coin5 + 95);   
-    glVertex2f(coinIdx5 + 29, coin5 + 95);     
-    glVertex2f(coinIdx5 + 29, coin5 + 94.5);   
-    glVertex2f(coinIdx5 + 26.5, coin5 + 94.5); 
+    glVertex2f(coinIdx5 + 26.5, coin5 + 95);
+    glVertex2f(coinIdx5 + 29, coin5 + 95);
+    glVertex2f(coinIdx5 + 29, coin5 + 94.5);
+    glVertex2f(coinIdx5 + 26.5, coin5 + 94.5);
     glEnd();
     coin5 -= speed;
     if ((abs(lrIndex - coinIdx5) < 8) && ((coin5 + 100) < 12)) {
@@ -685,7 +685,7 @@ void startGame()
     }
 
     // Booster (Increase Speed)
-    
+
     // Set booster probability
     if (isBoosting == 0)
     {
