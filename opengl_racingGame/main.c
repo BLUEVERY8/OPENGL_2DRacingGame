@@ -1,5 +1,4 @@
-#pragma warning (disable:4996)
-
+﻿#pragma warning (disable:4996)
 #include <windows.h>
 #include <glut.h> 
 #include <glu.h>
@@ -12,9 +11,9 @@
 #include <Digitalv.h>
 
 
-// Sound
+// Push your sound file location
 #define BACKGROUND "C:\\Users\\bluev\\source\\repos\\OPENGL_2DRacingGame\\BGM\\background.wav"
-//#define BACKGROUND "..\\background.wav"
+
 
 GLfloat light0Position[] = { 0, 8, 3, 1.0 };
 GLfloat light1Position[] = { 0, 8, 3, 1.0 };
@@ -58,7 +57,7 @@ int booster = 0, boosterIdx = 0;
 // probability of creating coin item
 int randomcoin = 0;
 // probability of creating booster item, booster duration, check getting booster
-int createBoost = 0, randomBooster, duration = 0, isBoosting = 0;
+int createBoost = 0, randomBooster, duration = 0, isBoosting=0;
 
 // Text Font
 void* font1 = GLUT_BITMAP_TIMES_ROMAN_24;
@@ -69,8 +68,7 @@ char buffer1[50], buffer2[50];
 // Play Time
 int play = 0;
 // Save Name & Score
-char* player[10][10];
-int record[10];
+char* player[10][10], record[10];
 // Print text on screen
 void renderBitmapString(float x, float y, void* font, const char* string)
 {
@@ -81,14 +79,6 @@ void renderBitmapString(float x, float y, void* font, const char* string)
         glutBitmapCharacter(font, *c);
     }
 }
-// Save Score
-void Record() {
-    printf("이름을 입력해주세요.예)AAA, BBB, ABC\n이름 : ");
-    scanf("%s", (const char*)player[play]);
-    record[play] = score;
-    play++;
-    glColor3f(1.0, 1.0, 1.0);
-}
 //game screen
 void startGame()
 {
@@ -97,7 +87,7 @@ void startGame()
     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, black);
     glMaterialfv(GL_FRONT, GL_SPECULAR, black);
     glMaterialfv(GL_FRONT, GL_SHININESS, polished);
-
+    
     glBegin(GL_POLYGON);
     glVertex2f(20, 0);
     glVertex2f(20, 100);
@@ -155,7 +145,7 @@ void startGame()
         else
             score += 3;
     }
-
+    
     //Road Left Border
     glBegin(GL_POLYGON);
     glVertex2f(20, 0);
@@ -258,8 +248,8 @@ void startGame()
         coin1 -= speed;
     // Check getting coin
     if ((abs(lrIndex - coinIdx1) < 4) && ((coin1 + 100) > 6) && ((coin1 + 100) < 17)) {
-        score += 3;
-        coin1 = -100;
+         score += 3;
+         coin1 = -100;
     }
     // Recreate coin
     if (coin1 <= -100 && randomcoin == 1)
@@ -296,7 +286,7 @@ void startGame()
     glEnd();
     if (coin2 > -100)
         coin2 -= speed;
-
+  
     if ((abs(lrIndex - coinIdx2) < 4) && ((coin2 + 100) > 6) && ((coin2 + 100) < 17)) {
         score += 3;
         coin2 = -100;
@@ -451,7 +441,7 @@ void startGame()
             booster--;
         else
             booster -= speed;
-
+        
         //Check getting booster
         if ((abs(lrIndex - boosterIdx) < 4) && ((booster + 100) > 5) && ((booster + 100) < 16)) {
             speed = 3;
@@ -517,7 +507,7 @@ void startGame()
         comingCar1 = 0;
         cCar1Index = rand() % 45;
     }
-
+    
 
     // Coming car2
     glColor3f(0.0f, 0.0f, 0.0f);
@@ -617,16 +607,16 @@ void startGame()
     //User car
     //headLight   
     glPushMatrix();
-    glTranslatef(lrIndex + 27, 9, 3);
+    glTranslatef(lrIndex+27, 9, 3);
     glLightfv(GL_LIGHT0, GL_POSITION, light0Position);
-    glDisable(GL_LIGHT0);
+    glDisable(GL_LIGHT0); 
     glColor3f(0.9, 0.9, 0.9);
     glutSolidSphere(1, 40, 40);
     glEnable(GL_LIGHT0);
     glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(lrIndex + 29, 9, 3);
+    glPushMatrix();   
+    glTranslatef(lrIndex+29, 9, 3);
     glLightfv(GL_LIGHT1, GL_POSITION, light1Position);
     glDisable(GL_LIGHT1);
     glColor3d(0.9, 0.9, 0.9);
@@ -711,41 +701,38 @@ void newMenu() {
         glColor3f(1.0, 0.0, 0.0);
         renderBitmapString(15, 70, (void*)font2, "GAME OVER");
         glColor3f(1.0, 0.0, 0.0);
-        sprintf(buffer2, "%d", score);
-        renderBitmapString(15, 60, (void*)font2, "Score : ");
-        renderBitmapString(28, 60, (void*)font2, buffer2);
-        glColor3f(0.0f, 0.0f, 0.0f);
-        renderBitmapString(15, 50, (void*)font2, "If you want to restart game Press space bar");
+        sprintf(buffer2, "Score : %d", score);
+        renderBitmapString(15, 60, (void*)font2, buffer2);
+        glColor3f(0.0f, 0.0f, 1.0f);
+        renderBitmapString(15, 45, (void*)font2, "If you want to restart game Press space bar");
         glColor3f(1.0f, 1.0f, 1.0f);
         renderBitmapString(40, 85, (void*)font2, "The racer");
 
-
-        glColor3f(0.0f, 1.0f, 0.0f);
-        renderBitmapString(30, 30, (void*)font2, "Press SPACE to START");
-
         glColor3f(1.0f, 1.0f, 1.0f);
-        renderBitmapString(30, 24, (void*)font3, "Press RIGHT to turn Right");
-        renderBitmapString(30, 22, (void*)font3, "Press LEFT to turn Left");
-        renderBitmapString(30, 20, font3, "Press S to save your score");
-        renderBitmapString(30, 18, font3, "Press B to move start menu");
+        renderBitmapString(30, 28, (void*)font3, "Press RIGHT to turn Right");
+        renderBitmapString(30, 25, (void*)font3, "Press LEFT to turn Left");
+        renderBitmapString(30, 22, font3, "Press S to save your score");
+
     }
     // Score Board Screen
     else if (isGaming == 3)
     {
+        printf("이름을 입력해주세요.예)AAA, BBB, ABC\n이름 : ");
+        scanf("%s", (const char*)player[play]);
+        play++;
         glColor3f(1.0, 1.0, 1.0);
         if (play == 0)
         {
-            renderBitmapString(25, 50 + 10, font2, "No Record");
-            renderBitmapString(25, 50 + 10 - 3, font2, "Press B to move start menu");
+            renderBitmapString(30, 50 + 10, font2, "No Record");
+            renderBitmapString(30, 50 + 10 - 3, font2, "Press B to move start menu");
         }
         else if (play != 0) {
             for (int i = 0; i < play; i++)
             {
-                renderBitmapString(30, 95 - (i * 2), font3, (const char*)player[i]);
-                sprintf(buffer2, "%d", record[i]);
-                renderBitmapString(60, 95 - (i * 2), font3, buffer2);
+                renderBitmapString(5, 95 - (i * 2), font3, (const char*)player[i]);
+                renderBitmapString(10, 95 - (i * 2), font3, buffer2);
             }
-            renderBitmapString(25, 30, font2, "Press B to move start menu");
+            renderBitmapString(30, 50, font2, "Press B to move start menu");
         }
     }
     // Start Screen
@@ -791,9 +778,8 @@ void newMenu() {
         renderBitmapString(30, 60, font2, "Press SPACE to START");
 
         glColor3f(1.0f, 1.0f, 1.0f);
-        renderBitmapString(27, 52, font3, "Press RIGHT to turn Right");
-        renderBitmapString(27, 50, font3, "Press LEFT to turn Left");
-        renderBitmapString(27, 48, font3, "Press S to move ScoreBoard");
+        renderBitmapString(27, 50, font3, "Press RIGHT to turn Right");
+        renderBitmapString(27, 48, font3, "Press LEFT to turn Left");
         renderBitmapString(27, 46, font3, "Click Right Button to Change Color");
     }
 }
@@ -820,7 +806,7 @@ void myReshape(int w, int h)
 // Change frame every second
 void myTimer(int value)
 {
-    duration++;
+    duration++; 
     // Booster duration
     if (duration == 250)
     {
@@ -861,7 +847,7 @@ void mySpecialKey(int key, int x, int y)
 // Sub function(Start game, move to score board)
 void myKey(unsigned char key, int x, int y)
 {
-    if (isGaming == 0)
+    if (isGaming == 0 || isGaming == 2)
     {
         if (key == 32)
         {
@@ -887,47 +873,12 @@ void myKey(unsigned char key, int x, int y)
             isGaming = 1;
             life1 = 1; life2 = 1; life3 = 1;
         }
-        else if (key == 's')
+        else if (key == 's' && isGaming == 2)
         {
             isGaming = 3;
         }
     }
-    else if (isGaming == 2)
-    {
-        if (key == 32)
-        {
-            duration = 0, isBoosting = 0;
-            score = 0, speed = 1, createBoost = 0;
-
-            lrIndex = 0;
-
-            comingCar1 = 0;
-            comingCar2 = 35;
-            comingCar3 = 70;
-
-            //Car Coming
-            coin1 = 0, coin2 = 10, coin3 = 20, coin4 = 30, coin5 = 40;
-            coinIdx1 = 0, coinIdx2 = 0, coinIdx3 = 0, coinIdx4 = 0, coinIdx5 = 0;
-            booster = 0;
-            boosterIdx = 0;
-            coinIdx1 = rand() % 45;
-            coinIdx2 = rand() % 45;
-            coinIdx3 = rand() % 45;
-            coinIdx4 = rand() % 45;
-            coinIdx5 = rand() % 45;
-            isGaming = 1;
-            life1 = 1; life2 = 1; life3 = 1;
-        }
-        else if (key == 's')
-        {
-            Record();
-        }
-        else if (key == 'b')
-        {
-            isGaming = 0;
-        }
-    }
-    else if (isGaming == 3)
+    if (isGaming == 3)
         if (key == 'b')
             isGaming = 0;
     glutPostRedisplay();
@@ -947,9 +898,9 @@ void initLight()
     GLfloat materialDiffuse[] = { 1, 1, 1, 1.0 };
     GLfloat materialSpecular[] = { 1.0, 1.0, 1.0, 1 };
     GLfloat materialShininess[] = { 80 };
-
+    
     glShadeModel(GL_SMOOTH);
-
+   
     glLightfv(GL_LIGHT0, GL_SPECULAR, light0Ambient);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light0Diffuse);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light0Specular);
@@ -998,8 +949,8 @@ int main(int argc, char* argv[])
     glutInitWindowSize(500, 650);
     glutInitWindowPosition(200, 20);
     glutCreateWindow("The racer");
-
-    init(); initLight();
+    
+    init(); initLight(); 
     srand((unsigned int)time(NULL));
     glutDisplayFunc(myDisplay);
     glutReshapeFunc(myReshape);
