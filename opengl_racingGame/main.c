@@ -14,7 +14,6 @@
 
 // Sound
 #define BACKGROUND "BGM\\background.wav"
-//#define BACKGROUND "..\\background.wav"
 
 GLfloat light0Position[] = { 0, 8, 3, 1.0 };
 GLfloat light1Position[] = { 0, 8, 3, 1.0 };
@@ -264,8 +263,8 @@ glEnd();
     // Recreate coin
     if (coin1 <= -100 && randomcoin == 1)
     {
-        coinIdx1 = rand() % 45;
-        coin1 = 0;
+        coinIdx1 = rand() % 50;
+        coin1 = rand() % 10;
     }
 
     // Coin2
@@ -304,8 +303,8 @@ glEnd();
 
     if (coin2 <= -100 && randomcoin == 1)
     {
-        coinIdx2 = rand() % 45;
-        coin2 = 0;
+        coinIdx2 = rand() % 50;
+        coin2 = rand() % 10;
     }
     // Coin3
     glColor3f(1.0, 1.0, 0.0);
@@ -343,8 +342,8 @@ glEnd();
 
     if (coin3 <= -100 && randomcoin == 1)
     {
-        coinIdx3 = rand() % 45;
-        coin3 = 0;
+        coinIdx3 = rand() % 50;
+        coin3 = rand() % 10;
     }
     // Coin4
     glColor3f(1.0, 1.0, 0.0);
@@ -382,8 +381,8 @@ glEnd();
 
     if (coin4 <= -100 && randomcoin == 1)
     {
-        coinIdx4 = rand() % 45;
-        coin4 = 0;
+        coinIdx4 = rand() % 50;
+        coin4 = rand() % 10;
     }
     // Coin5
      glColor3f(1.0, 1.0, 0.0);
@@ -422,8 +421,8 @@ glEnd();
 
     if (coin5 <= -100 && randomcoin == 1)
     {
-        coinIdx5 = rand() % 45;
-        coin5 = 0;
+        coinIdx5 = rand() % 50;
+        coin5 = rand() % 10;
     }
 
     // Booster
