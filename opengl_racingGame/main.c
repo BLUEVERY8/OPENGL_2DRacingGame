@@ -263,7 +263,7 @@ glEnd();
     // Recreate coin
     if (coin1 <= -100 && randomcoin == 1)
     {
-        coinIdx1 = rand() % 50;
+        coinIdx1 = rand() % 45;
         coin1 = rand() % 10;
     }
 
@@ -303,7 +303,7 @@ glEnd();
 
     if (coin2 <= -100 && randomcoin == 1)
     {
-        coinIdx2 = rand() % 50;
+        coinIdx2 = rand() % 45;
         coin2 = rand() % 10;
     }
     // Coin3
@@ -342,7 +342,7 @@ glEnd();
 
     if (coin3 <= -100 && randomcoin == 1)
     {
-        coinIdx3 = rand() % 50;
+        coinIdx3 = rand() % 45;
         coin3 = rand() % 10;
     }
     // Coin4
@@ -381,7 +381,7 @@ glEnd();
 
     if (coin4 <= -100 && randomcoin == 1)
     {
-        coinIdx4 = rand() % 50;
+        coinIdx4 = rand() % 45;
         coin4 = rand() % 10;
     }
     // Coin5
@@ -421,7 +421,7 @@ glEnd();
 
     if (coin5 <= -100 && randomcoin == 1)
     {
-        coinIdx5 = rand() % 50;
+        coinIdx5 = rand() % 45;
         coin5 = rand() % 10;
     }
 
@@ -991,7 +991,6 @@ void MenuFunc() {
 }
 int main(int argc, char* argv[])
 {
-    
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
     glutInitWindowSize(500, 650);
