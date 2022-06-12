@@ -227,31 +227,31 @@ void startGame()
     randomcoin = rand() % 40;
 
     // Coin1(increasing score)
-     glColor3f(1.0, 1.0, 0.0);
-glBegin(GL_POLYGON);
-glVertex2f(coinIdx1 + 27, coin1 + 97);
-glVertex2f(coinIdx1 + 29, coin1 + 97);
-glVertex2f(coinIdx1 + 30, coin1 + 96);
-glVertex2f(coinIdx1 + 30, coin1 + 95);
-glVertex2f(coinIdx1 + 29, coin1 + 94);
-glVertex2f(coinIdx1 + 27, coin1 + 94);
-glVertex2f(coinIdx1 + 26, coin1 + 95);
-glVertex2f(coinIdx1 + 26, coin1 + 96);
-glEnd();
+    glColor3f(1.0, 1.0, 0.0);
+    glBegin(GL_POLYGON);
+    glVertex2f(coinIdx1 + 27, coin1 + 97);
+    glVertex2f(coinIdx1 + 29, coin1 + 97);
+    glVertex2f(coinIdx1 + 30, coin1 + 96);
+    glVertex2f(coinIdx1 + 30, coin1 + 95);
+    glVertex2f(coinIdx1 + 29, coin1 + 94);
+    glVertex2f(coinIdx1 + 27, coin1 + 94);
+    glVertex2f(coinIdx1 + 26, coin1 + 95);
+    glVertex2f(coinIdx1 + 26, coin1 + 96);
+    glEnd();
 
-glColor3f(0.0, 0.0, 0.0);
-glBegin(GL_LINE_LOOP);
-glVertex2f(coinIdx1 + 26.5, coin1 + 95);
-glVertex2f(coinIdx1 + 26.5, coin1 + 96);
-glVertex2f(coinIdx1 + 27.25, coin1 + 96.75);
-glVertex2f(coinIdx1 + 29, coin1 + 96.75);
-glVertex2f(coinIdx1 + 29, coin1 + 96.25);
-glVertex2f(coinIdx1 + 27.25, coin1 + 96.25);
-glVertex2f(coinIdx1 + 26.5, coin1 + 95);
-glVertex2f(coinIdx1 + 29, coin1 + 95);
-glVertex2f(coinIdx1 + 29, coin1 + 94.5);
-glVertex2f(coinIdx1 + 26.5, coin1 + 94.5);
-glEnd();
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(coinIdx1 + 26.5, coin1 + 95);
+    glVertex2f(coinIdx1 + 26.5, coin1 + 96);
+    glVertex2f(coinIdx1 + 27.25, coin1 + 96.75);
+    glVertex2f(coinIdx1 + 29, coin1 + 96.75);
+    glVertex2f(coinIdx1 + 29, coin1 + 96.25);
+    glVertex2f(coinIdx1 + 27.25, coin1 + 96.25);
+    glVertex2f(coinIdx1 + 26.5, coin1 + 95);
+    glVertex2f(coinIdx1 + 29, coin1 + 95);
+    glVertex2f(coinIdx1 + 29, coin1 + 94.5);
+    glVertex2f(coinIdx1 + 26.5, coin1 + 94.5);
+    glEnd();
     // Move coin
     if (coin1 > -100)
         coin1 -= speed;
@@ -268,31 +268,31 @@ glEnd();
     }
 
     // Coin2
-     glColor3f(1.0, 1.0, 0.0);
-glBegin(GL_POLYGON);
-glVertex2f(coinIdx2 + 27, coin2 + 97);
-glVertex2f(coinIdx2 + 29, coin2 + 97);
-glVertex2f(coinIdx2 + 30, coin2 + 96);
-glVertex2f(coinIdx2 + 30, coin2 + 95);
-glVertex2f(coinIdx2 + 29, coin2 + 94);
-glVertex2f(coinIdx2 + 27, coin2 + 94);
-glVertex2f(coinIdx2 + 26, coin2 + 95);
-glVertex2f(coinIdx2 + 26, coin2 + 96);
-glEnd();
+    glColor3f(1.0, 1.0, 0.0);
+    glBegin(GL_POLYGON);
+    glVertex2f(coinIdx2 + 27, coin2 + 97);
+    glVertex2f(coinIdx2 + 29, coin2 + 97);
+    glVertex2f(coinIdx2 + 30, coin2 + 96);
+    glVertex2f(coinIdx2 + 30, coin2 + 95);
+    glVertex2f(coinIdx2 + 29, coin2 + 94);
+    glVertex2f(coinIdx2 + 27, coin2 + 94);
+    glVertex2f(coinIdx2 + 26, coin2 + 95);
+    glVertex2f(coinIdx2 + 26, coin2 + 96);
+    glEnd();
 
-glColor3f(0.0, 0.0, 0.0);
-glBegin(GL_LINE_LOOP);
-glVertex2f(coinIdx2 + 26.5, coin2 + 95);
-glVertex2f(coinIdx2 + 26.5, coin2 + 96);
-glVertex2f(coinIdx2 + 27.25, coin2 + 96.75);
-glVertex2f(coinIdx2 + 29, coin2 + 96.75);
-glVertex2f(coinIdx2 + 29, coin2 + 96.25);
-glVertex2f(coinIdx2 + 27.25, coin2 + 96.25);
-glVertex2f(coinIdx2 + 26.5, coin2 + 95);
-glVertex2f(coinIdx2 + 29, coin2 + 95);
-glVertex2f(coinIdx2 + 29, coin2 + 94.5);
-glVertex2f(coinIdx2 + 26.5, coin2 + 94.5);
-glEnd();
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(coinIdx2 + 26.5, coin2 + 95);
+    glVertex2f(coinIdx2 + 26.5, coin2 + 96);
+    glVertex2f(coinIdx2 + 27.25, coin2 + 96.75);
+    glVertex2f(coinIdx2 + 29, coin2 + 96.75);
+    glVertex2f(coinIdx2 + 29, coin2 + 96.25);
+    glVertex2f(coinIdx2 + 27.25, coin2 + 96.25);
+    glVertex2f(coinIdx2 + 26.5, coin2 + 95);
+    glVertex2f(coinIdx2 + 29, coin2 + 95);
+    glVertex2f(coinIdx2 + 29, coin2 + 94.5);
+    glVertex2f(coinIdx2 + 26.5, coin2 + 94.5);
+    glEnd();
     if (coin2 > -100)
         coin2 -= speed;
 
@@ -308,30 +308,30 @@ glEnd();
     }
     // Coin3
     glColor3f(1.0, 1.0, 0.0);
-glBegin(GL_POLYGON);
-glVertex2f(coinIdx3 + 27, coin3 + 97);
-glVertex2f(coinIdx3 + 29, coin3 + 97);
-glVertex2f(coinIdx3 + 30, coin3 + 96);
-glVertex2f(coinIdx3 + 30, coin3 + 95);
-glVertex2f(coinIdx3 + 29, coin3 + 94);
-glVertex2f(coinIdx3 + 27, coin3 + 94);
-glVertex2f(coinIdx3 + 26, coin3 + 95);
-glVertex2f(coinIdx3 + 26, coin3 + 96);
-glEnd();
+    glBegin(GL_POLYGON);
+    glVertex2f(coinIdx3 + 27, coin3 + 97);
+    glVertex2f(coinIdx3 + 29, coin3 + 97);
+    glVertex2f(coinIdx3 + 30, coin3 + 96);
+    glVertex2f(coinIdx3 + 30, coin3 + 95);
+    glVertex2f(coinIdx3 + 29, coin3 + 94);
+    glVertex2f(coinIdx3 + 27, coin3 + 94);
+    glVertex2f(coinIdx3 + 26, coin3 + 95);
+    glVertex2f(coinIdx3 + 26, coin3 + 96);
+    glEnd();
 
-glColor3f(0.0, 0.0, 0.0);
-glBegin(GL_LINE_LOOP);
-glVertex2f(coinIdx3 + 26.5, coin3 + 95);
-glVertex2f(coinIdx3 + 26.5, coin3 + 96);
-glVertex2f(coinIdx3 + 27.25, coin3 + 96.75);
-glVertex2f(coinIdx3 + 29, coin3 + 96.75);
-glVertex2f(coinIdx3 + 29, coin3 + 96.25);
-glVertex2f(coinIdx3 + 27.25, coin3 + 96.25);
-glVertex2f(coinIdx3 + 26.5, coin3 + 95);
-glVertex2f(coinIdx3 + 29, coin3 + 95);
-glVertex2f(coinIdx3 + 29, coin3 + 94.5);
-glVertex2f(coinIdx3 + 26.5, coin3 + 94.5);
-glEnd();
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(coinIdx3 + 26.5, coin3 + 95);
+    glVertex2f(coinIdx3 + 26.5, coin3 + 96);
+    glVertex2f(coinIdx3 + 27.25, coin3 + 96.75);
+    glVertex2f(coinIdx3 + 29, coin3 + 96.75);
+    glVertex2f(coinIdx3 + 29, coin3 + 96.25);
+    glVertex2f(coinIdx3 + 27.25, coin3 + 96.25);
+    glVertex2f(coinIdx3 + 26.5, coin3 + 95);
+    glVertex2f(coinIdx3 + 29, coin3 + 95);
+    glVertex2f(coinIdx3 + 29, coin3 + 94.5);
+    glVertex2f(coinIdx3 + 26.5, coin3 + 94.5);
+    glEnd();
     if (coin3 > -100)
         coin3 -= speed;
 
@@ -347,30 +347,30 @@ glEnd();
     }
     // Coin4
     glColor3f(1.0, 1.0, 0.0);
-glBegin(GL_POLYGON);
-glVertex2f(coinIdx4 + 27, coin4 + 97);
-glVertex2f(coinIdx4 + 29, coin4 + 97);
-glVertex2f(coinIdx4 + 30, coin4 + 96);
-glVertex2f(coinIdx4 + 30, coin4 + 95);
-glVertex2f(coinIdx4 + 29, coin4 + 94);
-glVertex2f(coinIdx4 + 27, coin4 + 94);
-glVertex2f(coinIdx4 + 26, coin4 + 95);
-glVertex2f(coinIdx4 + 26, coin4 + 96);
-glEnd();
+    glBegin(GL_POLYGON);
+    glVertex2f(coinIdx4 + 27, coin4 + 97);
+    glVertex2f(coinIdx4 + 29, coin4 + 97);
+    glVertex2f(coinIdx4 + 30, coin4 + 96);
+    glVertex2f(coinIdx4 + 30, coin4 + 95);
+    glVertex2f(coinIdx4 + 29, coin4 + 94);
+    glVertex2f(coinIdx4 + 27, coin4 + 94);
+    glVertex2f(coinIdx4 + 26, coin4 + 95);
+    glVertex2f(coinIdx4 + 26, coin4 + 96);
+    glEnd();
 
-glColor3f(0.0, 0.0, 0.0);
-glBegin(GL_LINE_LOOP);
-glVertex2f(coinIdx4 + 26.5, coin4 + 95);
-glVertex2f(coinIdx4 + 26.5, coin4 + 96);
-glVertex2f(coinIdx4 + 27.25, coin4 + 96.75);
-glVertex2f(coinIdx4 + 29, coin4 + 96.75);
-glVertex2f(coinIdx4 + 29, coin4 + 96.25);
-glVertex2f(coinIdx4 + 27.25, coin4 + 96.25);
-glVertex2f(coinIdx4 + 26.5, coin4 + 95);
-glVertex2f(coinIdx4 + 29, coin4 + 95);
-glVertex2f(coinIdx4 + 29, coin4 + 94.5);
-glVertex2f(coinIdx4 + 26.5, coin4 + 94.5);
-glEnd();
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(coinIdx4 + 26.5, coin4 + 95);
+    glVertex2f(coinIdx4 + 26.5, coin4 + 96);
+    glVertex2f(coinIdx4 + 27.25, coin4 + 96.75);
+    glVertex2f(coinIdx4 + 29, coin4 + 96.75);
+    glVertex2f(coinIdx4 + 29, coin4 + 96.25);
+    glVertex2f(coinIdx4 + 27.25, coin4 + 96.25);
+    glVertex2f(coinIdx4 + 26.5, coin4 + 95);
+    glVertex2f(coinIdx4 + 29, coin4 + 95);
+    glVertex2f(coinIdx4 + 29, coin4 + 94.5);
+    glVertex2f(coinIdx4 + 26.5, coin4 + 94.5);
+    glEnd();
     if (coin4 > -100)
         coin4 -= speed;
 
@@ -385,31 +385,31 @@ glEnd();
         coin4 = rand() % 10;
     }
     // Coin5
-     glColor3f(1.0, 1.0, 0.0);
-glBegin(GL_POLYGON);
-glVertex2f(coinIdx5 + 27, coin5 + 97);
-glVertex2f(coinIdx5 + 29, coin5 + 97);
-glVertex2f(coinIdx5 + 30, coin5 + 96);
-glVertex2f(coinIdx5 + 30, coin5 + 95);
-glVertex2f(coinIdx5 + 29, coin5 + 94);
-glVertex2f(coinIdx5 + 27, coin5 + 94);
-glVertex2f(coinIdx5 + 26, coin5 + 95);
-glVertex2f(coinIdx5 + 26, coin5 + 96);
-glEnd();
+    glColor3f(1.0, 1.0, 0.0);
+    glBegin(GL_POLYGON);
+    glVertex2f(coinIdx5 + 27, coin5 + 97);
+    glVertex2f(coinIdx5 + 29, coin5 + 97);
+    glVertex2f(coinIdx5 + 30, coin5 + 96);
+    glVertex2f(coinIdx5 + 30, coin5 + 95);
+    glVertex2f(coinIdx5 + 29, coin5 + 94);
+    glVertex2f(coinIdx5 + 27, coin5 + 94);
+    glVertex2f(coinIdx5 + 26, coin5 + 95);
+    glVertex2f(coinIdx5 + 26, coin5 + 96);
+    glEnd();
 
-glColor3f(0.0, 0.0, 0.0);
-glBegin(GL_LINE_LOOP);
-glVertex2f(coinIdx5 + 26.5, coin5 + 95);
-glVertex2f(coinIdx5 + 26.5, coin5 + 96);
-glVertex2f(coinIdx5 + 27.25, coin5 + 96.75);
-glVertex2f(coinIdx5 + 29, coin5 + 96.75);
-glVertex2f(coinIdx5 + 29, coin5 + 96.25);
-glVertex2f(coinIdx5 + 27.25, coin5 + 96.25);
-glVertex2f(coinIdx5 + 26.5, coin5 + 95);
-glVertex2f(coinIdx5 + 29, coin5 + 95);
-glVertex2f(coinIdx5 + 29, coin5 + 94.5);
-glVertex2f(coinIdx5 + 26.5, coin5 + 94.5);
-glEnd();
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(coinIdx5 + 26.5, coin5 + 95);
+    glVertex2f(coinIdx5 + 26.5, coin5 + 96);
+    glVertex2f(coinIdx5 + 27.25, coin5 + 96.75);
+    glVertex2f(coinIdx5 + 29, coin5 + 96.75);
+    glVertex2f(coinIdx5 + 29, coin5 + 96.25);
+    glVertex2f(coinIdx5 + 27.25, coin5 + 96.25);
+    glVertex2f(coinIdx5 + 26.5, coin5 + 95);
+    glVertex2f(coinIdx5 + 29, coin5 + 95);
+    glVertex2f(coinIdx5 + 29, coin5 + 94.5);
+    glVertex2f(coinIdx5 + 26.5, coin5 + 94.5);
+    glEnd();
     glEnd();
     if (coin5 > -100)
         coin5 -= speed;
@@ -658,11 +658,10 @@ glEnd();
         glColor3f(1.0f, 0.0f, 0.0f);
     }
     else
-        glColor3f(0.678, 1.0f, 0.184);
+        glColor3f(0.5, 0.5, 0.5);
     glBegin(GL_POLYGON);
     glVertex2f(lrIndex + 26, 1);
     glVertex2f(lrIndex + 26, 8);
-    glColor3f(0.0f, 0.545, 0.545);
 
     glVertex2f(lrIndex + 28, 10);
     glVertex2f(lrIndex + 30, 8);
