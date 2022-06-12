@@ -863,6 +863,7 @@ void myKey(unsigned char key, int x, int y)
     {
         if (key == 32)
         {
+            PlaySound(TEXT(BACKGROUND), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
             duration = 0, isBoosting = 0;
             score = 0, speed = 1, createBoost = 0;
 
@@ -990,7 +991,7 @@ void MenuFunc() {
 }
 int main(int argc, char* argv[])
 {
-    PlaySound(TEXT(BACKGROUND), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+    
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
     glutInitWindowSize(500, 650);
